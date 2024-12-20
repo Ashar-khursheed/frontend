@@ -104,7 +104,9 @@ const App = () => {
  
   return (
     <>
-     <Suspense fallback={<div></div>}>
+     <Suspense fallback={<div className="w-full h-[100vh] flex items-center justify-center bg-white fixed left-0 top-0 z-[999]">
+                <Loader />
+              </div>}>
       <Navigation
         categories={categories}
         currentLocation={currentLocation}

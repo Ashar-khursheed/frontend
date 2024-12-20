@@ -29,8 +29,11 @@ export const FeatureProduct = ({
     setInnerWidth(window.innerWidth);
   }, [window.innerWidth]);
 
-  const bigScreenCss =
+  const smallScreenCss =
     "flex grid-cols-5 sm:grid md:grid lg:grid 2xl:grid gap-5 sm:gap-5 sm:grid sm:space-x-5 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5";
+
+  const bigScreenCss =
+    "grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 w-full";
 
   return (
     <Wrapper>
@@ -52,7 +55,7 @@ export const FeatureProduct = ({
               }
             : {}
         }
-        className={bigScreenCss}
+        className={window?.innerWidth > 640 ? bigScreenCss : smallScreenCss}
       >
         {featureCatLoader ? (
           Array.from({ length: 10 }).map((_, index) => (
@@ -70,7 +73,7 @@ export const FeatureProduct = ({
                     index < 10 ? (
                       <ProductCard
                         key={index}
-                        classes="col-span-1 mt-1"
+                        classes="col-span-1 mt-1 w-full"
                         product={product}
                       />
                     ) : null
@@ -82,7 +85,8 @@ export const FeatureProduct = ({
                 )}
               </>
             ) : (
-              <div className="grid grid-cols-1 gap-4 w-[85vw] sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              <>
+                {/* <div className="grid grid-cols-1 w-[93vw] md:w-[85vw] gap-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"> */}
                 {products && products.length > 0 ? (
                   products.map((product, index) =>
                     index < 10 ? (
@@ -98,7 +102,8 @@ export const FeatureProduct = ({
                     No Product Found
                   </p>
                 )}
-              </div>
+                {/* </div> */}
+              </>
             )}
           </React.Fragment>
         )}

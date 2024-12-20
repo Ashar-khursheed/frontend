@@ -30,7 +30,6 @@ export const ProductCard = ({
   removeItem,
   setTempSaveForLater,
 }) => {
-  
   const [deleteCartLoader, setDeleteCartLoader] = useState(false);
   const authToken = localStorage.getItem("authToken");
   const productId = product.id ? product.id : product.product_id;
@@ -288,15 +287,15 @@ export const ProductCard = ({
               </React.Fragment>
             )}
           </Link>
-          <div className="absolute top-[35%] translate-y-[-50%] border border-gray-300 rounded-[4px] right-[-70px] group-hover:right-0 transition-all duration-500">
+          <div className="absolute top-[20%] sm:top-[8%] translate-y-[-50%] border border-gray-300 rounded-[4px] right-0 transition-all duration-500">
             {/* <VscGraph
               size={45}
               className="p-3 text-[#62666c] bg-white hover:text-white hover:bg-primary z-10 transition-all rounded-t-[4px]"
             /> */}
-            <LuEye
+            {/* <LuEye
               size={45}
               className="p-3 border-b border-gray-300 mt-[10px] sm:mt-[0px] bg-white text-[#62666c] hover:text-white hover:bg-primary z-10 transition-all"
-            />
+            /> */}
             {!productState.in_wishlist ? (
               <FaRegHeart
                 size={45}
@@ -371,10 +370,10 @@ export const ProductCard = ({
 
             <div className="flex overflow-hidden  sm:flex-row items-center">
               <span className="flex items-center sm:flex-none text-primary font-semibold ">
-                <span className="ml-0 sm:ml-1 text-[10px] sm:text-xl font-normal sm:font-bold">
+                <span className="ml-0 text-[10px] sm:text-xl font-normal sm:font-bold">
                   {product.currency_title ? product.currency_title : "USD "}
                 </span>
-         
+
                 {product.sale_price ? (
                   <span className="ml-1 text-[14px] sm:text-3xl font-bold sm:font-extrabold">
                     {product.sale_price}.
@@ -391,14 +390,16 @@ export const ProductCard = ({
                     : "00"}
                 </span>
               </span>
+            </div>
+            <div className="h-[20px]">
               {!product.sale_price ||
               product.sale_price === product.original_price ? null : (
-                <span className="text-gray-700 text-sm line-through ml-2 mt-2">
+                <span className="text-gray-700 text-[12px] sm:text-sm line-through ml-0 mt-2">
                   <span>
                     {product.currency_title ? product.currency_title : "USD"}
                     &nbsp;
                   </span>
-                  <span>{product.original_price}.</span>
+                  <span>{product.original_price || "."}.</span>
                   <span>
                     {product.price && String(product.price).split(".")[1]
                       ? String(product.price).split(".")[1]
@@ -407,7 +408,6 @@ export const ProductCard = ({
                 </span>
               )}
             </div>
-
             {!flashSale ? (
               <React.Fragment>
                 {product.leftStock > 0 && product.leftStock <= 5 ? (

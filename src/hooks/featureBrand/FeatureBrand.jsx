@@ -20,16 +20,21 @@ export const FeatureBrand = ({
     setProducts(showFeatureProduct[0]);
   }, [selectedBrand, brandCat]);
 
+  const smallScreenCss =
+    "flex grid-cols-5 sm:grid md:grid lg:grid 2xl:grid gap-5 sm:gap-5 sm:grid sm:space-x-5 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5";
+
   const bigScreenCss =
-    "flex grid-cols-5 sm:grid md:grid lg:grid 2xl:grid gap-5 sm:gap-5 sm:grid sm:space-x-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5";
- 
-const productList=products && products.filter((item)=>{
-    if(item.sale_price==null){
-      item.sale_price = item.price; 
-    }
-    return true;
-});
- 
+    "grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 w-full";
+
+  const productList =
+    products &&
+    products.filter((item) => {
+      if (item.sale_price == null) {
+        item.sale_price = item.price;
+      }
+      return true;
+    });
+
   return (
     <Wrapper>
       <FeatureHeader
@@ -50,7 +55,7 @@ const productList=products && products.filter((item)=>{
               }
             : {}
         }
-        className={bigScreenCss}
+        className={window?.innerWidth > 640 ? bigScreenCss : smallScreenCss}
       >
         {brandCatLoader ? (
           Array.from({ length: 10 }).map((_, index) => (
@@ -77,7 +82,8 @@ const productList=products && products.filter((item)=>{
                 )}
               </>
             ) : (
-              <div className="grid grid-cols-1 gap-4 w-[85vw] sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              <>
+                {/* <div className="grid grid-cols-1 gap-4 w-[85vw] sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"> */}
                 {productList && productList.length > 0 ? (
                   productList.map((product, index) =>
                     index < 10 ? (
@@ -93,7 +99,8 @@ const productList=products && products.filter((item)=>{
                     No Product Found
                   </p>
                 )}
-              </div>
+                {/* </div> */}
+              </>
             )}
           </React.Fragment>
         )}

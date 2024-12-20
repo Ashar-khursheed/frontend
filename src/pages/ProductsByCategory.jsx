@@ -101,6 +101,11 @@ import { useParams, Link, useSearchParams } from "react-router-dom";
       const response = await apiClient.get(`/categories/${id}/products`, {
         params,
       });
+
+      console.log(
+        "----<<<<>>>>-----",
+        Array.isArray(response?.data?.producttypes)
+      );
       console.log("productType", response?.data);
       setProducts(response?.data?.products.data);
       setPaginationData(response?.data?.products?.total);
@@ -415,19 +420,19 @@ import { useParams, Link, useSearchParams } from "react-router-dom";
                       return (
                         <div
                           key={cat.id}
-                          className={`bg-[#F5F5F5] m-[10px] border-[#186737] sm:border-[#D9D9D9] col-span-1 flex items-center justify-center flex-col cursor-pointer transition-all border hover:border-primary p-[5px] sm:p-4 rounded-md  border-primary"}`}
+                          className={`bg-[#F5F5F5] m-[10px] w-none sm:w-[183px] border-[#186737] sm:border-[#D9D9D9] col-span-1 flex items-center justify-center flex-col cursor-pointer transition-all border hover:border-primary p-[5px] sm:p-4 rounded-md  border-primary"}`}
                         >
                           <Link
                             key={cat.id}
-                            className="mt-1 block text-[#666666] text-base underline"
+                            className="mt-1 block text-[#666666] text-base"
                             to={`/collections/${category}/${cat.slug}/${cat.id}?type=1`}
                           >
                             <img
-                         className="sm:w-20 md:w-28 lg:w-36 xl:w-48 mx-auto" 
+                              className="sm:w-20 md:w-28 lg:w-36 xl:w-48 mx-auto"
                               src={`https://testhssite.com/storage/${cat.image}`}
                               alt={cat.name}
                             />
-                            <h4 className="lg:hidden xl:hidden mt-2 text-base font-semibold text-primary text-center">
+                            <h4 className=" mt-2 text-base font-semibold text-primary text-center">
                               {cat.name}
                             </h4>
                           </Link>

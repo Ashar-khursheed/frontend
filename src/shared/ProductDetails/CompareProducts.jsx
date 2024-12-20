@@ -119,7 +119,7 @@ export const CompareProducts = ({
   return (
     <React.Fragment>
       {!productLoader ? (
-        <div ref={targetRef} className=" p-[10px] col-span-12 my-8 mt-12">
+        <div ref={targetRef} className=" p-[10px] col-span-12 my-4 mt-12">
           {product &&
           product.compare_products &&
           product.compare_products.length &&
@@ -278,7 +278,7 @@ export const CompareProducts = ({
       )}
 
       {product.compare_products ? (
-        <div className="col-span-12 ">
+        <div className="col-span-12 mr-[10px]">
           <div className="flex items-end justify-end">
             <button className="text-white bg-[#64748B] rounded-md py-2 px-5 text-base font-semibold flex items-center mr-4">
               <FaShareAlt className="mr-1" />
