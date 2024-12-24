@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { ProductCard } from "../../../shared/ProductCard";
+import React, { useEffect, useState,lazy } from "react";
+ 
 import Skeleton from "react-loading-skeleton";
 import { apiClient } from "../../../utils/apiWrapper";
-
+const  ProductCard =lazy(()=>import("../../../shared/ProductCard"));
 const CommonProducts = () => {
   const [products, setProducts] = useState([]);
   const [loader, setLoader] = useState(false);

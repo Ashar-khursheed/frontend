@@ -3,7 +3,7 @@ import { Wrapper } from "../../shared/Wrapper";
 import { Link } from "react-router-dom";
 import { Category } from "./Category";
 
-export const Categories = ({ categories }) => {
+ const Categories = ({ categories }) => {
   return (
     <Wrapper>
       {/* Categories Header  */}
@@ -38,3 +38,5 @@ export const Categories = ({ categories }) => {
     </Wrapper>
   );
 };
+
+export default React.memo(Categories);

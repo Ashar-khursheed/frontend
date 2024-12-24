@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import { Wrapper } from "../shared/Wrapper";
 import { Breadcrumb } from "../shared/Breadcrumb";
 import { Menu, MenuItem } from "@szhsin/react-menu";
-import { GoTasklist } from "react-icons/go";
-import { CiGrid41 } from "react-icons/ci";
-import { ProductCard } from "../shared/ProductCard";
 import MultiRangeSlider from "multi-range-slider-react";
 import { Pagination } from "../shared/Pagination";
 import { RelatedSearch } from "../hooks/productListingHooks/RelatedSearch";
@@ -13,7 +10,7 @@ import Skeleton from "react-loading-skeleton";
 import { apiClient } from "../utils/apiWrapper";
 import { useLocation, useNavigate } from "react-router";
 import { IoClose } from "react-icons/io5";
-
+const  ProductCard =lazy(()=>import("../shared/ProductCard"));
   const ProductListing = () => {
   const [page, setPage] = useState("1");
   const [perPage, setPerPage] = useState("20");

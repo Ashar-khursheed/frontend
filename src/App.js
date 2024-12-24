@@ -55,7 +55,6 @@ const App = () => {
   const [categories, setCategories] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [userProfile, setUserProfile] = useState({});
-
   const [currentLocation, setCurrentLocation] = useState({});
 
   const fetchCategories = async () => {

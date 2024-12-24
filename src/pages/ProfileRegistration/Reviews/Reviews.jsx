@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,lazy } from "react";
 import { Wrapper } from "../../../shared/Wrapper";
 import SidebarProfile from "../../../components/SidebarProfile";
 import ReviewCard from "./Components/ReviewCard";
@@ -6,9 +6,10 @@ import { apiClient } from "../../../utils/apiWrapper";
 import { Breadcrumb } from "../../../shared/Breadcrumb";
 import Skeleton from "react-loading-skeleton";
 import { useNavigate } from "react-router";
-import { ProductCard } from "../../../shared/ProductCard";
+ 
 import { notify } from "../../../utils/notify";
 import ReviewPopup from "../../../components/ReviewPopup";
+const  ProductCard =lazy(()=>import("../../../shared/ProductCard"));
 const Reviews = () => {
   const [loader, setLoader] = useState(true);
   const [showPopup,setShowPopup]=useState(false);

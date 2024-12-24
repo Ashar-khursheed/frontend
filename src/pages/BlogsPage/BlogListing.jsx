@@ -3,6 +3,7 @@ import { Wrapper } from "../../shared/Wrapper";
 import { Breadcrumb } from "../../shared/Breadcrumb";
 import { BlogsCard } from "../../shared/BlogsCard";
 import { BlogPostCard } from "./components/BlogPostCard";
+import PopularPosts from "./components/PopularPosts";
 
 const BlogListing = () => {
   const collectionBreadCrumb = [
@@ -51,7 +52,7 @@ const BlogListing = () => {
           <div className="h-[314px] w-[305px] bg-[#D9D9D9] rounded-md ">
             <div className="w-[305px] h-[314px] rounded-md object-cover">
               <img
-                src={`${process.env.PUBLIC_URL}/images/BlogPost/blogpost-1.png`}
+                src={`${process.env.PUBLIC_URL}/images/blog/card/cafe.png`}
               />
             </div>
             <p className="text-center w-[100%] text-[24px] leading-[30px] text-light text-[#186737] my-[10px]">
@@ -61,7 +62,7 @@ const BlogListing = () => {
           <div className="h-[314px] w-[305px] bg-[#D9D9D9] rounded-md ">
             <div className="w-[305px] h-[314px] rounded-md object-cover">
               <img
-                src={`${process.env.PUBLIC_URL}/images/BlogPost/blogpost-5.png`}
+                src={`${process.env.PUBLIC_URL}/images/blog/card/hotels.png`}
               />
             </div>
             <p className="text-center w-[100%] text-[24px] leading-[30px] text-light text-[#186737] my-[10px]">
@@ -71,7 +72,7 @@ const BlogListing = () => {
           <div className="h-[314px] w-[305px] bg-[#D9D9D9] rounded-md ">
             <div className="w-[305px] h-[314px] rounded-md object-cover">
               <img
-                src={`${process.env.PUBLIC_URL}/images/BlogPost/blogpost-3.png`}
+                src={`${process.env.PUBLIC_URL}/images/blog/card/news.png`}
               />
             </div>
             <p className="text-center w-[100%] text-[24px] leading-[30px] text-light text-[#186737] my-[10px]">
@@ -81,7 +82,7 @@ const BlogListing = () => {
           <div className="h-[314px] w-[305px] bg-[#D9D9D9] rounded-md ">
             <div className="w-[305px] h-[314px] rounded-md object-cover">
               <img
-                src={`${process.env.PUBLIC_URL}/images/BlogPost/blogpost-4.png`}
+                src={`${process.env.PUBLIC_URL}/images/blog/card/restaurant.png`}
               />
             </div>
             <p className="text-center w-[100%] text-[24px] leading-[30px] text-light text-[#186737] my-[10px]">
@@ -91,7 +92,8 @@ const BlogListing = () => {
           <div className="h-[314px] w-[305px] bg-[#D9D9D9] rounded-md ">
             <div className="w-[305px] h-[314px] rounded-md object-cover">
               <img
-                src={`${process.env.PUBLIC_URL}/images/BlogPost/blogpost-5.png`}
+                className="object-cover"
+                src={`${process.env.PUBLIC_URL}/images/blog/card/news.png`}
               />
             </div>
             <p className="text-center w-[100%] text-[24px] leading-[30px] text-light text-[#186737] my-[10px]">
@@ -108,7 +110,7 @@ const BlogListing = () => {
             the hospitality industry, from kitchen equipment to dining
             essentials. Explore our platform to list everything from
             high-quality Products!
-          </p> 
+          </p>
         </div>
         <div className="flex">
           {/* First Container */}
@@ -116,148 +118,7 @@ const BlogListing = () => {
             <BlogPostCard count={2} />
           </div>
           {/* Second Container */}
-          <div className="hidden xl:block w-[25%]">
-            <div className="border-2 m-[10px] rounded-lg p-[10px]">
-              <h1 className="font-Montserrat m-[5px] text-[20px] leading-[30px] font-semibold">
-                Search
-              </h1>
-              <input
-                className="border-2 h-[60px] w-full rounded-[10px] pl-[10px]"
-                placeholder="Search Something"
-              />
-            </div>
-            <div className="border-2 m-[10px] rounded-lg p-[10px]">
-              <h1 className="font-Montserrat m-[5px] text-[20px] leading-[30px] font-semibold">
-                Popular Posts
-              </h1>
-              <div className="flex items-center  p-[10px]">
-                {/* Image Section */}
-                <div className="w-1/3">
-                  <img
-                    src="https://via.placeholder.com/200x200" // Replace with your actual image URL
-                    alt="Knife Station"
-                    className="w-full h-auto rounded-md"
-                  />
-                </div>
-                {/* Content Section */}
-                <div className="ml-[10px]">
-                  <h1 className="text-[14px] mb-[5px] font-semibold text-black leading-[18px]">
-                    Elevate Your Culinary Business With HorecaStore.Ae
-                  </h1>
-                  <p className="text-[14px] leading-[17px] font-light">
-                    Posted 08-August-2024
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center  p-[10px]">
-                {/* Image Section */}
-                <div className="w-1/3">
-                  <img
-                    src="https://via.placeholder.com/200x200" // Replace with your actual image URL
-                    alt="Knife Station"
-                    className="w-full h-auto rounded-md"
-                  />
-                </div>
-                {/* Content Section */}
-                <div className="ml-[10px]">
-                  <h1 className="text-[14px] mb-[5px] font-semibold text-black leading-[18px]">
-                    Elevate Your Culinary Business With HorecaStore.Ae
-                  </h1>
-                  <p className="text-[14px] leading-[17px] font-light">
-                    Posted 08-August-2024
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center  p-[10px]">
-                {/* Image Section */}
-                <div className="w-1/3">
-                  <img
-                    src="https://via.placeholder.com/200x200" // Replace with your actual image URL
-                    alt="Knife Station"
-                    className="w-full h-auto rounded-md"
-                  />
-                </div>
-                {/* Content Section */}
-                <div className="ml-[10px]">
-                  <h1 className="text-[14px] mb-[5px] font-semibold text-black leading-[18px]">
-                    Elevate Your Culinary Business With HorecaStore.Ae
-                  </h1>
-                  <p className="text-[14px] leading-[17px] font-light">
-                    Posted 08-August-2024
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center  p-[10px]">
-                {/* Image Section */}
-                <div className="w-1/3">
-                  <img
-                    src="https://via.placeholder.com/200x200" // Replace with your actual image URL
-                    alt="Knife Station"
-                    className="w-full h-auto rounded-md"
-                  />
-                </div>
-                {/* Content Section */}
-                <div className="ml-[10px]">
-                  <h1 className="text-[14px] mb-[5px] font-semibold text-black leading-[18px]">
-                    Elevate Your Culinary Business With HorecaStore.Ae
-                  </h1>
-                  <p className="text-[14px] leading-[17px] font-light">
-                    Posted 08-August-2024
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center  p-[10px]">
-                {/* Image Section */}
-                <div className="w-1/3">
-                  <img
-                    src="https://via.placeholder.com/200x200" // Replace with your actual image URL
-                    alt="Knife Station"
-                    className="w-full h-auto rounded-md"
-                  />
-                </div>
-                {/* Content Section */}
-                <div className="ml-[10px]">
-                  <h1 className="text-[14px] mb-[5px] font-semibold text-black leading-[18px]">
-                    Elevate Your Culinary Business With HorecaStore.Ae
-                  </h1>
-                  <p className="text-[14px] leading-[17px] font-light">
-                    Posted 08-August-2024
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="border-2 m-[10px] rounded-lg">
-              <img
-                className="h-[626px]"
-                src={`${process.env.PUBLIC_URL}/images/BlogPost/blogSlideBanner.png`}
-              />
-            </div>
-            <div className="border-2 m-[10px] rounded-lg p-[10px]">
-              <h1 className="font-Montserrat m-[5px] text-[20px] leading-[30px] font-semibold">
-                Tags
-              </h1>
-              <div className="flex flex-wrap items-center">
-                <p className="py-[7px] m-[5px] px-[20px] text-[#666666] text-[14px] bg-[#EEEEEE] rounded-full">
-                  Hospitality Trends
-                </p>
-                <p className="py-[7px] m-[5px] px-[20px] text-[#666666] text-[14px] bg-[#EEEEEE] rounded-full">
-                  Chef Tools
-                </p>
-                <p className="py-[7px] m-[5px] px-[20px] text-[#666666] text-[14px] bg-[#EEEEEE] rounded-full">
-                  Hos
-                </p>
-                <p className="py-[7px] m-[5px] px-[20px] text-[#666666] text-[14px] bg-[#EEEEEE] rounded-full">
-                  Chepotle
-                </p>
-                <p className="py-[7px] m-[5px] px-[20px] text-[#666666] text-[14px] bg-[#EEEEEE] rounded-full">
-                  fyi
-                </p>
-                <p className="py-[7px] m-[5px] px-[20px] text-[#666666] text-[14px] bg-[#EEEEEE] rounded-full">
-                  Dyi
-                </p>
-              </div>
-            </div>
-          </div>
+          <PopularPosts />
         </div>
       </Wrapper>
     </>

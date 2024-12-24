@@ -5,10 +5,8 @@ import { BsPlusLg } from "react-icons/bs";
 import { FiMinus } from "react-icons/fi";
 import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
-import { LuEye } from "react-icons/lu";
-import { VscGraph } from "react-icons/vsc";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
-import { FaRegClock, FaHeart } from "react-icons/fa";
+import { FaRegClock } from "react-icons/fa";
 import { FiTruck } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
@@ -16,14 +14,12 @@ import { apiClient } from "../utils/apiWrapper";
 import { useCart } from "../context/CartContext";
 import { useLocalCartCount } from "../context/LocalCartCount";
 import { CartButton } from "./CartButton";
-import { MdPlayCircle } from "react-icons/md";
 import { FaPlay } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useWishlist } from "../context/WishListContext";
-import { Counter } from "./CheckoutPage/Counter";
 import { ProductCardCounter } from "../components/ProductCardCounter";
 
-export const ProductCard = ({
+const ProductCard = ({
   classes,
   product,
   flashSale,
@@ -40,15 +36,14 @@ export const ProductCard = ({
   const [inWishList, setWishList] = useState(false);
   const sliderRef = useRef();
   const { triggerUpdateCart } = useCart();
-  const { totalWishListItems, incrementWishListItems } = useLocalCartCount();
+  const { incrementWishListItems } = useLocalCartCount();
   const [cartSummaryFlag, setCartSummaryFlag] = useState(false);
   const [showCountButton, setShowCountButton] = useState(false);
 
   const videoRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
-  const navigate = useNavigate();
   const [productState, setProductState] = useState(product);
-  const { totalWishListCount, triggerUpdateWishList } = useWishlist();
+  const { triggerUpdateWishList } = useWishlist();
 
   const settings = {
     dots: product?.images?.length > 1, // Show dots only if more than 1 image
@@ -160,7 +155,7 @@ export const ProductCard = ({
           .then((_) => {
             videoRef.current.pause();
           })
-          .catch((error) => {});
+          .catch(() => {});
       }
     } else {
       sliderRef.current.slickPause();
@@ -176,7 +171,7 @@ export const ProductCard = ({
             .then((_) => {
               videoRef.current.play();
             })
-            .catch((error) => {});
+            .catch(() => {});
         }
       }, 300);
     } else {
@@ -186,9 +181,6 @@ export const ProductCard = ({
 
   const handleRemoveFromSaveForlater = async (id, name) => {
     try {
-      const response = apiClient.post("remove-from-save-for-later", {
-        product_id: id,
-      });
       notify(name, " has been removed from cart.");
     } catch (error) {
       console.log("error", error);
@@ -251,7 +243,7 @@ export const ProductCard = ({
                     </video>
                   ) : (
                     <img
-                      src={`https://testhssite.com/storage/${product.images[0]}`}
+                      src={`${product.images[0]}`}
                       alt={product.altText}
                       className="w-[100px] h-[110px] sm:h-[250px] sm:w-full object-contain"
                     />
@@ -277,7 +269,7 @@ export const ProductCard = ({
                       className="flex items-center justify-center"
                     >
                       <img
-                        src={`https://testhssite.com/storage/${image}`}
+                        src={`${image}`}
                         alt={product.altText}
                         className="w-full w-[100px] h-[110px] sm:h-[250px] flex items-center justify-center object-contain"
                       />
@@ -287,7 +279,7 @@ export const ProductCard = ({
               </React.Fragment>
             )}
           </Link>
-          <div className="absolute top-[20%] sm:top-[8%] translate-y-[-50%] border border-gray-300 rounded-[4px] right-0 transition-all duration-500">
+          <div className="absolute top-[20%] sm:top-[8%] translate-y-[-50%] border-gray-300 rounded-[4px] right-0 transition-all duration-500">
             {/* <VscGraph
               size={45}
               className="p-3 text-[#62666c] bg-white hover:text-white hover:bg-primary z-10 transition-all rounded-t-[4px]"
@@ -300,13 +292,13 @@ export const ProductCard = ({
               <FaRegHeart
                 size={45}
                 onClick={(e) => handlerAddFavouriteItem(product)}
-                className="p-3 border-b border-gray-300 bg-white  text-[#62666c] hover:text-white hover:bg-primary z-10 transition-all rounded-b-[4px]"
+                className="p-3 text-[#62666c] hover:text-[#186737] z-10 transition-all rounded-b-[4px]"
               />
             ) : (
               <GoHeartFill
                 size={45}
                 onClick={(e) => handlerRemoveFavouriteItem(product)}
-                className="p-3 border-b border-gray-300 bg-white text-[#62666c] hover:text-white hover:bg-primary z-10 transition-all rounded-b-[4px]"
+                className="p-3   text-[#186737] hover:text-[gray] z-10 transition-all rounded-b-[4px]"
               />
             )}
           </div>
@@ -356,7 +348,6 @@ export const ProductCard = ({
                 </ul>
               </div>
             ) : null}
-
             <p className="font-normal sm:font-semibold text-[12px] sm:text-sm text-gray-700 mt-3">
               {product.delivery_days > 0 ? (
                 <span>
@@ -368,27 +359,31 @@ export const ProductCard = ({
               )}
             </p>
 
-            <div className="flex overflow-hidden  sm:flex-row items-center">
-              <span className="flex items-center sm:flex-none text-primary font-semibold ">
+            <div className="flex overflow-hidden sm:flex-row items-baseline">
+              <span className="flex items-baseline sm:flex-none text-primary font-semibold">
                 <span className="ml-0 text-[10px] sm:text-xl font-normal sm:font-bold">
                   {product.currency_title ? product.currency_title : "USD "}
                 </span>
-
                 {product.sale_price ? (
                   <span className="ml-1 text-[14px] sm:text-3xl font-bold sm:font-extrabold">
-                    {product.sale_price}.
+                    {Number(product.sale_price).toFixed(2).split(".")[0]}
+                    <span className="text-[10px] font-bold sm:text-[20px]">
+                      .{Number(product.sale_price).toFixed(2).split(".")[1]}
+                    </span>
                   </span>
                 ) : (
                   <span className="ml-1 text-[14px] sm:text-3xl font-bold sm:font-extrabold">
-                    {product.front_sale_price}.
+                    {Number(product.front_sale_price).toFixed(2).split(".")[0]}
+                    <span className="text-[10px] font-bold sm:text-[20px]">
+                      .
+                      {
+                        Number(product.front_sale_price)
+                          .toFixed(2)
+                          .split(".")[1]
+                      }
+                    </span>
                   </span>
                 )}
-                <span className="ml-1 text-[10px] sm:text-3xl font-bold sm:font-extrabold">
-                  {product.sale_price &&
-                  String(product.sale_price).split(".")[1]
-                    ? String(product.sale_price).split(".")[1]
-                    : "00"}
-                </span>
               </span>
             </div>
             <div className="h-[20px]">
@@ -399,15 +394,15 @@ export const ProductCard = ({
                     {product.currency_title ? product.currency_title : "USD"}
                     &nbsp;
                   </span>
-                  <span>{product.original_price || "."}.</span>
-                  <span>
-                    {product.price && String(product.price).split(".")[1]
-                      ? String(product.price).split(".")[1]
-                      : "00"}
+                  <span className="">
+                    {product.original_price
+                      ? Number(product.original_price).toFixed(2)
+                      : "0.00"}
                   </span>
                 </span>
               )}
             </div>
+
             {!flashSale ? (
               <React.Fragment>
                 {product.leftStock > 0 && product.leftStock <= 5 ? (
@@ -510,3 +505,5 @@ export const ProductCard = ({
     </React.Fragment>
   );
 };
+
+export default React.memo(ProductCard);

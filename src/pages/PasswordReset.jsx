@@ -43,11 +43,11 @@ import { toast } from "react-toastify";
       password_confirmation: confirmPassword,
       token: location?.pathname?.split("/")[2],
     };
-    console.log(body);
+ 
     e.preventDefault(); // Prevent default form submission
     if (!validateForm()) return; // Validate form before submitting
     try {
-      console.log(body);
+    
       setLoading(true);
       const response = await axios.post(
         "https://testhssite.com/api/password/reset",
@@ -62,7 +62,7 @@ import { toast } from "react-toastify";
       navigate("/login");
       setLoading(false);
     } catch (error) {
-      console.log(error);
+ 
       setError("Verification Failed. Please check your Email.");
       setLoading(false);
     }

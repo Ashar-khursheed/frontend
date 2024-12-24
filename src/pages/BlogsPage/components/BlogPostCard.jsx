@@ -3,6 +3,7 @@ import { Wrapper } from "../../../shared/Wrapper";
 import { apiClient } from "../../../utils/apiWrapper";
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
+import { formatDateString } from "../../../utils/formatDate";
 
 export const BlogPostCard = ({ count }) => {
   const [loader, setLoader] = useState(true);
@@ -23,17 +24,6 @@ export const BlogPostCard = ({ count }) => {
   useEffect(() => {
     fetchBlogs();
   }, []);
-
-  const formatDateString = (dateString) => {
-    const date = new Date(dateString);
-
-    // Options for formatting
-    const options = { day: "2-digit", month: "short", year: "numeric" };
-    const formattedDate = date.toLocaleDateString("en-GB", options); // Format as 'DD-MMM-YYYY'
-
-    // Replace the comma with a space and return the result
-    return formattedDate.replace(",", "").replace(/\s+/g, "-").toLowerCase();
-  };
 
   return (
     <>

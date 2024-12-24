@@ -428,7 +428,7 @@ function Model({ url, onLoaded }) {
                                                   }
                                                 >
                                                   <source
-                                                    src={`${item}`}
+                                                    src={item}
                                                     type="video/mp4"
                                                   />
                                                   Your browser does not support
@@ -538,7 +538,7 @@ function Model({ url, onLoaded }) {
                                       >
                                         {isImage(item) ? (
                                           <img
-                                            src={`${`${item}`}`}
+                                            src={item}
                                             alt={`Thumbnail ${index}`}
                                             className="w-full h-16 object-contain rounded-lg cursor-pointer "
                                           />
@@ -551,7 +551,7 @@ function Model({ url, onLoaded }) {
                                             className="w-full h-16 object-contain rounded-lg cursor-pointer "
                                           >
                                             <source
-                                              src={`${item}`}
+                                              src={item}
                                               type="video/mp4"
                                             />
                                             Your browser does not support the
@@ -698,9 +698,9 @@ function Model({ url, onLoaded }) {
                                         ? "border-primary"
                                         : ""
                                     }`}
-                                    src={`${`${
+                                    src={`${
                                       item.images ? item.images[0] : ""
-                                    }`}`}
+                                    }`}
                                     alt={item.name}
                                   />
                                 </Link>

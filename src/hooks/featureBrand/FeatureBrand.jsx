@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,lazy } from "react";
 import { Wrapper } from "../../shared/Wrapper";
 import { FeatureHeader } from "../../shared/FeatureHeader";
-import { ProductCard } from "../../shared/ProductCard";
 import Skeleton from "react-loading-skeleton";
-
-export const FeatureBrand = ({
+const  ProductCard =lazy(()=>import("../../shared/ProductCard"));
+  const FeatureBrand = ({
   brandCat,
   brandCatList,
   selectedBrand,
@@ -108,3 +107,5 @@ export const FeatureBrand = ({
     </Wrapper>
   );
 };
+
+export default React.memo(FeatureBrand);

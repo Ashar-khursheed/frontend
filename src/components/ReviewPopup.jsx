@@ -84,7 +84,7 @@ const renderStars = () => {
         });
         setUpdateReviews(!updateReviews);
       }else{
-        console.log('no');
+      
          response = await apiClient.post(url, formData,{
           headers: {
             'Content-Type': 'multipart/form-data',

@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,lazy } from "react";
 import { Wrapper } from "../../shared/Wrapper";
 import { flashClearance } from "../../data/homepage";
-import { ProductCard } from "../../shared/ProductCard";
 import { Link } from "react-router-dom";
-
-export const FeatureClearance = () => {
+const  ProductCard =lazy(()=>import("../../shared/ProductCard"));
+ const FeatureClearance = () => {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -79,3 +78,5 @@ export const FeatureClearance = () => {
     </Wrapper>
   );
 };
+
+export default React.memo(FeatureClearance);

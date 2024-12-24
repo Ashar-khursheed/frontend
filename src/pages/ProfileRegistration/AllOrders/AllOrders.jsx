@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,lazy } from "react";
 import AllOrdersBox from "./components/AllOrdersBox";
 import { Wrapper } from "../../../shared/Wrapper";
 import SidebarProfile from "../../../components/SidebarProfile";
@@ -7,9 +7,8 @@ import Skeleton from "react-loading-skeleton";
 import { Breadcrumb } from "../../../shared/Breadcrumb";
 import ImagePopup from "../../../components/ImagePopup";
 import { useNavigate } from "react-router";
-import { ProductCard } from "../../../shared/ProductCard";
 import CommonProducts from "../CommonProducts/CommonProducts";
-
+const  ProductCard =lazy(()=>import("../../../shared/ProductCard"));
 const AllOrders = () => {
   const [viewedLoader, setViewedLoader] = useState(true);
   const [ordersData, setOrdersData] = useState([]);

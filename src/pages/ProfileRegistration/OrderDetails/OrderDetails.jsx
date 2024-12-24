@@ -52,7 +52,7 @@ const OrderDetails = () => {
       title: "Profile",
     },
   ];
-console.log("orderData",orderData);
+ 
   
   return (
     <>

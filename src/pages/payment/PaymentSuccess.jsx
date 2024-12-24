@@ -38,21 +38,12 @@ const PaymentSuccess = () => {
     setRemoveItemsLoader(true)
     localStorage.removeItem('CartItems');
     localStorage.removeItem('TotalCartItems');
+    updateTempCart(0);
     setRemoveItemsLoader(false)
 
   }
 
 
-  const handlerCartSummary = async () => {
-    try {
-      const response = await apiClient.get(`/cart-summary`);
-
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-
-    }
-  }
 
   // const handlerSendWhatsapp = () => {
   //   const message = `Check out this product: \n${
@@ -111,12 +102,12 @@ const PaymentSuccess = () => {
   // };
 
   useEffect(() => {
-    localStorage.removeItem('CartItems');
-    localStorage.removeItem('TotalCartItems');
     handlerRemoveAllItemsFromCart()
     handlerRemoveAllItemsFromCartTemp();
     triggerUpdateCart();
   }, []);
+ 
+ 
   return (
     <>
       <Wrapper className="h-screen">

@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback,lazy } from "react";
 
 import { Link } from "react-router-dom";
 import { notify } from "../../utils/notify.js";
 import { useLocalCartCount } from "../../context/LocalCartCount";
 import { DeleteCartButton } from "../../shared/CheckoutPage/DeleteCartButton";
 import { Counter } from "../../shared/CheckoutPage/Counter.jsx";
-import { ProductCard } from "../../shared/ProductCard";
+ 
 import { firstBreadCrumb } from "../../data/checkoutConfig";
 import { Breadcrumb } from "../../shared/Breadcrumb";
 import { useCart } from "../../context/CartContext";
 import { apiClient } from "../../utils/apiWrapper.js";
 import { Layout } from "./Layout.jsx";
 import Skeleton from "react-loading-skeleton";
-
+const  ProductCard =lazy(()=>import("../../shared/ProductCard"));
   const Checkout = () => {
   const authToken = localStorage.getItem("authToken");
   const { triggerUpdateCart, updateTempCart } = useCart();
@@ -235,7 +235,7 @@ for mobile */}
                                 <img
                                   className="max-w-[130px]"
                                   src={
-                                    "https://testhssite.com/storage/" +
+                                     
                                     prod.product.image
                                   }
                                   alt={prod.product.name}
@@ -314,7 +314,7 @@ for mobile */}
                                   <img
                                     className="max-w-[130px]"
                                     src={
-                                      "https://testhssite.com/storage/" +
+                                       
                                       prod?.product?.images[0]
                                     }
                                     alt={prod.product.name}
@@ -560,7 +560,7 @@ for mobile */}
                                         <img
                                           className="max-w-[130px]"
                                           src={
-                                            "https://testhssite.com/storage/" +
+                                            
                                             prod.image
                                           }
                                           alt={prod.name}

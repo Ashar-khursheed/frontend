@@ -43,7 +43,7 @@ import { useNavigate } from "react-router-dom";
           },
         }
       );
-      console.log(response);
+ 
       setEmailSent(true);
       // const token = response?.data?.token;
       // navigate("/password-reset", { state: token });

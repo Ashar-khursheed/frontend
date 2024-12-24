@@ -30,7 +30,7 @@ export const SameProducts = ({ product }) => {
         <React.Fragment>
             <div className='flex items-center justify-between mt-2'>
                 <Link to={`/product/${id}`} className='flex items-center'>
-                    <img className='w-16' src={`https://testhssite.com/storage/${images && images[0] ? images[0] : ""}`} alt="" />
+                    <img className='w-16' src={`${images && images[0] ? images[0] : ""}`} alt="" />
                     <div className='ml-3'>
                         <p className='text-black-100 text-xs font-semibold'>{currency_title} <span className='font-bold text-base'>{price}</span></p>
                         <React.Fragment>

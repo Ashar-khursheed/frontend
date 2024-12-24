@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,lazy } from "react";
 import { Wrapper } from "../../../shared/Wrapper";
 import SidebarProfile from "../../../components/SidebarProfile";
 import { apiClient } from "../../../utils/apiWrapper";
-import { ProductCard } from "../../../shared/ProductCard";
+ 
 import Skeleton from "react-loading-skeleton";
 import { Breadcrumb } from "../../../shared/Breadcrumb";
 import { useNavigate } from "react-router";
 import CommonProducts from "../CommonProducts/CommonProducts";
-
+const  ProductCard =lazy(()=>import("../../../shared/ProductCard"));
 const BrowsingHistory = () => {
   const [viewedProducts, setViewedProducts] = useState([]);
   const [viewedLoader, setViewedLoader] = useState(true);

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy } from "react";
 import { Wrapper } from "../../../shared/Wrapper";
 import SidebarProfile from "../../../components/SidebarProfile";
 import { Breadcrumb } from "../../../shared/Breadcrumb";
 import Popup from "./Components/Popup";
 import Skeleton from "react-loading-skeleton";
-import { ProductCard } from "../../../shared/ProductCard";
+
 import { apiClient } from "../../../utils/apiWrapper";
-import CommonProducts from "../CommonProducts/CommonProducts";
 import { notify } from "../../../utils/notify";
+const ProductCard = lazy(() => import("../../../shared/ProductCard"));
 
 const Addresses = () => {
   const [popupHeading, setPopupHeading] = useState("");
@@ -219,10 +219,10 @@ const Addresses = () => {
                 style={
                   window.innerWidth < 640
                     ? {
-                        overflow: "auto",
-                        scrollbarWidth: "none",
-                        msOverflowStyle: "none",
-                      }
+                      overflow: "auto",
+                      scrollbarWidth: "none",
+                      msOverflowStyle: "none",
+                    }
                     : {}
                 }
                 className={bigScreenCss}

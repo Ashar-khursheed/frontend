@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import { Wrapper } from "../shared/Wrapper";
 import { Breadcrumb } from "../shared/Breadcrumb";
 import { Menu, MenuItem } from "@szhsin/react-menu";
-import { GoTasklist } from "react-icons/go";
-import { CiGrid41 } from "react-icons/ci";
-import { ProductCard } from "../shared/ProductCard";
 import MultiRangeSlider from "multi-range-slider-react";
 import { Pagination } from "../shared/Pagination";
-import { RelatedSearch } from "../hooks/productListingHooks/RelatedSearch";
 import { SuggestionSlider } from "../hooks/suggestionSlider/SuggestionSlider";
 import Skeleton from "react-loading-skeleton";
 import { apiClient } from "../utils/apiWrapper";
 import { useLocation, useNavigate } from "react-router";
 import { IoClose } from "react-icons/io5";
 import { useParams, Link, useSearchParams } from "react-router-dom";
-
+const  ProductCard =lazy(()=>import('../shared/ProductCard'));
  const ProductsByCategory = () => {
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
@@ -67,7 +63,7 @@ import { useParams, Link, useSearchParams } from "react-router-dom";
       const response = await apiClient.get(`/categories`, { params });
       setCategories(response.data);
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -102,11 +98,7 @@ import { useParams, Link, useSearchParams } from "react-router-dom";
         params,
       });
 
-      console.log(
-        "----<<<<>>>>-----",
-        Array.isArray(response?.data?.producttypes)
-      );
-      console.log("productType", response?.data);
+ 
       setProducts(response?.data?.products.data);
       setPaginationData(response?.data?.products?.total);
       setProducttypes(response?.data?.producttypes);

@@ -34,7 +34,7 @@ const Wishlist = () => {
         const response = await apiClient.get("/wishlist");
         setWishListData(response?.data?.wishlist);
         setLoader(false);
-        console.log(response?.data?.wishlist);
+ 
       } catch (error) {
         console.error("Error:", error);
       } finally {

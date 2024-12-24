@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,lazy } from "react";
 import { Wrapper } from "../../../shared/Wrapper";
 import SidebarProfile from "../../../components/SidebarProfile";
 import WishlistBox from "./Components/WishlistBox";
@@ -6,13 +6,8 @@ import { apiClient } from "../../../utils/apiWrapper";
 import Skeleton from "react-loading-skeleton";
 import { Breadcrumb } from "../../../shared/Breadcrumb";
 import { useNavigate } from "react-router";
-import { useLocalCartCount } from "../../../context/LocalCartCount";
-import { useCart } from "../../../context/CartContext";
-import { useWishlist } from "../../../context/WishListContext";
-import { ToastContainer, toast } from "react-toastify";
-import { ProductCard } from "../../../shared/ProductCard";
 import CommonProducts from "../CommonProducts/CommonProducts";
-
+const ProductCard =lazy(()=>import("../../../shared/ProductCard"));
 const ProfileWishlist = () => {
   const [wishListData, setWishListData] = useState([]);
   const navigate = useNavigate();
@@ -26,7 +21,7 @@ const ProfileWishlist = () => {
       const response = await apiClient.get("/wishlist");
       setWishListData(response?.data?.wishlist);
       setLoader(false);
-      console.log(response?.data?.wishlist);
+ 
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -42,7 +37,7 @@ const ProfileWishlist = () => {
         const response = await apiClient.delete(`/wishlist/remove`, {
           params: { product_id: product.id },
         });
-        console.log(response);
+ 
         setLoader(false);
         fetchAllReviews();
       } catch (error) {
