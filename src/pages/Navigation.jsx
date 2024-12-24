@@ -216,30 +216,35 @@ const Navigation = ({ categories, currentLocation }) => {
     };
   }, []);
 
+
+
   return (
     <React.Fragment>
       {openModel && !token ? (
-        <React.Fragment>
-          <div
-            className="bg-[#000000a1] translate-x-[100px] bg-[red] primary w-[10px] h-[100vh] z-[999] fixed flex items-center justify-center"
-            onClick={() => setOpenModel(false)}
-          ></div>
-          <div className="w-[375px] bg-white rounded-[10px] z-[9999] fixed top-[50%] left-[50%] translate-x-[-50%] hidden translate-y-[-50%]">
-            <div className="bg-[#f6f8fb] border-b  border-b-[#e2e8f0] flex items-center justify-start sm:justify-between p-5 py-3 rounded-t-[10px]">
-              <span></span>
-              <span
-                className="cursor-pointer"
-                onClick={() => setOpenModel(false)}
-              >
-                <IoMdClose size={20} />
-              </span>
-            </div>
-            <div className="px-5">
-              <p className="text-sm text-[#2E2F32]  my-5">
-                Delivery options and delivery speeds may vary for different
-                locations
-              </p>
-              <button
+           <React.Fragment>
+           <div
+             className="bg-[#000000a1] primary w-full h-[100vh] z-[999] fixed flex items-center justify-center"
+             onClick={() => setOpenModel(false)}
+           ></div>
+           <div className="w-[375px] bg-white rounded-[10px] z-[9999] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+             <div className="bg-[#f6f8fb] border-b  border-b-[#e2e8f0] flex items-center justify-between p-5 py-3 rounded-t-[10px]">
+               <span className="text-[#2E2F32] text-sm font-semibold">
+                
+               </span>
+               <span
+                 className="cursor-pointer"
+                 onClick={() => setOpenModel(false)}
+               >
+                 <IoMdClose size={20} />
+               </span>
+             </div>
+             <div className="px-5">
+               <p className="text-sm text-[#2E2F32]  my-5">
+               Delivery options and delivery speeds may vary for different
+               locations
+               </p>
+             
+               <button
                 onClick={() => {
                   navigate("/login");
                   setOpenModel(false);
@@ -248,9 +253,9 @@ const Navigation = ({ categories, currentLocation }) => {
               >
                 Sign in to update your location
               </button>
-            </div>
-          </div>
-        </React.Fragment>
+             </div>
+           </div>
+         </React.Fragment>
       ) : null}
 
       {openModel && token ? (
