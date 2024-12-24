@@ -289,8 +289,7 @@ const Navigation = ({ categories, currentLocation }) => {
                 ) : null}
                 {currentLocation ? (
                   <p className="text-[13px] text-black mt-2">
-                    {currentLocation.as} {currentLocation.regionName}
-                    {currentLocation.country}
+                    {currentLocation.city}, {currentLocation.zip}, {currentLocation.regionName}, {currentLocation.country}
                   </p>
                 ) : null}
                 <p className="text-sm text-[#64748B] mt-2">Default Address</p>
@@ -604,8 +603,7 @@ const Navigation = ({ categories, currentLocation }) => {
           />
           {currentLocation ? (
             <span className="text-[#64748B] text-sm ml-3 address">
-              {currentLocation.as}, {currentLocation.city},{" "}
-              {currentLocation.zip}
+            {currentLocation.city}, {currentLocation.zip}, {currentLocation.regionName}, {currentLocation.country}
             </span>
           ) : (
             <span className="text-[#64748B] text-sm ml-3">
