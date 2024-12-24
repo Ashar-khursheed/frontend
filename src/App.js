@@ -150,7 +150,6 @@ const App = () => {
           <Route path="/password-reset" element={<PasswordReset />} />{" "}
           <Route path="/payment/success" element={<PaymentSuccess />} />{" "}
           <Route path="/payment/cancel" element={<PaymentFailed />} />{" "}
-          
           {/* Protected routes wrapped with PrivateRoute */}
           <Route path="/registration/all-orders" element={<PrivateRoute element={<AllOrders />} />} />
           <Route path="/registration/reviews" element={<PrivateRoute element={<Reviews />} />} />
