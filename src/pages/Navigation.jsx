@@ -10,7 +10,6 @@ import {
 } from "@szhsin/react-menu";
 import { useCart } from "../context/CartContext";
 import { CiSearch } from "react-icons/ci";
-import { useLocalCartCount } from "../context/LocalCartCount";
 import { getCurrencyMenu } from "../data/navbar";
 import { IoMdClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +19,7 @@ import { useWishlist } from "../context/WishListContext";
 import { debounce } from "lodash";
 import ProfileDrawer from "./ProfileRegistration/ProfileDrawer/ProfileDrawer";
 import SidebarProfile from "../components/SidebarProfile";
-
+import { navItems } from "../data/sidebar";
 const Navigation = ({ categories, currentLocation }) => {
   const token = localStorage.getItem("authToken");
   const [currencyMenu, setCurrencyMenu] = useState(getCurrencyMenu(token));
@@ -999,13 +998,20 @@ const Navigation = ({ categories, currentLocation }) => {
             </div>
           </div>
           <div className="col-span-1 sm:col-span-2 md:col-span-12 lg:col-span-6     p-5">
-            {/* <SidebarProfile/> */}
-            <div className="flex items-center p-5 border-b-2 justify-between">
-              <p className="text-[16px] leading-[18.77px]">Account</p>
-              <p className="text-[13px] leading-[15.75px]">
-                Your info at a glance
+             {navItems.map((item, index) => {
+               return (
+               
+            <div className="flex items-center p-5 border-b-2 justify-between cursor-pointer" key={index}   onClick={() => navigate(item.link)}>
+              <div className="flex items-center">
+              <img className="h-[25px] mr-[10px]" src={item.icon} />
+              <p className="text-[16px] leading-[18.77px]">
+               {item.name}
               </p>
+              </div>
+             
             </div>
+                );
+              })}
           </div>
         </div>
       )}
