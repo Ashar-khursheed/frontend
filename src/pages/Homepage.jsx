@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Categories } from "../hooks/categories/Categories";
+import React, { useState, useEffect, lazy } from "react";
+
 import { Hero } from "../hooks/hero/Hero";
 import { RowNews } from "../hooks/rownews/RowNews";
-import { productCategory, featureBrand } from "../data/homepage";
-import { FeatureBrand } from "../hooks/featureBrand/FeatureBrand";
-import { BlogsCard } from "../shared/BlogsCard";
-import { FeatureProduct } from "../hooks/featureproducts/FeatureProducts";
-import { FeatureClearance } from "../hooks/featureClearance/FeatureClearance";
 import { TimerBanner } from "../hooks/timerBanner/TimerBanner";
-import axios from "axios";
 import { apiClient } from "../utils/apiWrapper";
+const FeatureProduct = lazy(() =>
+  import("../hooks/featureproducts/FeatureProducts")
+);
+const FeatureClearance = lazy(() =>
+  import("../hooks/featureClearance/FeatureClearance")
+);
+const FeatureBrand = lazy(() => import("../hooks/featureBrand/FeatureBrand"));
+const BlogsCard = lazy(() => import("../shared/BlogsCard"));
+const Categories = lazy(() => import("../hooks/categories/Categories"));
 
 const Homepage = ({ categories }) => {
   const [featureCat, setFeatureCat] = useState([]);
@@ -23,53 +26,6 @@ const Homepage = ({ categories }) => {
   const [sliderLoader, setSliderLoader] = useState(true);
   const [brandCatLoader, setBrandCatLoader] = useState(true);
   const authToken = localStorage.getItem("authToken");
-  const data = [
-    {
-      redirectLink: "#",
-      blogImg: "images/blog/blogImg/blog-1.png",
-      writerImg: "images/blog/writer/writer-1.png",
-      writtenBy: "Gabriel Kreuther",
-      postedDate: "posted 08-august-2024",
-      title:
-        "Lorem ipsum dolor sit amet consectetur Pharetra non feugiat habitant ",
-      describe:
-        "Lorem ipsum dolor sit amet consectetur. Odio lectus sita ai quisque a suscipit hendrerit pretium volutpat turpis non ultrices. Amet mauris quis at venenatis Eu non congue egestas convallis proin Netus sed.",
-      viewCount: "1",
-      commentCount: "6",
-      shareCount: "1",
-      isFavorite: false,
-    },
-    {
-      redirectLink: "#",
-      blogImg: "images/blog/blogImg/blog-2.png",
-      writerImg: "images/blog/writer/writer-2.png",
-      writtenBy: " Don Bradman",
-      postedDate: "posted 08-august-2024",
-      title:
-        "Lorem ipsum dolor sit amet consectetur Pharetra non feugiat habitant ",
-      describe:
-        "Lorem ipsum dolor sit amet consectetur. Odio lectus sita ai quisque a suscipit hendrerit pretium volutpat turpis non ultrices. Amet mauris quis at venenatis Eu non congue egestas convallis proin Netus sed.",
-      viewCount: "1",
-      commentCount: "6",
-      shareCount: "1",
-      isFavorite: false,
-    },
-    {
-      redirectLink: "#",
-      blogImg: "images/blog/blogImg/blog-3.png",
-      writerImg: "images/blog/writer/writer-3.png",
-      writtenBy: "gautam Khurrana",
-      postedDate: "posted 08-august-2024",
-      title:
-        "Lorem ipsum dolor sit amet consectetur Pharetra non feugiat habitant ",
-      describe:
-        "Lorem ipsum dolor sit amet consectetur. Odio lectus sita ai quisque a suscipit hendrerit pretium volutpat turpis non ultrices. Amet mauris quis at venenatis Eu non congue egestas convallis proin Netus sed.",
-      viewCount: "1",
-      commentCount: "6",
-      shareCount: "1",
-      isFavorite: false,
-    },
-  ];
 
   const fetchCategoriesProducts = async (tempCat) => {
     try {
@@ -104,7 +60,6 @@ const Homepage = ({ categories }) => {
 
   const fetchBrandProducts = async (tempBrand) => {
     const authToken = localStorage.getItem("authToken");
-
     try {
       const response = await apiClient.get(
         `${authToken ? "/brandproducts" : "/brandguestproducts"}`
@@ -156,7 +111,7 @@ const Homepage = ({ categories }) => {
       />
       <FeatureClearance />
       <TimerBanner />
-      <BlogsCard data={data} />
+      <BlogsCard />
     </div>
   );
 };

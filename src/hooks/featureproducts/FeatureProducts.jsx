@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy } from "react";
 import { Wrapper } from "../../shared/Wrapper";
 import { FeatureHeader } from "../../shared/FeatureHeader";
-import { ProductCard } from "../../shared/ProductCard";
 import Skeleton from "react-loading-skeleton";
-
-export const FeatureProduct = ({
+const ProductCard = lazy(() => import("../../shared/ProductCard"));
+const FeatureProduct = ({
   featureCat,
   featureCatList,
   selectedCat,
@@ -111,3 +110,5 @@ export const FeatureProduct = ({
     </Wrapper>
   );
 };
+
+export default React.memo(FeatureProduct);

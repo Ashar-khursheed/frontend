@@ -21,7 +21,7 @@ import { Breadcrumb } from "../../shared/Breadcrumb";
     const navigate = useNavigate();
     const { currencyTitle, savings, shippingRate, tax, totalAmount, sub_total,discountAmount } = location.state || {};
  
-  
+ 
     const [popupHeading, setPopupHeading] = useState("Add New Address");
     const [showPopup, setShowPopup] = useState(false);
     const { incrementCartItems } = useLocalCartCount();

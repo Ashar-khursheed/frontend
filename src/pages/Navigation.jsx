@@ -21,7 +21,7 @@ import { debounce } from "lodash";
 import ProfileDrawer from "./ProfileRegistration/ProfileDrawer/ProfileDrawer";
 import SidebarProfile from "../components/SidebarProfile";
 
- const Navigation = ({ categories, currentLocation }) => {
+const Navigation = ({ categories, currentLocation }) => {
   const token = localStorage.getItem("authToken");
   const [currencyMenu, setCurrencyMenu] = useState(getCurrencyMenu(token));
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
@@ -76,23 +76,20 @@ import SidebarProfile from "../components/SidebarProfile";
       );
     }
   };
-  
 
   const handleFocus = () => setIsFocused(true);
- 
+
   const handlerFormSubmit = (e) => {
     e.preventDefault();
     navigate(`products?search=${searchValue}`);
   };
 
- 
   const handlerSignOut = () => {
     localStorage.clear();
     setUserName("");
     setIsLoggedIn(false);
     navigate("/login");
   };
-
 
   const toggleDrawer = () => {
     setIsOpen(!isOpen);
@@ -105,7 +102,6 @@ import SidebarProfile from "../components/SidebarProfile";
   const fetchProducts = async (search) => {
     setLoader(true);
     try {
-    
       const params = search ? { query: search } : {};
       const response = await apiClient.get(`/search`, { params });
       setBrands(response.data.brands);
@@ -118,18 +114,16 @@ import SidebarProfile from "../components/SidebarProfile";
       setLoader(false);
     }
   };
- 
 
   // Debounce the fetchProducts call
   const debouncedFetchProducts = useCallback(
-    debounce((value) => fetchProducts(value), 300), 
+    debounce((value) => fetchProducts(value), 300),
     []
   );
 
-  const handlerSearchValue = (value)=>{
-    setSearchValue(value)
-  }
- 
+  const handlerSearchValue = (value) => {
+    setSearchValue(value);
+  };
 
   const navigateToProduct = (id, name) => {
     setSearchValue(name);
@@ -170,7 +164,6 @@ import SidebarProfile from "../components/SidebarProfile";
   }, [isFocused]);
 
   useEffect(() => {
- 
     const name = localStorage.getItem("username");
     if (token) {
       setIsLoggedIn(true);
@@ -198,7 +191,7 @@ import SidebarProfile from "../components/SidebarProfile";
     };
     const updateMaxIndex = () => {
       const width = window.innerWidth;
- 
+
       if (width >= 1536) {
         setMaxIndex(4); // 2xl: index <= 4
       } else if (width >= 1280) {
@@ -211,21 +204,17 @@ import SidebarProfile from "../components/SidebarProfile";
         setMaxIndex(0); // sm: index <= 0
       }
     };
- 
+
     updateMaxIndex(); // Set initial value
     window.addEventListener("resize", updateMaxIndex);
     // Add event listener to the document
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("resize", updateMaxIndex);
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
-    
   }, []);
-
- 
-
 
   return (
     <React.Fragment>
@@ -301,10 +290,10 @@ import SidebarProfile from "../components/SidebarProfile";
                 ) : null}
                 <p className="text-sm text-[#64748B] mt-2">Default Address</p>
               </div>
-              <Link to={token?'registration/addresses':'login'}>
-              <p className="text-primary text-sm mt-3 mb-6 cursor-pointer">
-                Manage your addresses
-              </p>
+              <Link to={token ? "registration/addresses" : "login"}>
+                <p className="text-primary text-sm mt-3 mb-6 cursor-pointer">
+                  Manage your addresses
+                </p>
               </Link>
             </div>
           </div>
@@ -445,7 +434,7 @@ import SidebarProfile from "../components/SidebarProfile";
                   {categories?.map((item, index) => {
                     return (
                       <li
-                      key={item.id}
+                        key={item.id}
                         onClick={() => {
                           if (item?.children?.length > 0) {
                             setChildCategory(item?.children);
@@ -495,7 +484,7 @@ import SidebarProfile from "../components/SidebarProfile";
                 </p>
                 <ul className="">
                   {childCategory?.map((item, index) => {
-                    // console.log("subcategories", item);
+         
 
                     return (
                       <li
@@ -610,7 +599,7 @@ import SidebarProfile from "../components/SidebarProfile";
           />
           {currentLocation ? (
             <span className="text-[#64748B] text-sm ml-3 address">
-            {currentLocation.as}, {currentLocation.city},{" "}
+              {currentLocation.as}, {currentLocation.city},{" "}
               {currentLocation.zip}
             </span>
           ) : (
@@ -639,7 +628,6 @@ import SidebarProfile from "../components/SidebarProfile";
               // value={searchValue}
               onChange={(e) => handlerSearchValue(e.target.value)}
               onFocus={handleFocus}
-              
             />
             <button type="submit" className="bg-primary p-2 rounded-full mr-2">
               <CiSearch color="white" size={26} />
@@ -647,7 +635,10 @@ import SidebarProfile from "../components/SidebarProfile";
           </form>
 
           {isFocused && (products || categoryList || brands) ? (
-            <div ref={divRef} className="max-h-[700px] rounded-lg absolute w-full z-[999] mt-3">
+            <div
+              ref={divRef}
+              className="max-h-[700px] rounded-lg absolute w-full z-[999] mt-3"
+            >
               {products && products.length > 0 && (
                 <div className="flex border-b-2 border-b-[#e2e8f0] rounded-lg bg-[#f6f8fb]">
                   <div className="basis-1/4 py-4 px-3 text-primary font-semibold text-base border-r-2 border-r-[#e2e8f0]">
@@ -655,7 +646,6 @@ import SidebarProfile from "../components/SidebarProfile";
                   </div>
                   <div className="basis-3/4 py-4 px-3 bg-white">
                     {products.slice(0, 7).map((prod, index) => (
-                   
                       <div
                         onClick={() => navigateToProduct(prod.id, prod.name)}
                         key={prod.id}
@@ -665,7 +655,6 @@ import SidebarProfile from "../components/SidebarProfile";
                             : "hover:bg-[#def9ec]"
                         }`}
                       >
-                    
                         <div>
                           <img
                             className="max-w-[40px]"
@@ -759,7 +748,10 @@ import SidebarProfile from "../components/SidebarProfile";
             className="relative mx-2 hidden sm:flex cursor-pointer"
             onClick={() => navigate("/wishlist")}
           >
-            <img src={process.env.PUBLIC_URL + "/icons/heart.svg"} alt="wishlist" />
+            <img
+              src={process.env.PUBLIC_URL + "/icons/heart.svg"}
+              alt="wishlist"
+            />
             <span className="absolute bottom-[-10px] right-[-6px] text-white bg-primary size-[22px] flex items-center justify-center text-sm rounded-full">
               {totalWishListCount}
             </span>
@@ -852,7 +844,7 @@ import SidebarProfile from "../components/SidebarProfile";
                   SAR : 550.0
                 </p>
                 <button className="flex items-center justify-center text-[white] mt-[5px] rounded-[4px] h-[28px] bg-[#186737] p-[10px] ">
-                Re Order
+                  Re Order
                 </button>
               </div>
             </div>
@@ -869,7 +861,7 @@ import SidebarProfile from "../components/SidebarProfile";
                   SAR : 550.0
                 </p>
                 <button className="flex items-center justify-center text-[white] mt-[5px] rounded-[4px] h-[28px] bg-[#186737] p-[10px] ">
-                Re Order
+                  Re Order
                 </button>
               </div>
             </div>
@@ -886,7 +878,7 @@ import SidebarProfile from "../components/SidebarProfile";
                   SAR : 550.0
                 </p>
                 <button className="flex items-center justify-center text-[white] mt-[5px] rounded-[4px] h-[28px] bg-[#186737] p-[10px] ">
-                Re Order
+                  Re Order
                 </button>
               </div>
             </div>
@@ -903,7 +895,7 @@ import SidebarProfile from "../components/SidebarProfile";
                   SAR : 550.0
                 </p>
                 <button className="flex items-center justify-center text-[white] mt-[5px] rounded-[4px] h-[28px] bg-[#186737] p-[10px] ">
-                Re Order
+                  Re Order
                 </button>
               </div>
             </div>
@@ -920,7 +912,7 @@ import SidebarProfile from "../components/SidebarProfile";
                   SAR : 550.0
                 </p>
                 <button className="flex items-center justify-center text-[white] mt-[5px] rounded-[4px] h-[28px] bg-[#186737] p-[10px] ">
-                Re Order
+                  Re Order
                 </button>
               </div>
             </div>
@@ -929,10 +921,10 @@ import SidebarProfile from "../components/SidebarProfile";
             <h1 className="text-[16px] leading-[16px] font-semibold">
               Track Your Order
             </h1>
-            <Link to={token?'registration/all-orders':'login'}>
-            <h2 className="text-[14px] mb-[10px] text-[#186737] mt-[5px] leading-[16px] font-normal">
-              View All & Manage
-            </h2>
+            <Link to={token ? "registration/all-orders" : "login"}>
+              <h2 className="text-[14px] mb-[10px] text-[#186737] mt-[5px] leading-[16px] font-normal">
+                View All & Manage
+              </h2>
             </Link>
             <div className="flex py-[10px]">
               <img
@@ -1004,7 +996,6 @@ import SidebarProfile from "../components/SidebarProfile";
             </div>
           </div>
           <div className="col-span-1 sm:col-span-2 md:col-span-12 lg:col-span-6     p-5">
-
             {/* <SidebarProfile/> */}
             <div className="flex items-center p-5 border-b-2 justify-between">
               <p className="text-[16px] leading-[18.77px]">Account</p>
@@ -1012,8 +1003,6 @@ import SidebarProfile from "../components/SidebarProfile";
                 Your info at a glance
               </p>
             </div>
-          
-            
           </div>
         </div>
       )}
@@ -1043,24 +1032,22 @@ import SidebarProfile from "../components/SidebarProfile";
                 ? categories.map((cat, index) => {
                     return (
                       <React.Fragment key={index}>
-                        {index <= 5 ? (
+                        {index <= maxIndex && (
                           <Link
-                            className={`text-base text-primary mx-2 `}
-                            to={"/collections/" + cat.slug}
+                            className="text-base text-primary mx-2"
+                            to={`/collections/${cat.slug}`}
                           >
                             {cat.name}
                           </Link>
-                        ) : null}
-                        <React.Fragment key={index}>
-                          {index === 7 ? (
-                            <Link
-                              className="text-base text-primary mx-2 font-bold"
-                              to={"collections/deal-of-a-days"}
-                            >
-                              Deal of the day
-                            </Link>
-                          ) : null}
-                        </React.Fragment>
+                        )}
+                        {index === 7 && (
+                          <Link
+                            className="text-base text-primary mx-2 font-bold"
+                            to="/collections/deal-of-a-days"
+                          >
+                            Deal of the day
+                          </Link>
+                        )}
                       </React.Fragment>
                     );
                   })
@@ -1200,7 +1187,6 @@ import SidebarProfile from "../components/SidebarProfile";
                         <img
                           className="max-w-[40px]"
                           src={`${prod.image}`}
-                          
                           alt={prod.name}
                         />
                       </div>

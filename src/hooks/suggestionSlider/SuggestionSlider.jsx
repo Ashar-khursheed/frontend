@@ -1,9 +1,8 @@
-import React from "react";
+import React,{lazy} from "react";
 import Slider from "react-slick";
 import { settings } from "../../utils/slicksettings";
-import { ProductCard } from "../../shared/ProductCard";
 import Skeleton from "react-loading-skeleton";
-
+const  ProductCard =lazy(()=>import("../../shared/ProductCard"));
 export const SuggestionSlider = ({ title, productList }) => {
   return (
     <div className="mb-10">

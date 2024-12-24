@@ -12,10 +12,7 @@ const Homepage=lazy(()=>import('./pages/Homepage'));
 const ProductListing = lazy(() => import("./pages/ProductListing"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const CollectionPage = lazy(() => import("./pages/CollectionPage"));
-const FirstCheckout = lazy(() => import("./pages/FirstCheckout"));
 const Login = lazy(() => import("./pages/Login"));
-const FinalCheckout = lazy(() => import("./pages/FinalCheckout"));
-const SuccessCheckout = lazy(() => import("./pages/SuccessCheckout"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const SettingsLayout = lazy(() => import("./pages/settings/SettingsLayout"));
 const Checkout = lazy(() => import("./pages/checkout/Checkout"));
@@ -50,12 +47,10 @@ const BlogDetails = lazy(() => import("./pages/BlogsPage/BlogDetails"));
 
 const App = () => {
   const location = useLocation();
-  const isLoginPage = location.pathname === "/login";
   const [loader, setLoader] = useState(true);
   const [categories, setCategories] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [userProfile, setUserProfile] = useState({});
-
   const [currentLocation, setCurrentLocation] = useState({});
 
   const fetchCategories = async () => {

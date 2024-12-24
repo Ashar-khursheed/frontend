@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Wrapper } from "../../../shared/Wrapper";
 import SidebarProfile from "../../../components/SidebarProfile";
-import { FaFacebookF, FaTwitter } from "react-icons/fa";
 import { apiClient } from "../../../utils/apiWrapper";
 import { toast } from "react-toastify";
 import { Breadcrumb } from "../../../shared/Breadcrumb";
 import { useNavigate } from "react-router";
-import { ProductCard } from "../../../shared/ProductCard";
-import Skeleton from "react-loading-skeleton";
 import CommonProducts from "../CommonProducts/CommonProducts";
-
 const AccountSecurity = () => {
   const [editName, setEditName] = useState(true);
   const [editPhone, setEditPhone] = useState(true);
@@ -25,7 +21,7 @@ const AccountSecurity = () => {
       const response = await apiClient.put(`/profile`, editAccount);
       setEditName(true);
       setEditPhone(true);
-      console.log(response);
+ 
       localStorage.setItem("userProfile", JSON.stringify(response.data.user));
       toast("Account Updated Successfully!");
     } catch (error) {

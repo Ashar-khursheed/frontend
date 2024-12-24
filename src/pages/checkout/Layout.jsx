@@ -8,6 +8,7 @@ import { apiClient } from "../../utils/apiWrapper.js";
 
 export const Layout = ({ children, cartItems, cartSummaryFlag, removeItemsLoader, tempCartItems, listOfStore, confirmAndPayFn }) => {
 
+
     const authToken = localStorage.getItem('authToken');
     const [isVisible, setIsVisible] = useState(false);
     const navigate = useNavigate();
@@ -27,24 +28,7 @@ export const Layout = ({ children, cartItems, cartSummaryFlag, removeItemsLoader
     const [tempTotalAmount, setTempTotalAmount] = useState(0);
     const [totalAmount, setTotalAmount] = useState(0);
     const [discountAmount,setDiscountAmount]=useState(0);
-    // useEffect(() => {
-    //     handlerCartSummary();
-    // }, [cartSummaryFlag])
-
-
-    // const handlerCartSummary = async () => {
-
-    //     setCartSummaryLoader(true)
-    //     try {
-    //         const response = await apiClient.get(`/cart-summary`);
-    //         setSummary(response.data)
-    //         setTotalOrderPrice(response.data.total_with_tax)
-    //     } catch (error) {
-    //         console.error('Error:', error);
-    //     } finally {
-    //         setCartSummaryLoader(false)
-    //     }
-    // }
+    
 
 
     const handlerApplyCoupon = async (e) => {
@@ -94,46 +78,37 @@ export const Layout = ({ children, cartItems, cartSummaryFlag, removeItemsLoader
         let tempSubtotal = 0;
         let tempTempSaving = 0;
         let tempTax = 0;
-        if (authToken == null) {
-           
-            !!tempCartItems && tempCartItems.forEach((item, index) => {
-                tempSubtotal += item.original_price * item.quantity;
-                tempTempSaving += item.front_sale_price * item.quantity;
-            });
-            if(!!tempCartItems && tempCartItems.length>0){
-            tempTax = tempSubtotal * (tempDiscountPercent / 100);
-            setSubTotal(tempSubtotal);
-            setTempSaving(tempTempSaving - tempSubTotal);
-            setTempTax(tempTax);
-            setTempTotalAmount(tempSubTotal + tempTax + tempShippingRate);
-            }
-
-        } else {
-            !!cartItems && cartItems.forEach((item, index) => {
-                tempSubtotal += item.product.sale_price ? (item.product.sale_price * item.quantity) : (item.product.original_price * item.quantity);
-                tempTempSaving += item.product.price * item.quantity;
-            });
-            if(!!cartItems && cartItems.length>0){
-                tempTax = tempSubtotal * (tempDiscountPercent / 100);
-                setSubTotal(tempSubtotal);
-                setTempSaving(tempTempSaving - tempSubTotal);
-                setTempTax(tempTax);
-                setTempTotalAmount(tempSubTotal + tempTax + tempShippingRate);
-                if (discountPercent) {
-                    
-                    setDiscountAmount((tempSubTotal + tempTax + tempShippingRate)/discountPercent);
-                    setTotalAmount(((tempSubTotal + tempTax + tempShippingRate) * ((100 - discountPercent) / 100)));
-                } else {
-                    setTotalAmount((tempSubTotal + tempTax + tempShippingRate));
-                }
+        let tempTotalAmount = 0;
     
+        const items = authToken == null ? tempCartItems : cartItems;
+    
+        if (items && items.length > 0) {
+            items.forEach((item) => {
+                const price = item.product ? (item.product.sale_price || item.product.original_price) : item.original_price;
+                tempSubtotal += price * item.quantity;
+                tempTempSaving += item.product ? item.product.price * item.quantity : item.front_sale_price * item.quantity;
+            });
+    
+            tempTax = tempSubtotal * (tempDiscountPercent / 100);
+            tempTotalAmount = tempSubtotal + tempTax + tempShippingRate;
+    
+            setSubTotal(tempSubtotal);
+            setTempSaving(tempTempSaving - tempSubtotal);  // Assuming you want savings minus subtotal
+            setTempTax(tempTax);
+            setTempTotalAmount(tempTotalAmount);
+    
+            if (discountPercent) {
+                setDiscountAmount(tempTotalAmount / discountPercent);
+                setTotalAmount(tempTotalAmount * ((100 - discountPercent) / 100));
+            } else {
+                setTotalAmount(tempTotalAmount);
             }
-           
         }
-
-    }, [tempCartItems, cartItems]);
+    }, [tempCartItems, cartItems, authToken, tempDiscountPercent, discountPercent, tempShippingRate]);
+    
 
     const navigation = (data) => {
+        
         navigate('/review-checkout', data);
     }
  

@@ -3,8 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { Wrapper } from "./Wrapper";
 import { apiClient } from "../utils/apiWrapper";
 import Skeleton from "react-loading-skeleton";
+import { formatDateString } from "../utils/formatDate";
 
-export const BlogsCard = ({ classes, data }) => {
+export const BlogsCard = ({ classes }) => {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(true);
   const [blogs, setBlogs] = useState([]);
@@ -25,15 +26,16 @@ export const BlogsCard = ({ classes, data }) => {
     fetchBlogs();
   }, []);
 
-  const formatDateString = (dateString) => {
-    const date = new Date(dateString);
-
-    // Options for formatting
-    const options = { day: "2-digit", month: "short", year: "numeric" };
-    const formattedDate = date.toLocaleDateString("en-GB", options); // Format as 'DD-MMM-YYYY'
-
-    // Replace the comma with a space and return the result
-    return formattedDate.replace(",", "").replace(/\s+/g, "-").toLowerCase();
+  const handleNavigation = (item) => {
+    const blogData = {
+      image: item.image,
+      name: item.author.username,
+      updatedAt: item.updated_at,
+      heading: item.name,
+      content: item.content,
+      views: item.views,
+    };
+    navigate("/blog-details", { state: blogData });
   };
 
   return (
@@ -57,7 +59,7 @@ export const BlogsCard = ({ classes, data }) => {
                 <React.Fragment key={index}>
                   {index < 3 ? (
                     <div
-                      onClick={() => navigate("/blog-details")}
+                      onClick={() => handleNavigation(item)}
                       className="border-2 rounded-md p-6 border-[#EEEEEE]"
                     >
                       <React.Fragment>
@@ -139,3 +141,5 @@ export const BlogsCard = ({ classes, data }) => {
     </Wrapper>
   );
 };
+
+export default React.memo(BlogsCard);

@@ -1,48 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import {
   megaDeals,
-  collectionCategories,
-  BrandPicks,
 } from "../data/Collections";
 
 import { ExploreBrandImages } from "../data/Collections";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Wrapper } from "../shared/Wrapper";
 import { Breadcrumb } from "../shared/Breadcrumb";
-import { CiSearch } from "react-icons/ci";
-import MultiRangeSlider from "multi-range-slider-react";
 import { Rating } from "../shared/Rating";
 import Slider from "react-slick";
-import { ProductCard } from "../shared/ProductCard";
 import { settings } from "../utils/slicksettings";
-import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import { apiClient } from "../utils/apiWrapper";
 import { useParams } from "react-router-dom";
+import { Loader } from "../shared/Loader";
+const ProductCard = lazy(() => import("../shared/ProductCard"));
 
-  const CollectionPage = () => {
+const CollectionPage = () => {
   const [selectedCat, setSelectedCat] = useState([]);
   const { id } = useParams();
-  const navigate = useNavigate();
-  const [minValue, set_minValue] = useState(25);
-  const [maxValue, set_maxValue] = useState(75);
   const [categories, setCategories] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const [filterCategories, setFilterCategories] = useState([]);
   const [products, setProducts] = useState([]);
-  const location = useLocation();
   const [productLoader, setProductLoader] = useState(false);
+  const [categoryLoader, setCategoryLoader] = useState(false);
 
-  const handleInput = (e) => {
-    set_minValue(e.minValue);
-    set_maxValue(e.maxValue);
-  };
   const fetchCategories = async () => {
+
     try {
+      setCategoryLoader(true);
       const response = await apiClient.get("/categories");
       setCategories(response.data);
       const matchedCategory = response.data.find((cat) => cat.slug === id);
-
       setSelectedCat(matchedCategory);
       let filteredObject = [];
       !!matchedCategory &&
@@ -63,7 +53,7 @@ import { useParams } from "react-router-dom";
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      // setLoader(false);
+      setCategoryLoader(false);
     }
   };
 
@@ -78,9 +68,17 @@ import { useParams } from "react-router-dom";
   };
 
   useEffect(() => {
-    fetchCategories();
-    fetchProducts();
-  }, []);
+  const fetchData = async () => {
+    try {
+      await fetchCategories(); // Wait for categories to load first
+      await fetchProducts();   // Then fetch products
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchData();
+}, [id]);
 
   const collectionBreadCrumb = [
     {
@@ -99,6 +97,7 @@ import { useParams } from "react-router-dom";
   const bigScreenCss =
     "flex grid-cols-5 sm:grid md:grid lg:grid 2xl:grid gap-5 sm:gap-5 sm:grid sm:space-x-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5";
 
+
   return (
     <>
       <Wrapper>
@@ -115,6 +114,7 @@ import { useParams } from "react-router-dom";
       {/* Main Page  */}
       <Wrapper>
         <div className="grid grid-cols-9 gap-4">
+
           <div className="col-span-9 mt-8">
             {/* Collection Header  */}
             <div className="flex items-center justify-center text-center flex-col">
@@ -136,102 +136,104 @@ import { useParams } from "react-router-dom";
 
             {/* Collection Category  */}
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 gap-5 mt-8">
-              {filterCategories && filterCategories.length > 0
-                ? filterCategories.map((cat, index) => {
-                    const isVisible =
-                      window?.innerWidth < 640 ? index < 8 : index < 14;
-
-                    return isVisible ? (
-                      <React.Fragment key={index}>
-                        <div className="flex flex-col">
-                          <div
-                            className={`bg-[#F5F5F5] border-[#D9D9D9] col-span-1 flex items-center justify-center flex-col cursor-pointer transition-all border-2 hover:border-primary p-4 rounded-md ${
-                              cat?.id === selectedCat?.id
-                                ? "border-primary"
-                                : "border-transparent"
-                            }`}
-                          >
-                            <img
-                              className="w-[193px] h-[188px]"
-                              src={`https://testhssite.com/storage/${cat.image}`}
-                              alt={cat.name}
-                            />
-                            <h4 className="block sm:hidden mt-2 text-base text-black font-semibold sm:text-primary text-left">
-                              {cat.name}
-                            </h4>
-                            <h4 className="block sm:hidden mt-2 w-[100%] text-base font-semibold text-primary text-left sm:text-center">
-                              {cat.count} Products
-                            </h4>
-                          </div>
-                          <h4 className="hidden sm:block mt-2 text-base text-black font-semibold sm:text-primary text-center">
-                            {cat.name}
-                          </h4>
-                        </div>
-                      </React.Fragment>
-                    ) : null;
-                  })
-                : // Render skeletons when `categories` is `null` or empty
-                  Array.from({ length: window?.innerWidth < 640 ? 8 : 14 }).map(
-                    (_, index) => (
-                      <div key={index} className="col-span-1">
-                        <Skeleton count={1} height="150px" />
+              {categoryLoader ? (
+                // Render skeletons while categories are loading
+                Array.from({ length: 14 }).map((_, index) => (
+                  <div key={index} className="col-span-1">
+                    <Skeleton key={index} height={150} />
+                  </div>
+                ))
+              ) : (!!filterCategories && filterCategories.map((cat, index) => {
+                const isVisible =
+                  window?.innerWidth < 640 ? index < 8 : index < 14;
+                return isVisible ? (
+                  <React.Fragment key={index}>
+                    <div className="flex flex-col">
+                      <div
+                        className={`bg-[#F5F5F5] border-[#D9D9D9] col-span-1 flex items-center justify-center flex-col cursor-pointer transition-all border-2 hover:border-primary p-4 rounded-md ${cat?.id === selectedCat?.id
+                            ? "border-primary"
+                            : "border-transparent"
+                          }`}
+                      >
+                        <img
+                          className="w-[193px] h-[188px]"
+                          src={`${cat.image}`}
+                          alt={cat.name}
+                        />
+                        <h4 className="block sm:hidden mt-2 text-base text-black font-semibold sm:text-primary text-left">
+                          {cat.name}
+                        </h4>
+                        <h4 className="block sm:hidden mt-2 w-[100%] text-base font-semibold text-primary text-left sm:text-center">
+                          {cat.count} Products
+                        </h4>
                       </div>
-                    )
-                  )}
+                      <h4 className="hidden sm:block mt-2 text-base text-black font-semibold sm:text-primary text-center">
+                        {cat.name}
+                      </h4>
+                    </div>
+                  </React.Fragment>
+                ) : null;
+              })
+              )}
+
+
+
+
             </div>
+
             <div className="hidden sm:grid grid-cols-2  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 mt-8">
               {selectedCat && selectedCat.children
                 ? selectedCat.children.map((cat, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="grid-cols-1 p-5 border border-gray-300  rounded-[4px] flex  flex-col transition-all hover:border-primary"
+                  return (
+                    <div
+                      key={index}
+                      className="grid-cols-1 p-5 border border-gray-300  rounded-[4px] flex  flex-col transition-all hover:border-primary"
+                    >
+                      <Link
+                        key={cat.id}
+                        className="mt-1 block text-[#666666] text-base underline"
+                        to={`/collections/${id}/${cat.slug}/${cat.id}`}
                       >
-                        <Link
-                          key={index}
-                          className="mt-1 block text-[#666666] text-base underline"
-                          to={`/collections/${id}/${cat.slug}/${cat.id}`}
-                        >
-                          <img
-                            className="w-full"
-                            src={"https://testhssite.com/storage/" + cat.image}
-                            alt={cat.name}
-                          />
-                          <div className="mt-4 flex items-center justify-between">
-                            <h4 className="text-primary text-lg font-semibold">
-                              {cat.name}
-                            </h4>
-                            <span className="text-primary text-sm flex justify-end  flex-row min-w-[120px]">
-                              {cat.children.length} Categories{" "}
-                              <img
-                                src={
-                                  process.env.PUBLIC_URL +
-                                  "/icons/arrow-right.png"
-                                }
-                                alt=""
-                              />
-                            </span>
-                          </div>
-                        </Link>
-                        <div className="border bg-[#E2E8F0] w-full h-[1px] my-4"></div>
-                        <div className="overflow-y-auto max-h-[250px]">
-                          {cat.children
-                            ? cat.children.map((cat2, index2) => {
-                                return (
-                                  <Link
-                                    key={index}
-                                    className="mt-1 block text-[#666666] text-base underline"
-                                    to={`/collections/${id}/${cat2.slug}/${cat2.id}?type=1`}
-                                  >
-                                    {cat2.name}
-                                  </Link>
-                                );
-                              })
-                            : null}
+                        <img
+                          className="w-full"
+                          src={cat.image}
+                          alt={cat.name}
+                        />
+                        <div className="mt-4 flex items-center justify-between">
+                          <h4 className="text-primary text-lg font-semibold">
+                            {cat.name}
+                          </h4>
+                          <span className="text-primary text-sm flex justify-end  flex-row min-w-[120px]">
+                            {cat.children.length} Categories{" "}
+                            <img
+                              src={
+                                process.env.PUBLIC_URL +
+                                "/icons/arrow-right.png"
+                              }
+                              alt=""
+                            />
+                          </span>
                         </div>
+                      </Link>
+                      <div className="border bg-[#E2E8F0] w-full h-[1px] my-4"></div>
+                      <div className="overflow-y-auto max-h-[250px]">
+                        {cat.children
+                          ? cat.children.map((cat2) => {
+                            return (
+                              <Link
+                                key={cat2.id}
+                                className="mt-1 block text-[#666666] text-base underline"
+                                to={`/collections/${id}/${cat2.slug}/${cat2.id}?type=1`}
+                              >
+                                {cat2.name}
+                              </Link>
+                            );
+                          })
+                          : null}
                       </div>
-                    );
-                  })
+                    </div>
+                  );
+                })
                 : null}
             </div>
           </div>
@@ -261,16 +263,16 @@ import { useParams } from "react-router-dom";
             <div className="grid grid-cols-3 mt-5 gap-6">
               {megaDeals
                 ? megaDeals.map((items, index) => {
-                    return (
-                      <Link
-                        key={index}
-                        to={items.redirectLink}
-                        className="mt-2 mr-[10px]"
-                      >
-                        <img src={items.img} alt="" />
-                      </Link>
-                    );
-                  })
+                  return (
+                    <Link
+                      key={index}
+                      to={items.redirectLink}
+                      className="mt-2 mr-[10px]"
+                    >
+                      <img src={items.img} alt="" />
+                    </Link>
+                  );
+                })
                 : null}
             </div>
           )}
@@ -278,18 +280,18 @@ import { useParams } from "react-router-dom";
             <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
               {megaDeals
                 ? megaDeals.map((items, index) => (
-                    <Link
-                      key={index}
-                      to={items.redirectLink}
-                      className="snap-center flex-shrink-0 w-full"
-                    >
-                      <img
-                        className="w-full h-auto object-cover"
-                        src={items.img}
-                        alt=""
-                      />
-                    </Link>
-                  ))
+                  <Link
+                    key={index}
+                    to={items.redirectLink}
+                    className="snap-center flex-shrink-0 w-full"
+                  >
+                    <img
+                      className="w-full h-auto object-cover"
+                      src={items.img}
+                      alt=""
+                    />
+                  </Link>
+                ))
                 : null}
             </div>
           )}
@@ -312,18 +314,18 @@ import { useParams } from "react-router-dom";
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                      <ProductCard
-                        classes="min-h-[600px] mx-2"
-                        key={index}
-                        product={product}
-                      />
-                    ))
+                    <ProductCard
+                      classes="min-h-[600px] mx-2"
+                      key={index}
+                      product={product}
+                    />
+                  ))
                   : Array.from({ length: 10 }).map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        className="col-span-1 mt-1 min-h-[400px]"
-                      />
-                    ))}
+                    <Skeleton
+                      key={index}
+                      className="col-span-1 mt-1 min-h-[400px]"
+                    />
+                  ))}
               </Slider>
             </div>
           )}
@@ -332,10 +334,10 @@ import { useParams } from "react-router-dom";
               style={
                 window.innerWidth < 640
                   ? {
-                      overflow: "auto",
-                      scrollbarWidth: "none", // For Firefox
-                      msOverflowStyle: "none", // For Internet Explorer and Edge
-                    }
+                    overflow: "auto",
+                    scrollbarWidth: "none", // For Firefox
+                    msOverflowStyle: "none", // For Internet Explorer and Edge
+                  }
                   : {}
               }
               className={bigScreenCss}
@@ -351,20 +353,20 @@ import { useParams } from "react-router-dom";
                 <React.Fragment>
                   {products && products.length > 0
                     ? products.map((product, index) =>
-                        index < 10 ? (
-                          <ProductCard
-                            key={index}
-                            classes="col-span-1 mt-1"
-                            product={product}
-                          />
-                        ) : null
-                      )
-                    : Array.from({ length: 10 }).map((_, index) => (
-                        <Skeleton
+                      index < 10 ? (
+                        <ProductCard
                           key={index}
-                          className="col-span-1 mt-1 min-h-[400px]"
+                          classes="col-span-1 mt-1"
+                          product={product}
                         />
-                      ))}
+                      ) : null
+                    )
+                    : Array.from({ length: 10 }).map((_, index) => (
+                      <Skeleton
+                        key={index}
+                        className="col-span-1 mt-1 min-h-[400px]"
+                      />
+                    ))}
                 </React.Fragment>
               )}
             </div>
@@ -410,18 +412,18 @@ import { useParams } from "react-router-dom";
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                      <ProductCard
-                        classes="min-h-[600px] mx-2"
-                        key={index}
-                        product={product}
-                      />
-                    ))
+                    <ProductCard
+                      classes="min-h-[600px] mx-2"
+                      key={index}
+                      product={product}
+                    />
+                  ))
                   : Array.from({ length: 10 }).map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        className="col-span-1 mt-1 min-h-[400px]"
-                      />
-                    ))}
+                    <Skeleton
+                      key={index}
+                      className="col-span-1 mt-1 min-h-[400px]"
+                    />
+                  ))}
               </Slider>
             </div>
           )}
@@ -430,10 +432,10 @@ import { useParams } from "react-router-dom";
               style={
                 window.innerWidth < 640
                   ? {
-                      overflow: "auto",
-                      scrollbarWidth: "none", // For Firefox
-                      msOverflowStyle: "none", // For Internet Explorer and Edge
-                    }
+                    overflow: "auto",
+                    scrollbarWidth: "none", // For Firefox
+                    msOverflowStyle: "none", // For Internet Explorer and Edge
+                  }
                   : {}
               }
               className={bigScreenCss}
@@ -449,20 +451,20 @@ import { useParams } from "react-router-dom";
                 <React.Fragment>
                   {products && products.length > 0
                     ? products.map((product, index) =>
-                        index < 10 ? (
-                          <ProductCard
-                            key={index}
-                            classes="col-span-1 mt-1"
-                            product={product}
-                          />
-                        ) : null
-                      )
-                    : Array.from({ length: 10 }).map((_, index) => (
-                        <Skeleton
+                      index < 10 ? (
+                        <ProductCard
                           key={index}
-                          className="col-span-1 mt-1 min-h-[400px]"
+                          classes="col-span-1 mt-1"
+                          product={product}
                         />
-                      ))}
+                      ) : null
+                    )
+                    : Array.from({ length: 10 }).map((_, index) => (
+                      <Skeleton
+                        key={index}
+                        className="col-span-1 mt-1 min-h-[400px]"
+                      />
+                    ))}
                 </React.Fragment>
               )}
             </div>
@@ -508,18 +510,18 @@ import { useParams } from "react-router-dom";
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                      <ProductCard
-                        classes="min-h-[600px] mx-2"
-                        key={index}
-                        product={product}
-                      />
-                    ))
+                    <ProductCard
+                      classes="min-h-[600px] mx-2"
+                      key={index}
+                      product={product}
+                    />
+                  ))
                   : Array.from({ length: 10 }).map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        className="col-span-1 mt-1 min-h-[400px]"
-                      />
-                    ))}
+                    <Skeleton
+                      key={index}
+                      className="col-span-1 mt-1 min-h-[400px]"
+                    />
+                  ))}
               </Slider>
             </div>
           )}
@@ -528,10 +530,10 @@ import { useParams } from "react-router-dom";
               style={
                 window.innerWidth < 640
                   ? {
-                      overflow: "auto",
-                      scrollbarWidth: "none", // For Firefox
-                      msOverflowStyle: "none", // For Internet Explorer and Edge
-                    }
+                    overflow: "auto",
+                    scrollbarWidth: "none", // For Firefox
+                    msOverflowStyle: "none", // For Internet Explorer and Edge
+                  }
                   : {}
               }
               className={bigScreenCss}
@@ -547,20 +549,20 @@ import { useParams } from "react-router-dom";
                 <React.Fragment>
                   {products && products.length > 0
                     ? products.map((product, index) =>
-                        index < 10 ? (
-                          <ProductCard
-                            key={index}
-                            classes="col-span-1 mt-1"
-                            product={product}
-                          />
-                        ) : null
-                      )
-                    : Array.from({ length: 10 }).map((_, index) => (
-                        <Skeleton
+                      index < 10 ? (
+                        <ProductCard
                           key={index}
-                          className="col-span-1 mt-1 min-h-[400px]"
+                          classes="col-span-1 mt-1"
+                          product={product}
                         />
-                      ))}
+                      ) : null
+                    )
+                    : Array.from({ length: 10 }).map((_, index) => (
+                      <Skeleton
+                        key={index}
+                        className="col-span-1 mt-1 min-h-[400px]"
+                      />
+                    ))}
                 </React.Fragment>
               )}
             </div>
@@ -603,18 +605,18 @@ import { useParams } from "react-router-dom";
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                      <ProductCard
-                        classes="min-h-[600px] mx-2"
-                        key={index}
-                        product={product}
-                      />
-                    ))
+                    <ProductCard
+                      classes="min-h-[600px] mx-2"
+                      key={index}
+                      product={product}
+                    />
+                  ))
                   : Array.from({ length: 10 }).map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        className="col-span-1 mt-1 min-h-[400px]"
-                      />
-                    ))}
+                    <Skeleton
+                      key={index}
+                      className="col-span-1 mt-1 min-h-[400px]"
+                    />
+                  ))}
               </Slider>
             </div>
           )}
@@ -623,10 +625,10 @@ import { useParams } from "react-router-dom";
               style={
                 window.innerWidth < 640
                   ? {
-                      overflow: "auto",
-                      scrollbarWidth: "none", // For Firefox
-                      msOverflowStyle: "none", // For Internet Explorer and Edge
-                    }
+                    overflow: "auto",
+                    scrollbarWidth: "none", // For Firefox
+                    msOverflowStyle: "none", // For Internet Explorer and Edge
+                  }
                   : {}
               }
               className={bigScreenCss}
@@ -642,20 +644,20 @@ import { useParams } from "react-router-dom";
                 <React.Fragment>
                   {products && products.length > 0
                     ? products.map((product, index) =>
-                        index < 10 ? (
-                          <ProductCard
-                            key={index}
-                            classes="col-span-1 mt-1"
-                            product={product}
-                          />
-                        ) : null
-                      )
-                    : Array.from({ length: 10 }).map((_, index) => (
-                        <Skeleton
+                      index < 10 ? (
+                        <ProductCard
                           key={index}
-                          className="col-span-1 mt-1 min-h-[400px]"
+                          classes="col-span-1 mt-1"
+                          product={product}
                         />
-                      ))}
+                      ) : null
+                    )
+                    : Array.from({ length: 10 }).map((_, index) => (
+                      <Skeleton
+                        key={index}
+                        className="col-span-1 mt-1 min-h-[400px]"
+                      />
+                    ))}
                 </React.Fragment>
               )}
             </div>
@@ -688,28 +690,28 @@ import { useParams } from "react-router-dom";
               style={
                 window.innerWidth < 640
                   ? {
-                      overflow: "auto",
-                      scrollbarWidth: "none", // For Firefox
-                      msOverflowStyle: "none", // For Internet Explorer and Edge
-                    }
+                    overflow: "auto",
+                    scrollbarWidth: "none", // For Firefox
+                    msOverflowStyle: "none", // For Internet Explorer and Edge
+                  }
                   : {}
               }
               className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide scroll-smooth"
             >
               {ExploreBrandImages
                 ? ExploreBrandImages.map((items, index) => (
-                    <Link
-                      key={index}
-                      to={items.redirectLink}
-                      className="snap-center flex-shrink-0 mr-[10px] w-[50vw]"
-                    >
-                      <img
-                        className="w-full mx-[10px] h-auto object-cover rounded-lg"
-                        src={items.img}
-                        alt=""
-                      />
-                    </Link>
-                  ))
+                  <Link
+                    key={index}
+                    to={items.redirectLink}
+                    className="snap-center flex-shrink-0 mr-[10px] w-[50vw]"
+                  >
+                    <img
+                      className="w-full mx-[10px] h-auto object-cover rounded-lg"
+                      src={items.img}
+                      alt=""
+                    />
+                  </Link>
+                ))
                 : null}
             </div>
           )}
@@ -843,18 +845,18 @@ import { useParams } from "react-router-dom";
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                      <ProductCard
-                        classes="min-h-[600px] mx-2"
-                        key={index}
-                        product={product}
-                      />
-                    ))
+                    <ProductCard
+                      classes="min-h-[600px] mx-2"
+                      key={index}
+                      product={product}
+                    />
+                  ))
                   : Array.from({ length: 10 }).map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        className="col-span-1 mt-1 min-h-[400px]"
-                      />
-                    ))}
+                    <Skeleton
+                      key={index}
+                      className="col-span-1 mt-1 min-h-[400px]"
+                    />
+                  ))}
               </Slider>
             </div>
           )}
@@ -863,10 +865,10 @@ import { useParams } from "react-router-dom";
               style={
                 window.innerWidth < 640
                   ? {
-                      overflow: "auto",
-                      scrollbarWidth: "none", // For Firefox
-                      msOverflowStyle: "none", // For Internet Explorer and Edge
-                    }
+                    overflow: "auto",
+                    scrollbarWidth: "none", // For Firefox
+                    msOverflowStyle: "none", // For Internet Explorer and Edge
+                  }
                   : {}
               }
               className={bigScreenCss}
@@ -882,20 +884,20 @@ import { useParams } from "react-router-dom";
                 <React.Fragment>
                   {products && products.length > 0
                     ? products?.map((product, index) =>
-                        index < 10 ? (
-                          <ProductCard
-                            key={index}
-                            classes="col-span-1 mt-1"
-                            product={product}
-                          />
-                        ) : null
-                      )
-                    : Array.from({ length: 10 }).map((_, index) => (
-                        <Skeleton
+                      index < 10 ? (
+                        <ProductCard
                           key={index}
-                          className="col-span-1 mt-1 min-h-[400px]"
+                          classes="col-span-1 mt-1"
+                          product={product}
                         />
-                      ))}
+                      ) : null
+                    )
+                    : Array.from({ length: 10 }).map((_, index) => (
+                      <Skeleton
+                        key={index}
+                        className="col-span-1 mt-1 min-h-[400px]"
+                      />
+                    ))}
                 </React.Fragment>
               )}
             </div>
@@ -919,18 +921,18 @@ import { useParams } from "react-router-dom";
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                      <ProductCard
-                        classes="min-h-[600px] mx-2"
-                        key={index}
-                        product={product}
-                      />
-                    ))
+                    <ProductCard
+                      classes="min-h-[600px] mx-2"
+                      key={index}
+                      product={product}
+                    />
+                  ))
                   : Array.from({ length: 10 }).map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        className="col-span-1 mt-1 min-h-[400px]"
-                      />
-                    ))}
+                    <Skeleton
+                      key={index}
+                      className="col-span-1 mt-1 min-h-[400px]"
+                    />
+                  ))}
               </Slider>
             </div>
           )}
@@ -939,10 +941,10 @@ import { useParams } from "react-router-dom";
               style={
                 window.innerWidth < 640
                   ? {
-                      overflow: "auto",
-                      scrollbarWidth: "none", // For Firefox
-                      msOverflowStyle: "none", // For Internet Explorer and Edge
-                    }
+                    overflow: "auto",
+                    scrollbarWidth: "none", // For Firefox
+                    msOverflowStyle: "none", // For Internet Explorer and Edge
+                  }
                   : {}
               }
               className={bigScreenCss}
@@ -958,20 +960,20 @@ import { useParams } from "react-router-dom";
                 <React.Fragment>
                   {products && products.length > 0
                     ? products.map((product, index) =>
-                        index < 10 ? (
-                          <ProductCard
-                            key={index}
-                            classes="col-span-1 mt-1"
-                            product={product}
-                          />
-                        ) : null
-                      )
-                    : Array.from({ length: 10 }).map((_, index) => (
-                        <Skeleton
+                      index < 10 ? (
+                        <ProductCard
                           key={index}
-                          className="col-span-1 mt-1 min-h-[400px]"
+                          classes="col-span-1 mt-1"
+                          product={product}
                         />
-                      ))}
+                      ) : null
+                    )
+                    : Array.from({ length: 10 }).map((_, index) => (
+                      <Skeleton
+                        key={index}
+                        className="col-span-1 mt-1 min-h-[400px]"
+                      />
+                    ))}
                 </React.Fragment>
               )}
             </div>
@@ -982,51 +984,7 @@ import { useParams } from "react-router-dom";
   );
 };
 
-export default React.memo(CollectionPage);
-const FilterTitle = ({ classes, title }) => {
-  return (
-    <h2 className={`${classes} text-black-100 font-semibold text-lg`}>
-      {title}
-    </h2>
-  );
-};
-const CustomCheckbox = ({ children, title, quantity, id }) => {
-  return (
-    <div className="flex items-center justify-between text-gray-700 mt-1">
-      <div className="flex items-center">
-        <input
-          id={title.split("")[0] + id}
-          type="checkbox"
-          value=""
-          className="outline-none w-4 h-4  border-primary rounded accent-primary"
-        />
-        <label htmlFor={title.split("")[0] + id} className="ml-2 text-sm ">
-          {title}
-        </label>
-      </div>
-      <span>{quantity}</span>
-    </div>
-  );
-};
 
-const CustomRadio = ({ children, id, rating, quantity }) => {
-  return (
-    <div className="flex items-center mb-2 ">
-      <input
-        type="radio"
-        name={id}
-        className="w-4 h-4  mr-2 accent-primary cursor-pointer"
-      />
-      <label
-        htmlFor={id}
-        className="w-full flex items-center justify-between text-gray-700 text-sm"
-      >
-        <div className="flex items-center">
-          <Rating rating={rating} />
-          <span className="">& Up </span>
-        </div>
-        <span>{quantity}</span>
-      </label>
-    </div>
-  );
-};
+
+
+export default React.memo(CollectionPage);

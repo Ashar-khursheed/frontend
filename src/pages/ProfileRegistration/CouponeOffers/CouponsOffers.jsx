@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy } from "react";
 import { Wrapper } from "../../../shared/Wrapper";
 import SidebarProfile from "../../../components/SidebarProfile";
 import { Breadcrumb } from "../../../shared/Breadcrumb";
@@ -6,9 +6,7 @@ import CouponBox from "./components/CouponBox";
 import { apiClient } from "../../../utils/apiWrapper";
 import Skeleton from "react-loading-skeleton";
 import { useNavigate } from "react-router";
-import { ProductCard } from "../../../shared/ProductCard";
 import CommonProducts from "../CommonProducts/CommonProducts";
-
 const CouponsOffers = () => {
   const [loader, setLoader] = useState(true);
   const [couponData, setCouponData] = useState([]);
@@ -22,7 +20,7 @@ const CouponsOffers = () => {
     try {
       const response = await apiClient.get("/customer/coupons");
       setCouponData(response?.data?.coupons);
-      console.log(response);
+
       setLoader(false);
     } catch (error) {
       console.error("Error:", error);
@@ -58,12 +56,9 @@ const CouponsOffers = () => {
       title: "Profile",
     },
     {
-      
       title: "Coupons & offers",
     },
   ];
-  const bigScreenCss =
-    "flex grid-cols-5 sm:grid md:grid lg:grid 2xl:grid gap-5 sm:gap-5 sm:grid sm:space-x-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5";
 
   return (
     <>
