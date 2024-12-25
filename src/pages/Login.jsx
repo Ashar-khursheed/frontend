@@ -419,7 +419,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 
                   {/*             
                  //for guest user */}
-                  <button type="submit" className=" w-full bg-primary text-white flex items-center justify-center py-4 px-3 font-semibold text-base min-w-[300px] rounded-[4px] "><span className="mr-2">Confirm & Pay</span> <FaArrowRightLong /></button>
+
+
+                  <button type="submit" className=" w-full bg-primary text-white flex items-center justify-center py-4 px-3 font-semibold text-base min-w-[269px] rounded-[4px] "><span>Confirm & Pay</span> &nbsp; &nbsp;<FaArrowRightLong /></button>
 
 
                 </>}
@@ -515,7 +517,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
                 {/*             
                  //for guest user */}
-                {/* <button type="submit" className=" w-full bg-primary text-white flex items-center justify-center py-4 px-3 font-semibold text-base min-w-[300px] rounded-[4px] "><span className="mr-2">Confirm & Pay</span> <FaArrowRightLong /></button> */}
+              
 
                 <button
                   type="submit"
