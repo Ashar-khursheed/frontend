@@ -127,7 +127,6 @@ export const CompareProducts = ({
                   <img
                     className=""
                     src={`${process.env.PUBLIC_URL}/images/logo.png`}
-                    alt="logo"
                   />
                   <h1 className="text-center text-[24px]">
                     Compare with similar products <br />
@@ -175,7 +174,7 @@ export const CompareProducts = ({
                           // src="http://localhost:3000/profileIcons/Frame-1.png"
                           // https://testhssite.com/storage/mmv700s-2.jpg
                           //
-                           alt={product.name}
+                          alt=""
                         />
                         <CartButton
                           productId={product.id}
@@ -199,7 +198,7 @@ export const CompareProducts = ({
                                           process.env.PUBLIC_URL +
                                           "/icons/write.png"
                                         }
-                                        alt={compare.name}
+                                        alt=""
                                       />
                                     </span>
                                     <span className="mt-5 text-black-100 text-base font-semibold m-[10px]">
@@ -211,7 +210,7 @@ export const CompareProducts = ({
                                         "https://testhssite.com/storage/" +
                                         compare.image
                                       }
-                                      alt={compare.name}
+                                      alt=""
                                     />
                                     <CartButton
                                       product_id={compare.id}

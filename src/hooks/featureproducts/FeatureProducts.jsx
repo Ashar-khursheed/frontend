@@ -42,7 +42,7 @@ const FeatureProduct = ({
         selectedItem={selectedCat}
         setSelectedItem={setSelectedCat}
         loader={featureCatLoader}
-        classes={"mt-14 mb-6"}
+        classes={"mt-8 mb-[10px] sm:mt-14 sm:mb-6 "}
       />
       <div
         style={
@@ -72,7 +72,7 @@ const FeatureProduct = ({
                     index < 10 ? (
                       <ProductCard
                         key={index}
-                        classes="col-span-1 mt-1 w-full"
+                        classes="col-span-1 mt-1"
                         product={product}
                       />
                     ) : null

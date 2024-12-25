@@ -15,16 +15,22 @@ import { apiClient } from "../utils/apiWrapper";
 import { useParams } from "react-router-dom";
 import { Loader } from "../shared/Loader";
 const ProductCard = lazy(() => import("../shared/ProductCard"));
-
 const CollectionPage = () => {
   const [selectedCat, setSelectedCat] = useState([]);
   const { id } = useParams();
+  // const [minValue, set_minValue] = useState(25);
+  // const [maxValue, set_maxValue] = useState(75);
   const [categories, setCategories] = useState([]);
+
   const [categoryName, setCategoryName] = useState("");
   const [filterCategories, setFilterCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [productLoader, setProductLoader] = useState(false);
   const [categoryLoader, setCategoryLoader] = useState(false);
+  // const handleInput = (e) => {
+  //   set_minValue(e.minValue);
+  //   set_maxValue(e.maxValue);
+  // };
 
   const fetchCategories = async () => {
 
@@ -68,17 +74,9 @@ const CollectionPage = () => {
   };
 
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      await fetchCategories(); // Wait for categories to load first
-      await fetchProducts();   // Then fetch products
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  fetchData();
-}, [id]);
+    fetchCategories();
+    fetchProducts();
+  }, [id]);
 
   const collectionBreadCrumb = [
     {
@@ -140,7 +138,7 @@ const CollectionPage = () => {
                 // Render skeletons while categories are loading
                 Array.from({ length: 14 }).map((_, index) => (
                   <div key={index} className="col-span-1">
-                    <Skeleton key={index} height={150} />
+                    <Skeleton height={150} />
                   </div>
                 ))
               ) : (!!filterCategories && filterCategories.map((cat, index) => {
@@ -190,7 +188,7 @@ const CollectionPage = () => {
                       className="grid-cols-1 p-5 border border-gray-300  rounded-[4px] flex  flex-col transition-all hover:border-primary"
                     >
                       <Link
-                        key={cat.id}
+                        key={index}
                         className="mt-1 block text-[#666666] text-base underline"
                         to={`/collections/${id}/${cat.slug}/${cat.id}`}
                       >
@@ -221,7 +219,7 @@ const CollectionPage = () => {
                           ? cat.children.map((cat2) => {
                             return (
                               <Link
-                                key={cat2.id}
+                                key={index}
                                 className="mt-1 block text-[#666666] text-base underline"
                                 to={`/collections/${id}/${cat2.slug}/${cat2.id}?type=1`}
                               >
