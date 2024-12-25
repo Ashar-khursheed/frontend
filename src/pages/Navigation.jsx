@@ -387,11 +387,11 @@ const Navigation = ({ categories, currentLocation }) => {
                   />
                 )}
                 <span className="font-semibold">{selectedLang}</span>
-                <img
+                {/* <img
                   className={`ml-1 transition-all group-hover:rotate-180`}
                   src={process.env.PUBLIC_URL + "/icons/arrow.svg"}
                   alt="arrow"
-                />
+                /> */}
               </div>
               <ul
                 className={`absolute top-5 left-[-10px] w-full hidden group-hover:block bg-gray-200 rounded-md `}
@@ -609,11 +609,11 @@ const Navigation = ({ categories, currentLocation }) => {
               Fetching Location...
             </span>
           )}
-          <img
+          {/* <img
             className="absolute right-3"
             src={process.env.PUBLIC_URL + "/icons/arrow.svg"}
             alt="arrow"
-          />
+          /> */}
         </div>
 
         {/* Search Option Button */}

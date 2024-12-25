@@ -11,8 +11,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth0 } from "@auth0/auth0-react";
 
   const Login = () => {
+
+ const { loginWithRedirect } = useAuth0();
   const location = useLocation();
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
@@ -256,7 +259,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
                 Or
               </span>
 
-              <button className="border rounded-[4px] bg-[#FFFFFF66] border-[#03030399] font-semibold text-sm w-full py-3 px-3 flex items-center justify-center">
+              <button
+              // onClick={() => loginWithRedirect()}
+              className="border rounded-[4px] bg-[#FFFFFF66] border-[#03030399] font-semibold text-sm w-full py-3 px-3 flex items-center justify-center">
                 <img
                   src={process.env.PUBLIC_URL + "/icons/apple.png"}
                   className="mr-2"
