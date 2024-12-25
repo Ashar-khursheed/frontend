@@ -55,19 +55,32 @@ import { useAuth0 } from "@auth0/auth0-react";
   }
 
 
-  const schema = yup
-    .object({
-      number: yup.number().positive().integer().required(),
-      email: yup.string().required(),
-
-    })
-    .required();
-
+  const schema = yup.object({
+    number: yup
+      .number()
+      .transform((value, originalValue) => {
+        if (originalValue === "") {
+          return null;  // or undefined if you prefer
+        }
+        return value;
+      })
+      .nullable()
+      .notRequired()
+      .positive("Number must be positive")
+      .integer("Number must be an integer")
+      .required("Mobile number is required"),
+  
+    email: yup
+      .string()
+      .email("Please enter a valid email address")
+      .required("Email is required"),
+  }).required();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    
     reset,
   } = useForm({
     resolver: yupResolver(schema),
@@ -85,11 +98,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 
   const schemaForAddress = yup
     .object({
-      name: yup.string().required(),
-      country: yup.string().required(),
-      state: yup.string().required(),
-      city: yup.string().required(),
-      address: yup.string().required(),
+      name: yup.string().required("Name is required"),
+      country: yup.string().required("Country is required"),
+      state: yup.string().required("State is required"),
+      city: yup.string().required("City is required"),
+      address: yup.string().required("Address is required"),
     })
     .required();
 
@@ -118,6 +131,13 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 
   const validateForm = () => {
+    if (!email) {
+      setError("Email is required");
+      return false;
+  } else if (!/\S+@\S+\.\S+/.test(email)) {
+    setError("Invalid email address");
+    return false;
+  }
     if (!password) {
       setError("Password is required");
       return false;
@@ -130,6 +150,7 @@ import { useAuth0 } from "@auth0/auth0-react";
     return true;
   };
 
+ 
 
 
 
@@ -169,6 +190,7 @@ import { useAuth0 } from "@auth0/auth0-react";
     }
   }, [getData]);
 
+  
   return (
     <React.Fragment>
 
@@ -194,7 +216,7 @@ import { useAuth0 } from "@auth0/auth0-react";
               </div>
               <input
                 type="email"
-                placeholder="Enter your Email"
+                placeholder="Enter your email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("Email")
@@ -236,9 +258,11 @@ import { useAuth0 } from "@auth0/auth0-react";
               )}
               <p
                 onClick={() => navigate("/forgot-password")}
-                className="text-[#64748B] cursor-pointer text-sm my-5 font-semibold"
+                className="text-[#64748B] cursor-pointer text-sm my-5 font-semibold "
               >
+                <span className="duration-300 hover:text-white hover:bg-primary">
                 Forgot Password?
+                </span>
               </p>
               <button
                 type="submit"
@@ -279,8 +303,8 @@ import { useAuth0 } from "@auth0/auth0-react";
               </button>
               <p className="mt-4 text-[#212121] text-sm">
                 By registering you agree to the user{" "}
-                <span className="font-semibold">Terms & Condition</span> and{" "}
-                <span className="font-semibold">Privacy Policy</span>
+                <span className="font-semibold duration-300 hover:text-white hover:bg-primary   ">Terms & Condition</span> and{" "}
+                <span className="font-semibold duration-300 hover:text-white hover:bg-primary   ">Privacy Policy</span>
               </p>
 
               <p className="mt-4 text-sm">
@@ -313,7 +337,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 
             {!showGuestAddress ? <form
-              className="bg-[#E2E8F04D] border-[#E2E8F0] rounded-[10px] mt-5 border px-6 py-10  max-w-[550px] min-h-[700px]"
+              className="bg-[#E2E8F04D] border-[#E2E8F0] rounded-[10px] mt-4 border px-6 py-10  max-w-[550px] min-h-[700px]"
               onSubmit={handleSubmit(onSubmit)}>
 
               {!guestUser ? <><div className="text-center mb-10">
@@ -356,34 +380,39 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 
                       <input
-                        type="number"
-                        placeholder="Enter number"
+                        type="tel"
+                        placeholder="Enter mobile number"
                         {...register("number", {
                           minLength: 1,
-                          maxLength: 12
+                          maxLength: 12,
+                          
                         })}
-                        className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("number")
+                        onInput={(e) => {
+                          // Allow only numeric input (this is optional since pattern handles it)
+                          e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                        }}
+                        className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${errors.number
                           ? "border-red-500"
                           : "border-[#66666666]"
                           } rounded-[4px]`}
                       />
-                      {error.includes("number") && (
-                        <p className="text-red-500 text-sm"> {errors.number?.message}</p>
-                      )}
+                   
+                   {errors.number && (
+          <p className="text-red-500 text-sm text-left">{errors.number?.message}</p>
+        )}
+                  
                     </div>
                     <div className="relative">
                       <input
                         type="email"
-                        placeholder="Email Address"
+                        placeholder="Enter email address"
                         {...register("email")}
-                        className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("email")
+                        className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${errors.email 
                           ? "border-red-500"
                           : "border-[#66666666]"
                           } rounded-[4px] pr-12`}
                       />
-                      {error.includes("email") && (
-                        <p className="text-red-500 text-sm">  {errors.email?.message}</p>
-                      )}
+                     <p className="text-red-500 text-sm text-left"> {errors?.email?.message}</p>
 
                     </div>
                   </div>
@@ -412,13 +441,13 @@ import { useAuth0 } from "@auth0/auth0-react";
                       type="text"
                       placeholder="Enter name"
                       {...register2("name")}
-                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("number")
+                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error2?.name
                         ? "border-red-500"
                         : "border-[#66666666]"
                         } rounded-[4px]`}
                     />
 
-                    <p className="text-red-500 text-sm"> {errors.name?.message}</p>
+                    <p className="text-red-500 text-sm text-left"> {error2?.name?.message}</p>
 
                   </div>
                   <div className="relative">
@@ -426,13 +455,13 @@ import { useAuth0 } from "@auth0/auth0-react";
                       type="text"
                       placeholder="Enter country"
                       {...register2("country")}
-                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("email")
+                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error2?.country
                         ? "border-red-500"
                         : "border-[#66666666]"
                         } rounded-[4px] pr-12`}
                     />
 
-                    <p className="text-red-500 text-sm">  {errors.country?.message}</p>
+                    <p className="text-red-500 text-sm text-left">  {error2?.country?.message}</p>
 
 
                   </div>
@@ -441,13 +470,13 @@ import { useAuth0 } from "@auth0/auth0-react";
                       type="text"
                       placeholder="Enter state"
                       {...register2("state")}
-                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("state")
+                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error2?.state
                         ? "border-red-500"
                         : "border-[#66666666]"
                         } rounded-[4px] pr-12`}
                     />
 
-                    <p className="text-red-500 text-sm">  {errors.state?.message}</p>
+                    <p className="text-red-500 text-sm text-left">  {error2?.state?.message}</p>
 
 
                   </div>
@@ -456,13 +485,13 @@ import { useAuth0 } from "@auth0/auth0-react";
                       type="text"
                       placeholder="Enter city"
                       {...register2("city")}
-                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("city")
+                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error2?.city
                         ? "border-red-500"
                         : "border-[#66666666]"
                         } rounded-[4px] pr-12`}
                     />
 
-                    <p className="text-red-500 text-sm">  {errors.city?.message}</p>
+                    <p className="text-red-500 text-sm text-left">  {error2?.city?.message}</p>
 
 
                   </div>
@@ -472,13 +501,13 @@ import { useAuth0 } from "@auth0/auth0-react";
                       type="text"
                       placeholder="Enter address"
                       {...register2("address")}
-                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("address")
+                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error2?.address
                         ? "border-red-500"
                         : "border-[#66666666]"
                         } rounded-[4px] pr-12`}
                     />
 
-                    <p className="text-red-500 text-sm">  {errors.address?.message}</p>
+                    <p className="text-red-500 text-sm text-left">  {error2?.address?.message}</p>
 
 
                   </div>
