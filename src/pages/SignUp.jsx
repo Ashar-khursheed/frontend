@@ -200,8 +200,8 @@ import { apiClient } from "../utils/apiWrapper";
                         <img src={process.env.PUBLIC_URL + "/icons/google.png"} className="mr-2" alt="" />Sign In with Outlook
                     </button>
                     <p className="mt-4 text-[#212121] text-sm">By registering you agree to the user 
-                        <Link to="" ><span className="font-semibold duration-300 hover:text-white hover:bg-primary hover:px-1 hover:rounded"> Terms & Condition</span> </Link>and
-                        <Link to="" > <span className="font-semibold duration-300 hover:text-white hover:bg-primary hover:px-1 hover:rounded"> Privacy Policy</span></Link>
+                        <Link to="" ><span className="font-semibold duration-300 hover:text-white hover:bg-primary "> Terms & Condition</span> </Link>and
+                        <Link to="" > <span className="font-semibold duration-300 hover:text-white hover:bg-primary "> Privacy Policy</span></Link>
                         </p>
 
                     <div className="w-full h-[1px] bg-[#E2E8F0] mt-4"></div>
