@@ -309,7 +309,7 @@ const ProductCard = ({
             )}
           </div>
         </div>
-        <div className="mt-1 p-4 mr-[10px] xl:mt-[-28%] 2xl:mt-[-3%] ">
+        <div className="mt-1 p-4 mr-[0px] sm:mr-[10px] xl:mt-[-28%] 2xl:mt-[-3%] ">
           <Link to={`/product/${productId}`}>
             {product.leftStock <= 0 ? (
               <p className="text-[#A6131D] text-[10px] mt-[-10px] mb-[0px] sm:text-sm mt-2">
