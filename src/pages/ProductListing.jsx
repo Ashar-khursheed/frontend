@@ -140,9 +140,8 @@ const ProductListing = () => {
     selectedMaxPrice,
   ]);
 
-  useEffect(() => {
-    setPage(1);
-  }, [sortBy, perPage]);
+  useEffect(() => {}, [sortBy, perPage]);
+
   return (
     <div>
       <div
@@ -217,10 +216,10 @@ const ProductListing = () => {
         <FilterSection
           minDelivery={minDelivery}
           maxDelivery={maxDelivery}
-          setPage={setPage}
           priceRangeBool={priceRangeBool}
           setPriceRangeBool={setPriceRangeBool}
           brands={brands}
+          setPage={setPage}
           selectedBrands={selectedBrands}
           setSelectedBrands={setSelectedBrands}
           categories={categories}
@@ -252,6 +251,7 @@ const ProductListing = () => {
               priceRangeBool={priceRangeBool}
               setPriceRangeBool={setPriceRangeBool}
               brands={brands}
+              setPage={setPage}
               selectedBrands={selectedBrands}
               setSelectedBrands={setSelectedBrands}
               categories={categories}
@@ -624,8 +624,8 @@ const FilterSection = ({
   selectedReview,
   setSelectedBrands,
   products,
-  minDelivery,
   setPage,
+  minDelivery,
   maxDelivery,
   setSelectedDelivery,
   selectedDelivery,
@@ -655,6 +655,9 @@ const FilterSection = ({
   const [btnActive, setBtnActive] = useState(true);
   const [btnActiveRating, setBtnActiveRating] = useState(true);
 
+  useEffect(() => {
+    setPage(1);
+  }, [btnActive, btnActiveRating]);
   const numberOfRanges = 5;
   // let timeoutId; // Keep track of the timeout ID
 
@@ -725,7 +728,6 @@ const FilterSection = ({
                 setSelectedMaxPrice(20000);
                 setSelectedMinPrice(10);
                 setBtnActive(true);
-                setPage(1);
               }}
             >
               Clear All
