@@ -217,6 +217,7 @@ const ProductListing = () => {
         <FilterSection
           minDelivery={minDelivery}
           maxDelivery={maxDelivery}
+          setPage={setPage}
           priceRangeBool={priceRangeBool}
           setPriceRangeBool={setPriceRangeBool}
           brands={brands}
@@ -624,6 +625,7 @@ const FilterSection = ({
   setSelectedBrands,
   products,
   minDelivery,
+  setPage,
   maxDelivery,
   setSelectedDelivery,
   selectedDelivery,
@@ -723,6 +725,7 @@ const FilterSection = ({
                 setSelectedMaxPrice(20000);
                 setSelectedMinPrice(10);
                 setBtnActive(true);
+                setPage(1);
               }}
             >
               Clear All

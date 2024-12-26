@@ -1056,21 +1056,22 @@ const Navigation = ({ categories, currentLocation }) => {
         <Wrapper classes="flex flex-row items-center justify-between">
           <div className="flex group relative group/cat1 mr-3  items-center justify-between w-full">
             <div
-              className="flex flex-row items-center justify-center mr-3 cursor-pointer"
+              className="flex items-center justify-center mr-3 cursor-pointer"
               ref={ref}
               {...anchorProps}
             >
               <img
-                src={process.env.PUBLIC_URL + "/icons/category.svg"}
+                src={`${process.env.PUBLIC_URL}/icons/category.svg`}
                 alt=""
+                className="h-5 w-5"
               />
-              <span className="font-bold text-base text-primary ml-2 w-[215px]">
-                Shop By Categories
+              <span className="font-bold text-base text-primary ml-2">
+                Shop By Categories&nbsp;
               </span>
               <img
-                className="ml-1  size-5 mt-[2px]"
-                src={process.env.PUBLIC_URL + "/icons/arrow.svg"}
+                src={`${process.env.PUBLIC_URL}/icons/arrow.svg`}
                 alt=""
+                className="h-5 w-5 ml-1"
               />
             </div>
             <div className="w-[80%] flex flex-row items-center justify-between">
