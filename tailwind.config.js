@@ -25,6 +25,8 @@ module.exports = {
       xl: "1280px",
       "2xl": "1400px",
       "3xl": "1600px",
+        "80p": '1840px',  // Example custom breakpoint for 80% viewport width
+        "110p": '100vw' // Example custom breakpoint for 110% viewport width
     },
     extend: {
       colors: {
@@ -47,7 +49,6 @@ module.exports = {
       animation: {
         'slide-sequence': 'slideSequence 8s infinite',
         'slide-sequence-store': 'slideSequenceStore 8s infinite',
-
       },
       keyframes: {
         slideSequence: {

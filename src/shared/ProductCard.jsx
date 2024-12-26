@@ -222,7 +222,7 @@ const ProductCard = ({
         <div
           className={
             window?.innerWidth < 640
-              ? "overflow-hidden relative z-50 h-[110px] sm:h-[288px]"
+              ? "overflow-hidden relative z-50 h-[120px] sm:h-[288px]"
               : "overflow-hidden relative z-50 80p:h-[288px] 110p:h-[288px] "
           }
         >
@@ -251,7 +251,7 @@ const ProductCard = ({
                     <img
                       src={`${product.images[0]}`}
                       alt={product.altText}
-                      className="mt[12px] sm:mt-[0px] w-[100px] h-[110px] sm:h-[100%] sm:w-full object-contain"
+                      className="mt-[12px] sm:mt-[0px] w-[100px] h-[110px] sm:h-[100%] sm:w-full object-contain"
                     />
                   )}
                 </div>
@@ -277,7 +277,7 @@ const ProductCard = ({
                       <img
                         src={`${image}`}
                         alt={product.altText}
-                        className="w-full w-[100px] h-[110px] sm:h-[100%] flex items-center justify-center object-contain"
+                        className="w-full w-[100px] h-[120px] sm:h-[100%] flex items-center justify-center object-contain"
                       />
                     </div>
                   ))}
