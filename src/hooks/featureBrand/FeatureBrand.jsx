@@ -1,9 +1,9 @@
-import React, { useEffect, useState,lazy } from "react";
+import React, { useEffect, useState, lazy } from "react";
 import { Wrapper } from "../../shared/Wrapper";
 import { FeatureHeader } from "../../shared/FeatureHeader";
 import Skeleton from "react-loading-skeleton";
-const  ProductCard =lazy(()=>import("../../shared/ProductCard"));
-  const FeatureBrand = ({
+const ProductCard = lazy(() => import("../../shared/ProductCard"));
+const FeatureBrand = ({
   brandCat,
   brandCatList,
   selectedBrand,
@@ -38,8 +38,8 @@ const  ProductCard =lazy(()=>import("../../shared/ProductCard"));
     <Wrapper>
       <FeatureHeader
         data={brandCatList}
-        classes={"mt-14 mb-6"}
-        title="Feature Brand"
+        classes={"mt-8 sm:mt-14 sm:mb-6"}
+        title="Feature Brands"
         selectedItem={selectedBrand}
         setSelectedItem={setSelectedBrand}
         loader={brandCatLoader}

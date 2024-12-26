@@ -219,7 +219,13 @@ const ProductCard = ({
             ) : null}
           </React.Fragment>
         )}
-        <div className="overflow-hidden relative z-50 h-[110px] sm:h-[288px]">
+        <div
+          className={
+            window?.innerWidth < 640
+              ? "overflow-hidden relative z-50 h-[120px] sm:h-[288px]"
+              : "overflow-hidden relative z-50 80p:h-[288px] 110p:h-[288px] "
+          }
+        >
           <Link to={`/product/${productId}`}>
             {product.video_path && JSON.parse(product.video_path)[0] ? (
               <React.Fragment>
@@ -245,7 +251,7 @@ const ProductCard = ({
                     <img
                       src={`${product.images[0]}`}
                       alt={product.altText}
-                      className="w-[100px] h-[110px] sm:h-[250px] sm:w-full object-contain"
+                      className="mt-[12px] sm:mt-[0px] w-[100px] h-[110px] sm:h-[100%] sm:w-full object-contain"
                     />
                   )}
                 </div>
@@ -271,7 +277,7 @@ const ProductCard = ({
                       <img
                         src={`${image}`}
                         alt={product.altText}
-                        className="w-full w-[100px] h-[110px] sm:h-[250px] flex items-center justify-center object-contain"
+                        className="w-full w-[100px] h-[120px] sm:h-[100%] flex items-center justify-center object-contain"
                       />
                     </div>
                   ))}
@@ -303,11 +309,10 @@ const ProductCard = ({
             )}
           </div>
         </div>
-
-        <div className="mt-1 p-4">
+        <div className="mt-1 p-4 mr-[0px] sm:mr-[10px] xl:mt-[-28%] 2xl:mt-[-3%] ">
           <Link to={`/product/${productId}`}>
             {product.leftStock <= 0 ? (
-              <p className="text-[#A6131D] text-[10px] mt-[-10px] mb-[10px] sm:text-sm mt-2">
+              <p className="text-[#A6131D] text-[10px] mt-[-10px] mb-[0px] sm:text-sm mt-2">
                 Only available for pre-orders
               </p>
             ) : (
@@ -348,33 +353,33 @@ const ProductCard = ({
                 </ul>
               </div>
             ) : null}
-            <p className="font-normal sm:font-semibold text-[12px] sm:text-sm text-gray-700 mt-3">
+            <p className="font-normal sm:font-semibold text-[12px] sm:text-sm text-gray-700 mt-1">
               {product.delivery_days > 0 ? (
                 <span>
                   {" "}
                   Get it as soon as in&nbsp;{product.delivery_days} Days
                 </span>
               ) : (
-                <span className=" text-[white]">.</span>
+                <span className="">Now Delivering Faster</span>
               )}
             </p>
 
-            <div className="flex overflow-hidden sm:flex-row items-baseline">
+            <div className="flex overflow-hidden items-baseline  sm:flex-row items-baseline">
               <span className="flex items-baseline sm:flex-none text-primary font-semibold">
-                <span className="ml-0 text-[10px] sm:text-xl font-normal sm:font-bold">
+                <span className="ml-0 text-[10px] sm:text-[14px] font-normal sm:font-bold">
                   {product.currency_title ? product.currency_title : "USD "}
                 </span>
                 {product.sale_price ? (
                   <span className="ml-1 text-[14px] sm:text-3xl font-bold sm:font-extrabold">
                     {Number(product.sale_price).toFixed(2).split(".")[0]}
-                    <span className="text-[10px] font-bold sm:text-[20px]">
+                    <span className="text-[10px] font-bold sm:text-[14px]">
                       .{Number(product.sale_price).toFixed(2).split(".")[1]}
                     </span>
                   </span>
                 ) : (
                   <span className="ml-1 text-[14px] sm:text-3xl font-bold sm:font-extrabold">
                     {Number(product.front_sale_price).toFixed(2).split(".")[0]}
-                    <span className="text-[10px] font-bold sm:text-[20px]">
+                    <span className="text-[10px] font-bold sm:text-[14px]">
                       .
                       {
                         Number(product.front_sale_price)
@@ -385,11 +390,9 @@ const ProductCard = ({
                   </span>
                 )}
               </span>
-            </div>
-            <div className="h-[20px]">
               {!product.sale_price ||
               product.sale_price === product.original_price ? null : (
-                <span className="text-gray-700 text-[12px] sm:text-sm line-through ml-0 mt-2">
+                <span className="text-gray-700 text-[12px] ml-[10px] sm:text-sm line-through ml-0 mt-2">
                   <span>
                     {product.currency_title ? product.currency_title : "USD"}
                     &nbsp;
@@ -402,7 +405,6 @@ const ProductCard = ({
                 </span>
               )}
             </div>
-
             {!flashSale ? (
               <React.Fragment>
                 {product.leftStock > 0 && product.leftStock <= 5 ? (
@@ -433,16 +435,16 @@ const ProductCard = ({
             </div>
           </div>
           <div className="flex items-center">
-            <div className="hidden mt-2 sm:flex items-center justify-between p-[2px] sm:px-3 sm:py-2 w-[90px] border border-[#BCE3C9] rounded-[4px]">
+            <div className="hidden mt-2 sm:flex items-center justify-between p-[2px] sm:px-3 sm:py-[2px] w-[90px] border border-[#BCE3C9] rounded-[4px]">
               <FiMinus
-                className="cursor-pointer w-[10px] sm:w-[26px]"
+                className="cursor-pointer w-[10px] sm:w-[24px]"
                 onClick={(e) => handlerDecrement(e)}
               />
               <span className="font-semibold text-primary mx-2 text-[10px] sm:text-[16px]">
                 {String(count).padStart(2, "0")}
               </span>
               <BsPlusLg
-                className="cursor-pointer w-[10px] sm:w-[26px]"
+                className="cursor-pointer w-[10px] sm:w-[24px]"
                 onClick={(e) => handlerIncrement(e)}
               />
             </div>
@@ -483,7 +485,14 @@ const ProductCard = ({
                     Add To Cart
                   </span>
                 ) : (
-                  <span className="ml-0 sm:ml-2 p-[2px] sm:p-0 font-semibold text-primary text-[10px] sm:text-base group-hover:text-white transition-all duration-500">
+                  <span
+                    className={
+                      window?.innerWidth < 1367
+                        ? "ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] group-hover:text-white transition-all duration-500"
+                        : "ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] lg:text-[8px] 80p:text-base 110p:text-[10px] group-hover:text-white transition-all duration-500"
+                    }
+                  >
+                    {/* <span className="ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] lg:text-[8px] 80p:text-base 110p:text-[10px] group-hover:text-white transition-all duration-500"> */}
                     Add To Cart
                   </span>
                 )}

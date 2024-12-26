@@ -29,7 +29,7 @@ const BlogDetails = () => {
         <div className="flex mt-[10px] text-[32px] m-[10px] font-bold text-white h-[160px] overflow-hidden rounded-[20px] sm:h-[700px] w-full">
           <img
             className="absolute h-[160px] m-[5px] sm:h-[700px] w-[85%] object-cover rounded-[20px] opacity-[1]"
-            src={`https://testhssite.com/storage/${data?.image}`}
+            src={`${data?.image}`}
           />
         </div>
         <div className="flex">

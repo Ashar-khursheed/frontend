@@ -28,12 +28,12 @@ export const BlogsCard = ({ classes }) => {
 
   const handleNavigation = (item) => {
     const blogData = {
-      image: item.image,
-      name: item.author.username,
-      updatedAt: item.updated_at,
-      heading: item.name,
-      content: item.content,
-      views: item.views,
+      image: item?.images[0],
+      name: item?.author?.username,
+      updatedAt: item?.updated_at,
+      heading: item?.name,
+      content: item?.content,
+      views: item?.views,
     };
     navigate("/blog-details", { state: blogData });
   };
@@ -65,14 +65,14 @@ export const BlogsCard = ({ classes }) => {
                       <React.Fragment>
                         <Link to="#">
                           <img
-                            className="w-full col-span-1"
-                            src={`https://testhssite.com/storage/${item.image}`}
+                            className="w-full col-span-1 h-[350px] object-cover rounded-md"
+                            src={`${item.images[0]}`}
                             alt=""
                           />
                           <div className="flex justify-between items-center my-3">
                             <div className="flex justify-start items-center">
                               <img
-                                src={`https://testhssite.com/storage/${item.image}`}
+                                src={`${item.images[0]}`}
                                 className="size-[30px] rounded-full"
                                 alt="blog writer"
                               />
@@ -91,9 +91,12 @@ export const BlogsCard = ({ classes }) => {
                           <h3 className="text-[#262626] text-md line-clamp-1 lg:text-lg my-3">
                             {item.name}{" "}
                           </h3>
-                          <p className="text-gray-700  my-5 line-clamp-4 text-sm lg:text-md xl:text-base">
-                            {item.content.replace(/<\/?p>/g, "")}
-                          </p>
+                          <p
+                            className="text-gray-700  my-5 line-clamp-4 text-sm lg:text-md xl:text-base"
+                            dangerouslySetInnerHTML={{
+                              __html: item.content.replace(/<\/?p>/g, ""),
+                            }}
+                          ></p>
                         </Link>
 
                         <hr className="h-px my-3 bg-[#EEEEEE]"></hr>

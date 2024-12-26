@@ -42,7 +42,9 @@ export const Pagination = ({ paginationData, setPage, page }) => {
     } else {
       return (
         <span
-          onClick={() => setPage(tempPage)}
+          onClick={() => {
+            link?.label !== "..." && setPage(tempPage);
+          }}
           key={index}
           className={`border-transparent border transition-all hover:border-[#030303] cursor-pointer text-[#030303] rounded sm:rounded-0 py-[0px] px-[10px] sm:py-4 sm:px-6 block ${
             link.active ? "bg-primary text-white" : ""
