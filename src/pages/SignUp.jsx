@@ -49,9 +49,9 @@ import { apiClient } from "../utils/apiWrapper";
             validationErrors.push("Confirm Password must be at least 8 characters");
         }
         if (!phone) {
-            validationErrors.push("Phone number is required");
+            validationErrors.push("Mobile number is required");
         } else if (!/^\d{10}$/.test(phone)) { // Check for exactly 10 digits
-            validationErrors.push("Phone number must be 10 digits");
+            validationErrors.push("Mobile number must be 10 digits");
         }
 
         setErrors(validationErrors);
@@ -165,7 +165,8 @@ import { apiClient } from "../utils/apiWrapper";
                             {showPassword ? <IoMdEye size="24px" /> : <IoMdEyeOff size="24px" />}
                         </span>
                     </div>
-                    {errors.includes("Passwords is required") && <p className="text-red-500 text-sm">Passwords is required</p>}
+                    
+                    {errors.includes("Password is required") && <p className="text-red-500 text-sm">Passwords is required</p>}
                     {errors.includes("Passwords must be at least 8 characters") && <p className="text-red-500 text-sm">Passwords must be at least 8 characters</p>}
 
 

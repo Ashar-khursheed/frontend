@@ -143,6 +143,7 @@ const  ProductCard =lazy(()=>import("../shared/ProductCard"));
   useEffect(() => {
     setPage(1);
   }, [sortBy, perPage]);
+ 
   return (
     <div>
       <div
