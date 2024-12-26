@@ -10,9 +10,9 @@ export const FeatureHeader = ({
   classes,
 }) => {
   const smScreen =
-    "flex items-center justify-between text-[12px] sm:text-[18px] overflow-x-auto space-x-4 px-2 py-1";
+    "flex items-center justify-between text-[12px] sm:text-[18px] overflow-x-auto space-x-4 pr-2 py-1";
   const BgScreen =
-    "flex items-center justify-between text-[12px] sm:text-[18px] space-x-4 px-2 py-1";
+    "flex items-center justify-between text-[12px] 80p:text-[18px] 110p:text-[16px] space-x-4 px-2 py-1";
 
   const flexSm = "flex-col";
   const flexBg = "flex";
@@ -29,12 +29,12 @@ export const FeatureHeader = ({
               : "flex items-center justify-between w-[100%] overflow-hidden text-black-100 font-semibold text-sm sm:text-2xl"
           }`}
         >
-          <h2 className="text-black-100 font-semibold text-sm sm:text-[24px]">
+          <h2 className="text-black-100 font-semibold text-sm sm:text-xl md:text-[16px] xl:text-[22px]">
             {title}
           </h2>
           <ul
             style={
-              window.innerWidth < 640
+              window.innerWidth < 1024
                 ? {
                     overflow: "auto",
                     scrollbarWidth: "none", // For Firefox
@@ -60,7 +60,7 @@ export const FeatureHeader = ({
                   const isSelected = brand === selectedItem;
                   return (
                     <li
-                      className={`shrink-0 px-3 py-1 cursor-pointer rounded mr-[-1%] ${
+                      className={`shrink-0 pr-3 py-1 cursor-pointer rounded mr-[-1%] hover:text-[#186737] ${
                         isSelected
                           ? " text-[#186737] font-normal"
                           : "text-[#64748B] font-normal"
@@ -68,7 +68,9 @@ export const FeatureHeader = ({
                       key={index}
                       onClick={() => setSelectedItem(brand)}
                     >
-                      <div className="text-center ">{brand}</div>
+                      <div className="text-center md:text-[14px] xl:text-[14px]">
+                        {brand}
+                      </div>
                     </li>
                   );
                 })

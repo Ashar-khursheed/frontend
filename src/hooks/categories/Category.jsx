@@ -12,7 +12,7 @@ export const Category = ({ category }) => {
         src={"https://testhssite.com/storage/" + category.image}
         alt={category.name}
       />
-      <p className="text-gray-700 text-[16px] mt-4 font-normal ">
+      <p className="text-gray-700 text-[16px] text-[16px] sm:text-[12px] md:text-[16px] lg:text-[16px] xl:text-[14px] mt-4 font-normal ">
         {category.name}
       </p>
     </Link>
