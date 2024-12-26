@@ -18,6 +18,13 @@ import { apiClient } from "../utils/apiWrapper";
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+    const handleNameBlur = () => {
+        setName(name.trim());  // Trim spaces from start and end when the input loses focus
+      };
+      const handleEmailBlur = () => {
+        setEmail(email.trim());  // Trim spaces from start and end when the input loses focus
+      };
+
     const validateForm = () => {
         const validationErrors = [];
 
@@ -42,9 +49,9 @@ import { apiClient } from "../utils/apiWrapper";
             validationErrors.push("Confirm Password must be at least 8 characters");
         }
         if (!phone) {
-            validationErrors.push("Phone number is required");
+            validationErrors.push("Mobile number is required");
         } else if (!/^\d{10}$/.test(phone)) { // Check for exactly 10 digits
-            validationErrors.push("Phone number must be 10 digits");
+            validationErrors.push("Mobile number must be 10 digits");
         }
 
         setErrors(validationErrors);
@@ -53,7 +60,7 @@ import { apiClient } from "../utils/apiWrapper";
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-
+ 
         if (!validateForm()) return;
 
         try {
@@ -73,17 +80,17 @@ import { apiClient } from "../utils/apiWrapper";
             setLoading(false);
         }
     };
-
+ 
     return (
         <Wrapper>
-            <div className="flex items-center justify-center w-full min-h-[120vh]">
+            <div className="flex items-center justify-center w-full min-h-[75vh] mt-20 mb-20">
                 <form className="bg-[#E2E8F04D] border-[#E2E8F0] rounded-[10px] border px-6 py-10 max-w-[550px]" onSubmit={handleFormSubmit}>
                     <div className="text-center mb-7">
                         <h3 className="text-2xl text-[#030303] font-semibold">Create an Account</h3>
-                        {/* <p className="text-[#000000] text-sm mt-2">
+                        <p className="text-[#000000] text-sm mt-2">
                             Shopping for your business?
                             {isVendor === 0 ? <span onClick={() => setIsVendor(1)} className="underline cursor-pointer text-primary font-semibold"> Create a business account.</span> : <span onClick={() => setIsVendor(0)} className="underline cursor-pointer text-primary font-semibold"> Create a personal account.</span>}
-                        </p> */}
+                        </p>
                     </div>
 
                     <label htmlFor="" className="text-[#030303] font-semibold">Are You Buying For:</label>
@@ -117,17 +124,19 @@ import { apiClient } from "../utils/apiWrapper";
                     <input
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        onBlur={handleNameBlur}
                         type="text"
-                        placeholder="Enter your User Name"
+                        placeholder="Enter your Name"
                         className="w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border border-[#66666666] rounded-[4px]"
                     />
                     {errors.includes("Name is required") && <p className="text-red-500 text-sm">Name is required</p>}
 
                     <input
                         value={email}
+                        onBlur={handleEmailBlur}
                         onChange={(e) => setEmail(e.target.value)}
                         type="email"
-                        placeholder="Enter your Email"
+                        placeholder="Enter your email address"
                         className="w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border border-[#66666666] rounded-[4px]"
                     />
                     {errors.includes("Email is required") && <p className="text-red-500 text-sm">Email is required</p>}
@@ -141,13 +150,13 @@ import { apiClient } from "../utils/apiWrapper";
                         placeholder="Enter your mobile number"
                         className="w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border border-[#66666666] rounded-[4px]"
                     />
-                    {errors.includes("Phone number is required") && <p className="text-red-500 text-sm">Phone number is required</p>}
-                    {errors.includes("Phone number must be 10 digits") && <p className="text-red-500 text-sm">Phone number must be 10 digits</p>}
+                    {errors.includes("Mobile number is required") && <p className="text-red-500 text-sm">Mobile number is required</p>}
+                    {errors.includes("Mobile number must be 10 digits") && <p className="text-red-500 text-sm">Mobile number must be 10 digits</p>}
 
                     <div className="relative">
                         <input
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => setPassword(e.target.value.trim())}
                             type={showPassword ? "text" : "password"}
                             placeholder="Password"
                             className="w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border border-[#66666666] rounded-[4px] pr-12"
@@ -156,15 +165,16 @@ import { apiClient } from "../utils/apiWrapper";
                             {showPassword ? <IoMdEye size="24px" /> : <IoMdEyeOff size="24px" />}
                         </span>
                     </div>
-                    {errors.includes("Password is required") && <p className="text-red-500 text-sm">Password is required</p>}
-                    {errors.includes("Password must be at least 8 characters") && <p className="text-red-500 text-sm">Password must be at least 8 characters</p>}
+                    
+                    {errors.includes("Password is required") && <p className="text-red-500 text-sm">Passwords is required</p>}
+                    {errors.includes("Passwords must be at least 8 characters") && <p className="text-red-500 text-sm">Passwords must be at least 8 characters</p>}
 
 
 
                     <div className="relative">
                         <input
                             value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            onChange={(e) => setConfirmPassword(e.target.value.trim())}
                             type={showConfirmPassword ? "text" : "password"}
                             placeholder="Confirm Password"
                             className="w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border border-[#66666666] rounded-[4px] pr-12"
@@ -190,8 +200,10 @@ import { apiClient } from "../utils/apiWrapper";
                     <button className="border rounded-[4px] bg-[#FFFFFF66] border-[#03030399] font-semibold text-sm w-full py-3 px-3 flex items-center justify-center mt-5">
                         <img src={process.env.PUBLIC_URL + "/icons/google.png"} className="mr-2" alt="" />Sign In with Outlook
                     </button>
-                    <p className="mt-4 text-[#212121] text-sm">By registering you agree to the user <span className="font-semibold">Terms & Condition</span> and
-                        <span className="font-semibold"> Privacy Policy</span></p>
+                    <p className="mt-4 text-[#212121] text-sm">By registering you agree to the user 
+                        <Link to="" ><span className="font-semibold duration-300 hover:text-white hover:bg-primary "> Terms & Condition</span> </Link>and
+                        <Link to="" > <span className="font-semibold duration-300 hover:text-white hover:bg-primary "> Privacy Policy</span></Link>
+                        </p>
 
                     <div className="w-full h-[1px] bg-[#E2E8F0] mt-4"></div>
                     <p className="mt-4 text-sm">Already Have an Account? <Link to="/login" className="text-primary font-semibold underline">Sign In</Link></p>
