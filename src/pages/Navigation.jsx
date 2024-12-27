@@ -191,7 +191,7 @@ const Navigation = ({ categories, currentLocation }) => {
     const updateMaxIndex = () => {
       const width = window.innerWidth;
 
-      if (width >= 1536) {
+      if (width >= 1536) { 
         setMaxIndex(7); // 2xl: index <= 4
       } else if (width >= 1280) {
         setMaxIndex(6); // xl: index <= 3
