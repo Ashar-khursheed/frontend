@@ -125,7 +125,7 @@ const  ProductCard =lazy(()=>import('../shared/ProductCard'));
       let related = [];
       response.data?.products?.data?.forEach((element) => {
         if (element) {
-          element?.tags?.map((element2) => {
+          element.tags.map((element2) => {
             if (element2) {
               let tempRelated = {
                 name: element2.name,
