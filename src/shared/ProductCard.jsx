@@ -479,17 +479,19 @@ const ProductCard = ({
                 images={product.images}
                 video_path={product.video_path}
               >
-                <MdOutlineAddShoppingCart className="text-primary group-hover:text-white transition-all duration-500" />
                 {window.innerWidth < 640 ? (
-                  <span className="ml-[-10px] text-[14px] pl-[10px] w-[150px] sm:ml-2 p-[2px] sm:p-0 font-semibold text-primary text-[10px] sm:text-base group-hover:text-white transition-all duration-500">
-                    Add To Cart
-                  </span>
+                  <>
+                    <MdOutlineAddShoppingCart className="text-primary group-hover:text-white transition-all duration-500" />
+                    <span className="ml-[-10px] text-[14px] pl-[10px] w-[150px] sm:ml-2 p-[2px] sm:p-0 font-semibold text-primary text-[10px] sm:text-base group-hover:text-white transition-all duration-500">
+                      Add To Cart
+                    </span>
+                  </>
                 ) : (
                   <span
                     className={
                       window?.innerWidth < 1367
                         ? "ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] group-hover:text-white transition-all duration-500"
-                        : "ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] lg:text-[8px] 80p:text-base 110p:text-[10px] group-hover:text-white transition-all duration-500"
+                        : "ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] lg:text-[8px] 80p:text-base 110p:text-[14px] group-hover:text-white transition-all duration-500"
                     }
                   >
                     {/* <span className="ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] lg:text-[8px] 80p:text-base 110p:text-[10px] group-hover:text-white transition-all duration-500"> */}
