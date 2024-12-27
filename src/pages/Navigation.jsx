@@ -164,8 +164,6 @@ const Navigation = ({ categories, currentLocation }) => {
     }
   }, [isFocused]);
 
-  console.log("--->>>>", categories.length - 1);
-
   useEffect(() => {
     const name = localStorage.getItem("username");
     if (token) {
@@ -198,14 +196,16 @@ const Navigation = ({ categories, currentLocation }) => {
       // 1920
       // 2560
 
-      if (width >= 1600) {
-        setMaxIndex(9); // xl: index <= 3
+      if (width >= 1920) {
+        setMaxIndex(8); // xl: index <= 3
+      } else if (width >= 1600) {
+        setMaxIndex(7); // xl: index <= 3
       } else if (width >= 1536) {
-        setMaxIndex(7); // xl: index <= 3
-      } else if (width >= 1400) {
-        setMaxIndex(7); // xl: index <= 3
-      } else if (width >= 1280) {
         setMaxIndex(6); // xl: index <= 3
+      } else if (width >= 1400) {
+        setMaxIndex(6); // xl: index <= 3
+      } else if (width >= 1280) {
+        setMaxIndex(5); // xl: index <= 3
       } else if (width >= 1024) {
         setMaxIndex(3); // lg: index <= 2
       } else if (width >= 768) {
@@ -672,7 +672,7 @@ const Navigation = ({ categories, currentLocation }) => {
                 onChange={(e) => handlerSearchValue(e.target.value)}
                 onFocus={handleFocus}
               />
-              <div className="mr-[-20px]">
+              <div className="">
                 <button
                   type="submit"
                   className="bg-primary p-2 rounded-full mr-2"
@@ -1092,7 +1092,7 @@ const Navigation = ({ categories, currentLocation }) => {
                 src={process.env.PUBLIC_URL + "/icons/category.svg"}
                 alt=""
               />
-              <span className="font-bold text-base text-primary ml-2 w-[215px]">
+              <span className="font-bold text-base xl:text-[18px] text-primary ml-2 w-[215px]">
                 Shop By Categories
               </span>
               <img
@@ -1108,7 +1108,7 @@ const Navigation = ({ categories, currentLocation }) => {
                       <React.Fragment key={index}>
                         {index <= maxIndex && (
                           <Link
-                            className="text-[13px] font-normal text-primary mx-2"
+                            className="text-[16px] font-normal text-primary mx-2"
                             to={`/collections/${cat.slug}`}
                           >
                             {cat.name}
@@ -1116,7 +1116,7 @@ const Navigation = ({ categories, currentLocation }) => {
                         )}
                         {index === categories.length - 1 && (
                           <Link
-                            className="text-[13px] font-bold text-primary mx-2 "
+                            className="text-[16px] font-bold text-primary mx-2 "
                             to="/collections/deal-of-a-days"
                           >
                             Deal of the day
