@@ -91,12 +91,12 @@ export const BlogsCard = ({ classes }) => {
                           <h3 className="text-[#262626] text-md line-clamp-1 lg:text-lg my-3">
                             {item.name}{" "}
                           </h3>
-                          <p
+                          <div
                             className="text-gray-700 text-[10px]  my-5 line-clamp-4 text-sm lg:text-md xl:text-base"
                             dangerouslySetInnerHTML={{
                               __html: item.content.replace(/<\/?p>/g, ""),
                             }}
-                          ></p>
+                          ></div>
                         </Link>
 
                         <hr className="h-px my-3 bg-[#EEEEEE]"></hr>
