@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FilterTitle from "./FilterTitle";
 import CustomCheckboxes from "./CustomCheckboxes";
 
+
 const DynamicFilter = ({ data, setDynamicParams, dynamicParams }) => {
   const [seeMore, setSeeMore] = useState(false);
 
@@ -180,11 +181,11 @@ const DynamicFilter = ({ data, setDynamicParams, dynamicParams }) => {
         const title =
           key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " ");
 
-        if (value.ranges && Object.keys(value.ranges).length) {
-          return renderRangeFilter(value.ranges, title);
-        } else if (value.non_numeric_values && Object.keys(value.non_numeric_values).length) {
-          return renderCheckboxFilter(value.non_numeric_values, title);
-        }
+                if (value.ranges && Object.keys(value.ranges).length) {
+                    return renderRangeFilter(value.ranges, title);
+                } else if (value.non_numeric_values && Object.keys(value.non_numeric_values).length) {
+                    return renderCheckboxFilter(value.non_numeric_values, title);
+                }
 
         return null;
       })}
