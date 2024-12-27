@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import FilterTitle from "./FilterTitle";
 import CustomCheckboxes from "./CustomCheckboxes";
 
-
 const DynamicFilter = ({ data, setDynamicParams, dynamicParams }) => {
   const [seeMore, setSeeMore] = useState(false);
 
   // State to store selected filters
   const [selectedFilters, setSelectedFilters] = useState({
     ranges: {},
-    nonNumericValues: {},  // Ensure it's an empty object initially
+    nonNumericValues: {}, // Ensure it's an empty object initially
   });
 
   // Function to handle checkbox changes (both ranges and non-numeric)
@@ -50,7 +49,7 @@ const DynamicFilter = ({ data, setDynamicParams, dynamicParams }) => {
 
     // Process ranges
     Object.entries(filters.ranges).forEach(([key, value]) => {
-      const [min, max] = key.split('-');
+      const [min, max] = key.split("-");
       filterArray.push({
         spec_name: title,
         min: min,
@@ -70,10 +69,13 @@ const DynamicFilter = ({ data, setDynamicParams, dynamicParams }) => {
     return filterArray
       .map((filter, index) => {
         return Object.entries(filter)
-          .map(([key, val]) => `filters[${index}][${key}]=${encodeURIComponent(val)}`)
-          .join('&');
+          .map(
+            ([key, val]) =>
+              `filters[${index}][${key}]=${encodeURIComponent(val)}`
+          )
+          .join("&");
       })
-      .join('&');
+      .join("&");
   };
 
   // Function to render range filters
@@ -108,11 +110,19 @@ const DynamicFilter = ({ data, setDynamicParams, dynamicParams }) => {
                       id={rangeValue}
                       className="mr-2"
                       onChange={(e) =>
-                        handleCheckboxChange(rangeValue, title, "range", e.target.checked)
+                        handleCheckboxChange(
+                          rangeValue,
+                          title,
+                          "range",
+                          e.target.checked
+                        )
                       }
                       checked={selectedFilters.ranges[rangeValue] || false}
                     />
-                    <label htmlFor={rangeValue} className="text-gray-700 text-sm">
+                    <label
+                      htmlFor={rangeValue}
+                      className="text-gray-700 text-sm"
+                    >
                       ${min} - ${max}
                     </label>
                   </div>
@@ -154,9 +164,19 @@ const DynamicFilter = ({ data, setDynamicParams, dynamicParams }) => {
                         id={`${title}-${key}`}
                         title={value}
                         quantity={value.quantity}
-                        checked={selectedFilters.nonNumericValues[`${title}-${key}`] === value}
+                        checked={
+                          selectedFilters.nonNumericValues[
+                            `${title}-${key}`
+                          ] === value
+                        }
                         onChange={(isChecked) =>
-                          handleCheckboxChange(`${title}-${key}`, title, "non_numeric_values", isChecked, value)
+                          handleCheckboxChange(
+                            `${title}-${key}`,
+                            title,
+                            "non_numeric_values",
+                            isChecked,
+                            value
+                          )
                         }
                       />
                     )}
@@ -181,11 +201,14 @@ const DynamicFilter = ({ data, setDynamicParams, dynamicParams }) => {
         const title =
           key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " ");
 
-                if (value.ranges && Object.keys(value.ranges).length) {
-                    return renderRangeFilter(value.ranges, title);
-                } else if (value.non_numeric_values && Object.keys(value.non_numeric_values).length) {
-                    return renderCheckboxFilter(value.non_numeric_values, title);
-                }
+        if (value.ranges && Object.keys(value.ranges).length) {
+          return renderRangeFilter(value.ranges, title);
+        } else if (
+          value.non_numeric_values &&
+          Object.keys(value.non_numeric_values).length
+        ) {
+          return renderCheckboxFilter(value.non_numeric_values, title);
+        }
 
         return null;
       })}
