@@ -672,7 +672,7 @@ const Navigation = ({ categories, currentLocation }) => {
                 onChange={(e) => handlerSearchValue(e.target.value)}
                 onFocus={handleFocus}
               />
-              <div className="mr-[-20px]">
+              <div className="">
                 <button
                   type="submit"
                   className="bg-primary p-2 rounded-full mr-2"
