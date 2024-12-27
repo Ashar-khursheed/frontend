@@ -103,18 +103,14 @@ const DynamicFilter = ({ data, setDynamicParams, dynamicParams }) => {
               return (
                 <div key={key}>
                   <div className="mt-2">
-                    <input
-                      type="checkbox"
+                    <CustomCheckboxes
                       id={rangeValue}
-                      className="mr-2"
-                      onChange={(e) =>
-                        handleCheckboxChange(rangeValue, title, "range", e.target.checked)
-                      }
+                      title={`${min} - ${max}`}
                       checked={selectedFilters.ranges[rangeValue] || false}
+                      onChange={(isChecked) =>
+                        handleCheckboxChange(rangeValue, title, "range", isChecked)
+                      }
                     />
-                    <label htmlFor={rangeValue} className="text-gray-700 text-sm">
-                      ${min} - ${max}
-                    </label>
                   </div>
                 </div>
               );
@@ -125,7 +121,6 @@ const DynamicFilter = ({ data, setDynamicParams, dynamicParams }) => {
       </React.Fragment>
     );
   };
-
   // Function to render checkboxes for non-numeric values (like categories)
   const renderCheckboxFilter = (nonNumericValues, title) => {
     return (
