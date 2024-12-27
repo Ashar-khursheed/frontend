@@ -5,9 +5,11 @@ import DynamicFilter from "./DynamicFIlter";
 import { IoClose } from "react-icons/io5";
 import { apiClient } from "../utils/apiWrapper";
 import { useParams, Link, useSearchParams } from "react-router-dom";
+import FilterTitle from '../components/FilterTitle';
+import CustomCheckbox from "./CustomCheckbox";
 const FilterSection = ({
-
-    filter,
+    setDynamicParams,
+    filters,
     brands,
     priceMin,
     priceMax,
@@ -39,10 +41,11 @@ const FilterSection = ({
     };
 
 
-    const [filters, setFilters] = useState(null);
+    // const [filters, setFilters] = useState(null);
     const [minValue, set_minValue] = useState(priceMin);
     const [maxValue, set_maxValue] = useState(priceMax);
     const [seeMoreBrand, setSeeMoreBrand] = useState(false);
+   
     const location = useLocation();
     const navigate = useNavigate();
     const handleInput = (e) => {
@@ -65,34 +68,12 @@ const FilterSection = ({
     };
 
 
-    const fetchFilter = async () => {
-        try {
-            const params = {
-                category_id: id,
-                per_page: 12,
-            }
-            const response = await apiClient.get(`/categories/filters`, {
-                params,
-            });
-            const result = convertToSnakeCase(response?.data?.filters);
-            if (result != undefined && result != null) {
-                setFilters((result));
-            }
-
-        } catch (error) {
-            console.log("error", error);
-        }
-    }
-
-    useEffect(() => {
-        fetchFilter();
-    }, [id]);
-
+ 
 
     return (
         <React.Fragment>
 
-            {filters ? <DynamicFilter data={!!filters && filters} /> : ""}
+         
             <div className=" col-span-2 h-[100vh] overflow-auto px-3">
                 {/* Price Section  */}
                 <React.Fragment>
@@ -205,38 +186,7 @@ const FilterSection = ({
                     </div>
                     <div className="w-full h-[1px] bg-[#E2E8F0] my-5"></div>
                 </React.Fragment>
-                <React.Fragment>
-                    <div className="flex items-center justify-between">
-                        <FilterTitle title="Fulfillment Speed" />
-                        <span
-                            className="font-semibold text-gray-400 text-sm underline cursor-pointer"
-                            onClick={() => setSelectedDelivery()}
-                        >
-                            Clear All
-                        </span>
-                    </div>
-                    <div className="relative flex flex-row h-1 w-full bg-gray-700 items-center justify-between mt-3">
-                        <span
-                            className={`size-[15px] rounded-full  hover:bg-primary transition-all cursor-pointer ${selectedDelivery === minDelivery ? "bg-primary" : "bg-gray-700"
-                                }`}
-                            onClick={() => setSelectedDelivery(minDelivery)}
-                        ></span>
-                        <span
-                            className={`size-[15px] rounded-full  hover:bg-primary transition-all cursor-pointer ${selectedDelivery === maxDelivery ? "bg-primary" : "bg-gray-700"
-                                }`}
-                            onClick={() => setSelectedDelivery(maxDelivery)}
-                        ></span>
-                    </div>
-                    <div className="relative flex flex-row h-1 w-full items-center justify-between mt-6 text-sm text-gray-700">
-                        <span onClick={() => setSelectedDelivery(minDelivery)}>
-                            {minDelivery}
-                        </span>
-                        <span className="" onClick={() => setSelectedDelivery(maxDelivery)}>
-                            {maxDelivery}
-                        </span>
-                    </div>
-                    <div className="w-full h-[1px] bg-[#E2E8F0] mt-4 mb-3"></div>
-                </React.Fragment>
+             
 
                 <React.Fragment>
                     <div className="flex items-center justify-between">
@@ -282,7 +232,8 @@ const FilterSection = ({
                     </div>
                 </React.Fragment>
 
-                {/* <DynamicFilter data={!!filter && filter} /> */}
+                {filters ? <DynamicFilter data={!!filters && filters}    setDynamicParams={setDynamicParams}
+           /> : ""}
 
 
 
@@ -294,34 +245,8 @@ const FilterSection = ({
 export default React.memo(FilterSection);
 
 
-const FilterTitle = ({ classes, title }) => {
-    return (
-        <h2 className={`${classes} text-black-100 font-semibold text-lg`}>
-            {title}
-        </h2>
-    );
-};
 
-// Custom Checkbox Component
-const CustomCheckbox = ({ children, title, quantity, id, onClick }) => {
-    return (
-        <div className="flex items-center justify-between text-gray-700 mt-1">
-            <div className="flex items-center">
-                <input
-                    id={title.split("")[0] + id}
-                    type="checkbox"
-                    value=""
-                    className="outline-none w-4 h-4  border-primary rounded accent-primary"
-                    onClick={() => onClick()}
-                />
-                <label htmlFor={title.split("")[0] + id} className="ml-2 text-sm ">
-                    {title}
-                </label>
-            </div>
-            <span>{quantity}</span>
-        </div>
-    );
-};
+
 
 // Custom Radio Component
 const CustomRadio = ({ children, id, rating, quantity, onClick, checked }) => {
