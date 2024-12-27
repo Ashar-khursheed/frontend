@@ -8,12 +8,12 @@ import { SuggestionSlider } from "../hooks/suggestionSlider/SuggestionSlider";
 import Skeleton from "react-loading-skeleton";
 import { apiClient } from "../utils/apiWrapper";
 import { useLocation, useNavigate } from "react-router";
-import { useParams, Link, useSearchParams } from "react-router-dom";
-import FilterSection from "../components/FilterSection";
 
+import { useParams, Link, useSearchParams } from "react-router-dom";
+
+import FilterSection from "../components/FilterSection";
 const  ProductCard =lazy(()=>import('../shared/ProductCard'));
  const ProductsByCategory = () => {
-  const authToken = localStorage.getItem("authToken");
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
   const { id, category, subcategory } = useParams();
@@ -22,7 +22,7 @@ const  ProductCard =lazy(()=>import('../shared/ProductCard'));
   const [loader, setLoader] = useState(true);
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [filters, setFilters] = useState([]);
+
   const [priceMin, setPriceMin] = useState(10);
   const [priceMax, setPriceMax] = useState(20000);
   const [lengthMin, setLengthMin] = useState("");
@@ -46,7 +46,6 @@ const  ProductCard =lazy(()=>import('../shared/ProductCard'));
   const [selectedMinPrice, setSelectedMinPrice] = useState();
   const [selectedMaxPrice, setSelectedMaxPrice] = useState();
   const [openFilterPopup, setOpenFilterPopup] = useState(false);
-  const [dynamicParams,setDynamicParams]=useState(null);
 
 
 
@@ -77,7 +76,7 @@ const  ProductCard =lazy(()=>import('../shared/ProductCard'));
   };
 
   const fetchProducts = async () => {
-
+    const authToken = localStorage.getItem("authToken");
     setLoader(true);
     try {
       let search = location.search ? location.search.split("=")[1] : "";
@@ -86,12 +85,10 @@ const  ProductCard =lazy(()=>import('../shared/ProductCard'));
         category_id: id,
         per_page: perPage,
         page: page,
-        ...(dynamicParams && { dynamicParams }),
         ...(selectedReview && { rating: selectedReview }),
         ...(selectedBrands.length > 0 && { brand_id: String(selectedBrands) }),
         ...(search && { search: search }),
       };
- 
       if (sortBy === "asc" || sortBy === "desc") {
         params.sort_direction = sortBy;
         params.sort_by = "sale_price";
@@ -112,7 +109,7 @@ const  ProductCard =lazy(()=>import('../shared/ProductCard'));
 
      
 
-      setFilters(response?.data?.filters);
+
       setProducts(response?.data?.products.data);
       setPaginationData(response?.data?.products?.total);
       setProducttypes(response?.data?.producttypes);
@@ -128,7 +125,7 @@ const  ProductCard =lazy(()=>import('../shared/ProductCard'));
       let related = [];
       response.data?.products?.data?.forEach((element) => {
         if (element) {
-          element?.tags?.map((element2) => {
+          element.tags.map((element2) => {
             if (element2) {
               let tempRelated = {
                 name: element2.name,
@@ -166,7 +163,6 @@ const  ProductCard =lazy(()=>import('../shared/ProductCard'));
     selectedMinPrice,
     selectedMaxPrice,
     id,
-    dynamicParams
   ]);
 
   useEffect(() => {
@@ -258,7 +254,6 @@ const  ProductCard =lazy(()=>import('../shared/ProductCard'));
                                 </div> */}
         </div>
         <FilterSection
-       
           minDelivery={minDelivery}
           maxDelivery={maxDelivery}
           priceRangeBool={priceRangeBool}
@@ -290,8 +285,6 @@ const  ProductCard =lazy(()=>import('../shared/ProductCard'));
         <div className="grid grid-cols-4 sm:grid-cols-9 gap-4">
           <div className="col-span-2 hidden sm:hidden md:hidden lg:block">
             <FilterSection
-            setDynamicParams={setDynamicParams}
-              filters={filters}
               minDelivery={minDelivery}
               maxDelivery={maxDelivery}
               priceRangeBool={priceRangeBool}
@@ -415,7 +408,7 @@ const  ProductCard =lazy(()=>import('../shared/ProductCard'));
                         >
                           <img
                             className="w-28"
-                            src={`${item.images}`}
+                            src={`https://testhssite.com/storage/${item.images}`}
                             alt={item.name}
                           />
                         </div>
@@ -444,7 +437,7 @@ const  ProductCard =lazy(()=>import('../shared/ProductCard'));
                           >
                             <img
                               className="sm:w-20 md:w-28 lg:w-36 xl:w-48 mx-auto"
-                              src={`${cat.image}`}
+                              src={`https://testhssite.com/storage/${cat.image}`}
                               alt={cat.name}
                             />
                             <h4 className=" mt-2 text-base font-semibold text-primary text-center">
