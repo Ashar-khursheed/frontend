@@ -29,12 +29,12 @@ export const FeatureHeader = ({
               : "flex items-center justify-between w-[100%] overflow-hidden text-black-100 font-semibold text-sm sm:text-2xl"
           }`}
         >
-          <h2 className="text-black-100 font-semibold text-sm sm:text-xl md:text-[16px] xl:text-[22px]">
+          <h2 className="text-black-100 font-semibold text-sm sm:text-xl md:text-[16px] xl:text-[24px] w-[220px]">
             {title}
           </h2>
           <ul
             style={
-              window.innerWidth < 1024
+              window.innerWidth <= 1024
                 ? {
                     overflow: "auto",
                     scrollbarWidth: "none", // For Firefox
@@ -68,7 +68,7 @@ export const FeatureHeader = ({
                       key={index}
                       onClick={() => setSelectedItem(brand)}
                     >
-                      <div className="text-center md:text-[14px] xl:text-[14px]">
+                      <div className="text-center md:text-[14px] xl:text-[18px]">
                         {brand}
                       </div>
                     </li>

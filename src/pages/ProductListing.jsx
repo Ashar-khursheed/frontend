@@ -804,7 +804,7 @@ const FilterSection = ({
           <div className="w-full h-[1px] bg-[#E2E8F0] my-5"></div>
         </React.Fragment>
 
-        <React.Fragment>
+        {/* <React.Fragment>
           <div className="flex items-center justify-between">
             <FilterTitle title="Fulfillment Speed" />
             <button
@@ -838,7 +838,7 @@ const FilterSection = ({
             </span>
           </div>
           <div className="w-full h-[1px] bg-[#E2E8F0] mt-4 mb-3"></div>
-        </React.Fragment>
+        </React.Fragment> */}
 
         <React.Fragment>
           <div className="flex items-center justify-between">
