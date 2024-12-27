@@ -664,6 +664,7 @@ const Navigation = ({ categories, currentLocation }) => {
                 src={process.env.PUBLIC_URL + "/icons/arrow.svg"}
                 alt="arrow"
               />
+              {/* dsaf */}
               <input
                 type="text"
                 className="h-full w-full border-l border-r-gray-300 px-3 text-base text-[#64748B] outline-none"
