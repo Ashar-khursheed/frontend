@@ -10,7 +10,6 @@ import {
 } from "@szhsin/react-menu";
 import { useCart } from "../context/CartContext";
 import { CiSearch } from "react-icons/ci";
-import { useLocalCartCount } from "../context/LocalCartCount";
 import { getCurrencyMenu } from "../data/navbar";
 import { IoMdClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +19,7 @@ import { useWishlist } from "../context/WishListContext";
 import { debounce } from "lodash";
 import ProfileDrawer from "./ProfileRegistration/ProfileDrawer/ProfileDrawer";
 import SidebarProfile from "../components/SidebarProfile";
-
+import { navItems } from "../data/sidebar";
 const Navigation = ({ categories, currentLocation }) => {
   const token = localStorage.getItem("authToken");
   const [currencyMenu, setCurrencyMenu] = useState(getCurrencyMenu(token));
@@ -221,12 +220,12 @@ const Navigation = ({ categories, currentLocation }) => {
       {openModel && !token ? (
         <React.Fragment>
           <div
-            className="bg-[#000000a1] translate-x-[100px] bg-[red] primary w-[10px] h-[100vh] z-[999] fixed flex items-center justify-center"
+            className="bg-[#000000a1] primary w-full h-[100vh] z-[999] fixed flex items-center justify-center"
             onClick={() => setOpenModel(false)}
           ></div>
-          <div className="w-[375px] bg-white rounded-[10px] z-[9999] fixed top-[50%] left-[50%] translate-x-[-50%] hidden translate-y-[-50%]">
-            <div className="bg-[#f6f8fb] border-b  border-b-[#e2e8f0] flex items-center justify-start sm:justify-between p-5 py-3 rounded-t-[10px]">
-              <span></span>
+          <div className="w-[375px] bg-white rounded-[10px] z-[9999] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+            <div className="bg-[#f6f8fb] border-b  border-b-[#e2e8f0] flex items-center justify-between p-5 py-3 rounded-t-[10px]">
+              <span className="text-[#2E2F32] text-sm font-semibold"></span>
               <span
                 className="cursor-pointer"
                 onClick={() => setOpenModel(false)}
@@ -239,6 +238,7 @@ const Navigation = ({ categories, currentLocation }) => {
                 Delivery options and delivery speeds may vary for different
                 locations
               </p>
+
               <button
                 onClick={() => {
                   navigate("/login");
@@ -284,8 +284,8 @@ const Navigation = ({ categories, currentLocation }) => {
                 ) : null}
                 {currentLocation ? (
                   <p className="text-[13px] text-black mt-2">
-                    {currentLocation.as} {currentLocation.regionName}
-                    {currentLocation.country}
+                    {currentLocation.city}, {currentLocation.zip},{" "}
+                    {currentLocation.regionName}, {currentLocation.country}
                   </p>
                 ) : null}
                 <p className="text-sm text-[#64748B] mt-2">Default Address</p>
@@ -329,12 +329,11 @@ const Navigation = ({ categories, currentLocation }) => {
             {currencyMenu
               ? currencyMenu.map((currency, index) => {
                   return (
-                    <li key={index} className="flex items-center">
-                      <Link to={currency.redirectUrl} className="mr-2">
-                        {currency.title}
-                      </Link>
-                      {/* for responsive right line after sell on horeca heading */}
-                      <span className="hidden sm:block text-gray-700 w-[1px] h-[40px] lg:h-[12px] bg-[black] mr-[10px]"></span>
+                    <li
+                      key={index}
+                      className="after:content-['|'] after:mx-2 after:text-gray-700"
+                    >
+                      <Link to={currency.redirectUrl}>{currency.title}</Link>
                     </li>
                   );
                 })
@@ -385,20 +384,20 @@ const Navigation = ({ categories, currentLocation }) => {
                   />
                 )}
                 <span className="font-semibold">{selectedLang}</span>
-                <img
+                {/* <img
                   className={`ml-1 transition-all group-hover:rotate-180`}
                   src={process.env.PUBLIC_URL + "/icons/arrow.svg"}
                   alt="arrow"
-                />
+                /> */}
               </div>
               <ul
-                className={`absolute top-5 left-[-10px] w-full hidden group-hover:block w-[100px] bg-gray-200 rounded-md `}
+                className={`absolute top-5 left-[-10px] w-full hidden group-hover:block bg-gray-200 rounded-md `}
               >
                 {lang.map((lang, index) => {
                   return (
                     <li
                       key={index}
-                      className=" px-3 py-[4px] border border-white text-xs"
+                      className=" px-3 border border-white text-xs"
                       onClick={() => {
                         setSelectedLang(lang);
                       }}
@@ -412,32 +411,9 @@ const Navigation = ({ categories, currentLocation }) => {
           </ul>
         </Wrapper>
       </div>
-      <div className="hidden sm:flex md:flex lg:flex xl:flex 2xl:hidden items-center justify-left bg-[#def9ec] p-[10px]">
-        <Wrapper>
-          <div className="flex items-center">
-            <img
-              className="p-[2px] rounded-[2px]"
-              src={process.env.PUBLIC_URL + "/icons/location.svg"}
-              alt="Location"
-            />
-            <p className="text-[14px] ml-[10px] leading-[16.42px] font-semibold text-[#196637]">
-              Deliver To :
-            </p>
-            {currentLocation ? (
-              <span className="text-[#196637] text-sm ml-3">
-                {currentLocation.city}, {currentLocation.country}
-              </span>
-            ) : (
-              <span className="text-[#196637] text-sm ml-3">
-                Fetching Location...
-              </span>
-            )}
-          </div>
-        </Wrapper>
-      </div>
 
       {/* Main Nav*/}
-      <Wrapper classes="flex items-center flex-row justify-between sm:justify-start sm:justify-between py-5">
+      <Wrapper classes="flex items-center flex-row justify-start sm:justify-between py-5">
         {/* Drawer */}
         <div>
           {/* Main Drawer */}
@@ -592,7 +568,7 @@ const Navigation = ({ categories, currentLocation }) => {
             />
           )}
         </div>
-        <div className={window.innerWidth < 640 ? "mr-[15%]" : "mr-[0%]"}>
+        <div className={window.innerWidth < 640 ? "mr-[15%]" : "ml-[0]"}>
           <Link to="/home">
             <img
               onClick={toggleDrawer}
@@ -602,9 +578,6 @@ const Navigation = ({ categories, currentLocation }) => {
             />
           </Link>
         </div>
-        {window?.innerWidth > 640 && (
-          <div className="mr-[10%] h-[40px] w-[10px] bg-[white] block sm:hidden"></div>
-        )}
         <Link to="/home">
           <img
             className="ml-[40px] sm:ml-[0px]"
@@ -612,14 +585,10 @@ const Navigation = ({ categories, currentLocation }) => {
             alt="Horeca Store"
           />
         </Link>
-        {/* for responsiveness */}
-        {window?.innerWidth > 640 && (
-          <div className="mr-[10%] h-[40px] w-[20px] ml-[40px] bg-[white] block sm:hidden"></div>
-        )}
-        {/* for responsiveness */}
+
         {/* Location Search Bar  */}
         <div
-          className="cursor-pointer relative w-[12.8rem]  flex items-center border border-gray-300 rounded-full h-12 px-3 ml-14 hidden xl:flex"
+          className="cursor-pointer relative w-[12.8rem]  flex items-center border border-gray-300 rounded-full h-12 px-3 ml-14 hidden sm:flex"
           onClick={() => setOpenModel(true)}
         >
           <img
@@ -628,35 +597,28 @@ const Navigation = ({ categories, currentLocation }) => {
           />
           {currentLocation ? (
             <span className="text-[#64748B] text-sm ml-3 address">
-              {currentLocation.as}, {currentLocation.city},{" "}
-              {currentLocation.zip}
+              {currentLocation.city}, {currentLocation.zip},{" "}
+              {currentLocation.regionName}, {currentLocation.country}
             </span>
           ) : (
             <span className="text-[#64748B] text-sm ml-3">
               Fetching Location...
             </span>
           )}
-          <img
+          {/* <img
             className="absolute right-3"
             src={process.env.PUBLIC_URL + "/icons/arrow.svg"}
             alt="arrow"
-          />
+          /> */}
         </div>
 
         {/* Search Option Button */}
-        <div className="w-[60%] rounded-full border border-gray-300  relative ml-2 hidden sm:block">
+        <div className="w-[50%] rounded-full border border-gray-300  relative ml-2 hidden sm:block">
           <form
             className="flex items-center h-12"
             onSubmit={(e) => handlerFormSubmit(e)}
           >
-            <span className="ml-2 cursor-pointer text-primary text-base px-5">
-              All
-            </span>
-            <img
-              className="mr-[10px] cursor-pointer  ml-[-10px]"
-              src={process.env.PUBLIC_URL + "/icons/arrow.svg"}
-              alt="arrow"
-            />
+            <span className="ml-2 text-primary text-base px-5">All</span>
             <input
               type="text"
               className="h-full w-full border-l border-r-gray-300 px-3 text-base text-[#64748B] outline-none"
@@ -772,7 +734,7 @@ const Navigation = ({ categories, currentLocation }) => {
           )}
         </div>
 
-        <div className="flex flex-row  items-center justify-evenly ml-[10%] sm:ml-0  sm:mr-2  sm:min-w-[125px] ">
+        <div className="flex flex-row  items-center justify-evenly ml-[10%] sm:ml-6  sm:mr-2  sm:min-w-[125px] ">
           {/* <div className="relative mx-2 hidden sm:flex">
             <img src={process.env.PUBLIC_URL + "/icons/graph.svg"} alt="" />
             <span className="absolute bottom-[-10px] right-[-6px] text-white bg-primary size-[22px] flex items-center justify-center text-sm rounded-full">
@@ -781,7 +743,7 @@ const Navigation = ({ categories, currentLocation }) => {
           </div> */}
 
           <div
-            className="relative mx-2 hidden sm:flex cursor-pointer group"
+            className="relative mx-2 hidden sm:flex cursor-pointer"
             onClick={() => navigate("/wishlist")}
           >
             <img
@@ -791,25 +753,15 @@ const Navigation = ({ categories, currentLocation }) => {
             <span className="absolute bottom-[-10px] right-[-6px] text-white bg-primary size-[22px] flex items-center justify-center text-sm rounded-full">
               {totalWishListCount}
             </span>
-
-            {/* Tooltip */}
-            <div className="absolute bottom-full mb-2 right-0 hidden group-hover:block bg-[#DEF9EC] text-[#186737] text-xs rounded py-1 px-2">
-              Wishlist
-            </div>
           </div>
           <div
-            className="relative mx-2 cursor-pointer group mr-[10px] sm:mr-[0px]"
+            className="relative mx-2 cursor-pointer"
             onClick={() => navigate("/checkout")}
           >
-            <img src={process.env.PUBLIC_URL + "/icons/cart.svg"} alt="cart" />
+            <img src={process.env.PUBLIC_URL + "/icons/cart.svg"} alt="" />
             <span className="absolute bottom-[-10px] right-[-6px] text-white bg-primary size-[22px] flex items-center justify-center text-sm rounded-full">
               {totalCartCount}
             </span>
-
-            {/* Tooltip */}
-            <div className="absolute bottom-full mb-2 right-0 hidden group-hover:block bg-[#DEF9EC] text-[#186737] text-xs rounded py-1 px-2">
-              Cart
-            </div>
           </div>
         </div>
         <div className="flex flex-row">
@@ -1042,13 +994,20 @@ const Navigation = ({ categories, currentLocation }) => {
             </div>
           </div>
           <div className="col-span-1 sm:col-span-2 md:col-span-12 lg:col-span-6     p-5">
-            {/* <SidebarProfile/> */}
-            <div className="flex items-center p-5 border-b-2 justify-between">
-              <p className="text-[16px] leading-[18.77px]">Account</p>
-              <p className="text-[13px] leading-[15.75px]">
-                Your info at a glance
-              </p>
-            </div>
+            {navItems.map((item, index) => {
+              return (
+                <div
+                  className="flex items-center p-5 border-b-2 justify-between cursor-pointer"
+                  key={index}
+                  onClick={() => navigate(item.link)}
+                >
+                  <div className="flex items-center">
+                    <img className="h-[25px] mr-[10px]" src={item.icon} />
+                    <p className="text-[16px] leading-[18.77px]">{item.name}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
@@ -1056,22 +1015,21 @@ const Navigation = ({ categories, currentLocation }) => {
         <Wrapper classes="flex flex-row items-center justify-between">
           <div className="flex group relative group/cat1 mr-3  items-center justify-between w-full">
             <div
-              className="flex items-center justify-center mr-3 cursor-pointer"
+              className="flex flex-row items-center justify-center mr-3 cursor-pointer"
               ref={ref}
               {...anchorProps}
             >
               <img
-                src={`${process.env.PUBLIC_URL}/icons/category.svg`}
+                src={process.env.PUBLIC_URL + "/icons/category.svg"}
                 alt=""
-                className="h-5 w-5"
               />
-              <span className="font-bold text-base text-primary ml-2">
-                Shop By Categories&nbsp;
+              <span className="font-bold text-lg text-primary ml-2">
+                Shop By Categories
               </span>
               <img
-                src={`${process.env.PUBLIC_URL}/icons/arrow.svg`}
+                className="ml-1  size-5 mt-[2px]"
+                src={process.env.PUBLIC_URL + "/icons/arrow.svg"}
                 alt=""
-                className="h-5 w-5 ml-1"
               />
             </div>
             <div className="w-[80%] flex flex-row items-center justify-between">
@@ -1081,7 +1039,7 @@ const Navigation = ({ categories, currentLocation }) => {
                       <React.Fragment key={index}>
                         {index <= maxIndex && (
                           <Link
-                            className="text-[13px] font-normal text-primary mx-2"
+                            className="text-base text-primary mx-2"
                             to={`/collections/${cat.slug}`}
                           >
                             {cat.name}
@@ -1089,7 +1047,7 @@ const Navigation = ({ categories, currentLocation }) => {
                         )}
                         {index === 7 && (
                           <Link
-                            className="text-[13px] font-bold text-primary mx-2 "
+                            className="text-base text-primary mx-2 font-bold"
                             to="/collections/deal-of-a-days"
                           >
                             Deal of the day
