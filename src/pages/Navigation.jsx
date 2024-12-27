@@ -192,11 +192,11 @@ const Navigation = ({ categories, currentLocation }) => {
       const width = window.innerWidth;
 
       if (width >= 1536) {
-        setMaxIndex(4); // 2xl: index <= 4
+        setMaxIndex(7); // 2xl: index <= 4
       } else if (width >= 1280) {
-        setMaxIndex(3); // xl: index <= 3
+        setMaxIndex(6); // xl: index <= 3
       } else if (width >= 1024) {
-        setMaxIndex(2); // lg: index <= 2
+        setMaxIndex(3); // lg: index <= 2
       } else if (width >= 768) {
         setMaxIndex(1); // md: index <= 1
       } else {
@@ -215,35 +215,31 @@ const Navigation = ({ categories, currentLocation }) => {
     };
   }, []);
 
-
-
   return (
     <React.Fragment>
       {openModel && !token ? (
-           <React.Fragment>
-           <div
-             className="bg-[#000000a1] primary w-full h-[100vh] z-[999] fixed flex items-center justify-center"
-             onClick={() => setOpenModel(false)}
-           ></div>
-           <div className="w-[375px] bg-white rounded-[10px] z-[9999] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-             <div className="bg-[#f6f8fb] border-b  border-b-[#e2e8f0] flex items-center justify-between p-5 py-3 rounded-t-[10px]">
-               <span className="text-[#2E2F32] text-sm font-semibold">
-                
-               </span>
-               <span
-                 className="cursor-pointer"
-                 onClick={() => setOpenModel(false)}
-               >
-                 <IoMdClose size={20} />
-               </span>
-             </div>
-             <div className="px-5">
-               <p className="text-sm text-[#2E2F32]  my-5">
-               Delivery options and delivery speeds may vary for different
-               locations
-               </p>
-             
-               <button
+        <React.Fragment>
+          <div
+            className="bg-[#000000a1] primary w-full h-[100vh] z-[999] fixed flex items-center justify-center"
+            onClick={() => setOpenModel(false)}
+          ></div>
+          <div className="w-[375px] bg-white rounded-[10px] z-[9999] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+            <div className="bg-[#f6f8fb] border-b  border-b-[#e2e8f0] flex items-center justify-between p-5 py-3 rounded-t-[10px]">
+              <span className="text-[#2E2F32] text-sm font-semibold"></span>
+              <span
+                className="cursor-pointer"
+                onClick={() => setOpenModel(false)}
+              >
+                <IoMdClose size={20} />
+              </span>
+            </div>
+            <div className="px-5">
+              <p className="text-sm text-[#2E2F32]  my-5">
+                Delivery options and delivery speeds may vary for different
+                locations
+              </p>
+
+              <button
                 onClick={() => {
                   navigate("/login");
                   setOpenModel(false);
@@ -252,9 +248,9 @@ const Navigation = ({ categories, currentLocation }) => {
               >
                 Sign in to update your location
               </button>
-             </div>
-           </div>
-         </React.Fragment>
+            </div>
+          </div>
+        </React.Fragment>
       ) : null}
 
       {openModel && token ? (
@@ -288,7 +284,8 @@ const Navigation = ({ categories, currentLocation }) => {
                 ) : null}
                 {currentLocation ? (
                   <p className="text-[13px] text-black mt-2">
-                    {currentLocation.city}, {currentLocation.zip}, {currentLocation.regionName}, {currentLocation.country}
+                    {currentLocation.city}, {currentLocation.zip},{" "}
+                    {currentLocation.regionName}, {currentLocation.country}
                   </p>
                 ) : null}
                 <p className="text-sm text-[#64748B] mt-2">Default Address</p>
@@ -487,8 +484,6 @@ const Navigation = ({ categories, currentLocation }) => {
                 </p>
                 <ul className="">
                   {childCategory?.map((item, index) => {
-         
-
                     return (
                       <li
                         onClick={() => {
@@ -602,7 +597,8 @@ const Navigation = ({ categories, currentLocation }) => {
           />
           {currentLocation ? (
             <span className="text-[#64748B] text-sm ml-3 address">
-            {currentLocation.city}, {currentLocation.zip}, {currentLocation.regionName}, {currentLocation.country}
+              {currentLocation.city}, {currentLocation.zip},{" "}
+              {currentLocation.regionName}, {currentLocation.country}
             </span>
           ) : (
             <span className="text-[#64748B] text-sm ml-3">
@@ -998,20 +994,20 @@ const Navigation = ({ categories, currentLocation }) => {
             </div>
           </div>
           <div className="col-span-1 sm:col-span-2 md:col-span-12 lg:col-span-6     p-5">
-             {navItems.map((item, index) => {
-               return (
-               
-            <div className="flex items-center p-5 border-b-2 justify-between cursor-pointer" key={index}   onClick={() => navigate(item.link)}>
-              <div className="flex items-center">
-              <img className="h-[25px] mr-[10px]" src={item.icon} />
-              <p className="text-[16px] leading-[18.77px]">
-               {item.name}
-              </p>
-              </div>
-             
-            </div>
-                );
-              })}
+            {navItems.map((item, index) => {
+              return (
+                <div
+                  className="flex items-center p-5 border-b-2 justify-between cursor-pointer"
+                  key={index}
+                  onClick={() => navigate(item.link)}
+                >
+                  <div className="flex items-center">
+                    <img className="h-[25px] mr-[10px]" src={item.icon} />
+                    <p className="text-[16px] leading-[18.77px]">{item.name}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

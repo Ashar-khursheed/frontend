@@ -92,7 +92,7 @@ export const BlogsCard = ({ classes }) => {
                             {item.name}{" "}
                           </h3>
                           <p
-                            className="text-gray-700  my-5 line-clamp-4 text-sm lg:text-md xl:text-base"
+                            className="text-gray-700 text-[10px]  my-5 line-clamp-4 text-sm lg:text-md xl:text-base"
                             dangerouslySetInnerHTML={{
                               __html: item.content.replace(/<\/?p>/g, ""),
                             }}
