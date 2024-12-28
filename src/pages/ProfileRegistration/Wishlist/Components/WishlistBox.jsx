@@ -38,13 +38,13 @@ const WishlistBox = ({ data, handlerRemoveWishlist, handleAddToCart }) => {
         <div className="flex items-center w-[100%] h-[100%] lg:h-[230px] mt-[-20px] lg:mt-[0] lg:w-[20%] justify-between lg:justify-center flex-row lg:flex-col md:flex-row p-[15px]">
           <button
             onClick={() => handleAddToCart(data)}
-            className="flex mb-0 lg:mb-[5px] bg-[#DEF9EC] items-center justify-center rounded-md font-sans w-[175px] lg:w-[180px] h-[40px] text-[#186737] text-[16px] font-medium leading-[16px] text-left underline-offset-auto decoration-slice"
+            className="flex mb-0 lg:mb-[5px] bg-[#DEF9EC] hover:bg-[#186737] hover:text-[#DEF9EC] items-center justify-center rounded-md font-sans w-[175px] lg:w-[180px] h-[40px] text-[#186737] text-[16px] font-medium leading-[16px] text-left underline-offset-auto decoration-slice"
           >
             Add To Cart
           </button>
           <button
             onClick={() => handlerRemoveWishlist(data)}
-            className="flex mt-0 lg:mt-[5px] items-center justify-center rounded-md font-sans w-[175px] lg:w-[180px] h-[40px] border border-[#666666] text-[16px] text-[#666666] font-medium leading-[16px] text-left underline-offset-auto decoration-slice"
+            className="flex mt-0 lg:mt-[5px] items-center hover:bg-[#186737] hover:text-[#DEF9EC] justify-center rounded-md font-sans w-[175px] lg:w-[180px] h-[40px] border border-[#666666] text-[16px] text-[#666666] font-medium leading-[16px] text-left underline-offset-auto decoration-slice"
           >
             Remove
           </button>

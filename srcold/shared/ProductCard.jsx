@@ -201,7 +201,7 @@ const ProductCard = ({
   return (
     <React.Fragment>
       <div
-        className={`${classes}  min-h-[330px] sm:min-h-[520px] block w-[183px] sm:w-full group border-gray-300 relative rounded-[4px]  cursor-pointer product__card__wrapper group transition-all border-2 z-[70] hover:border-primary duration-700`}
+        className={`${classes}  min-h-[330px] sm:min-h-[520px] block sm:w-full group border-gray-300 relative rounded-[4px]  cursor-pointer product__card__wrapper group transition-all border-2 z-[70] hover:border-primary duration-700`}
         onMouseLeave={() => onMouseLeaveFunction(product.video_path)}
         onMouseEnter={() => onMouseEnterFunction(product.video_path)}
       >

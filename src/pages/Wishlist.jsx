@@ -34,7 +34,6 @@ const Wishlist = () => {
         const response = await apiClient.get("/wishlist");
         setWishListData(response?.data?.wishlist);
         setLoader(false);
- 
       } catch (error) {
         console.error("Error:", error);
       } finally {
@@ -52,6 +51,9 @@ const Wishlist = () => {
           params: { product_id: product.id },
         });
         setLoader(false);
+        toast(
+          <span className="line-clamp-2">{`Successfully Remove From Cart`}</span>
+        );
         fetchAllReviews();
       } catch (error) {
         console.error("Error:", error);
@@ -174,10 +176,8 @@ const Wishlist = () => {
                     </>
                   ) : (
                     <>
-                      <div class="container mx-auto">
-                        <div class="grid grid-cols-1 md:grid-cols-6">
-                          <h1>Not found any products</h1>
-                        </div>
+                      <div class="flex items-center justify-center w-[90vw] h-[100vh]">
+                        <h1>Not product Found</h1>
                       </div>
                     </>
                   )}
