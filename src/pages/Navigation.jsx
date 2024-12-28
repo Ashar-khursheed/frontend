@@ -312,7 +312,7 @@ const Navigation = ({ categories, currentLocation }) => {
       <div className="flex lg:hidden items-center bg-[#186737] p-[10px]">
         <img
           className="p-[2px] rounded-[2px]"
-          src={process.env.PUBLIC_URL + "/icons/location.svg"}
+          src={process.env.PUBLIC_URL + "/icons/LocationMobileWhite.svg"}
           alt="Location"
         />
         <p className="text-[14px] ml-[10px] leading-[16.42px] font-semibold text-[white]">
@@ -1112,7 +1112,7 @@ const Navigation = ({ categories, currentLocation }) => {
                             className="text-[16px] font-normal text-primary mx-2"
                             to={`/collections/${cat.slug}`}
                           >
-                            {cat.name}
+                            <p className="hover:text-[gray]">{cat.name}</p>
                           </Link>
                         )}
                         {index === categories.length - 1 && (

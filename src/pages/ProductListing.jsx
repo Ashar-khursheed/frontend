@@ -50,7 +50,6 @@ const ProductListing = () => {
       title: "Products",
     },
   ];
-
   const fetchProducts = async () => {
     const authToken = localStorage.getItem("authToken");
     setLoader(true);
@@ -387,7 +386,7 @@ const ProductListing = () => {
             </div>
 
             {/* Related Searched  */}
-            {!loader && products.length == perPage ? (
+            {!loader && products.length <= perPage ? (
               <Pagination
                 page={page}
                 paginationData={paginationData}

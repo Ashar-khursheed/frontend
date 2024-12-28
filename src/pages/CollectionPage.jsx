@@ -1,7 +1,5 @@
 import React, { lazy, useEffect, useState } from "react";
-import {
-  megaDeals,
-} from "../data/Collections";
+import { megaDeals } from "../data/Collections";
 
 import { ExploreBrandImages } from "../data/Collections";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -33,7 +31,6 @@ const CollectionPage = () => {
   // };
 
   const fetchCategories = async () => {
-
     try {
       setCategoryLoader(true);
       const response = await apiClient.get("/categories");
@@ -95,7 +92,6 @@ const CollectionPage = () => {
   const bigScreenCss =
     "flex grid-cols-5 sm:grid md:grid lg:grid 2xl:grid gap-5 sm:gap-5 sm:grid sm:space-x-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5";
 
-
   return (
     <>
       <Wrapper>
@@ -112,7 +108,6 @@ const CollectionPage = () => {
       {/* Main Page  */}
       <Wrapper>
         <div className="grid grid-cols-9 gap-4">
-
           <div className="col-span-9 mt-8">
             {/* Collection Header  */}
             <div className="flex items-center justify-center text-center flex-col">
@@ -134,104 +129,101 @@ const CollectionPage = () => {
 
             {/* Collection Category  */}
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 gap-5 mt-8">
-              {categoryLoader ? (
-                // Render skeletons while categories are loading
-                Array.from({ length: 14 }).map((_, index) => (
-                  <div key={index} className="col-span-1">
-                    <Skeleton height={150} />
-                  </div>
-                ))
-              ) : (!!filterCategories && filterCategories.map((cat, index) => {
-                const isVisible =
-                  window?.innerWidth < 640 ? index < 8 : index < 14;
-                return isVisible ? (
-                  <React.Fragment key={index}>
-                    <div className="flex flex-col">
-                      <div
-                        className={`bg-[#F5F5F5] border-[#D9D9D9] col-span-1 flex items-center justify-center flex-col cursor-pointer transition-all border-2 hover:border-primary p-4 rounded-md ${cat?.id === selectedCat?.id
-                            ? "border-primary"
-                            : "border-transparent"
-                          }`}
-                      >
-                        <img
-                          className="w-[193px] h-[188px]"
-                          src={`${cat.image}`}
-                          alt={cat.name}
-                        />
-                        <h4 className="block sm:hidden mt-2 text-base text-black font-semibold sm:text-primary text-left">
-                          {cat.name}
-                        </h4>
-                        <h4 className="block sm:hidden mt-2 w-[100%] text-base font-semibold text-primary text-left sm:text-center">
-                          {cat.count} Products
-                        </h4>
-                      </div>
-                      <h4 className="hidden sm:block mt-2 text-base text-black font-semibold sm:text-primary text-center">
-                        {cat.name}
-                      </h4>
+              {categoryLoader
+                ? // Render skeletons while categories are loading
+                  Array.from({ length: 14 }).map((_, index) => (
+                    <div key={index} className="col-span-1">
+                      <Skeleton height={150} />
                     </div>
-                  </React.Fragment>
-                ) : null;
-              })
-              )}
-
-
-
-
+                  ))
+                : !!filterCategories &&
+                  filterCategories.map((cat, index) => {
+                    const isVisible =
+                      window?.innerWidth < 640 ? index < 8 : index < 14;
+                    return isVisible ? (
+                      <React.Fragment key={index}>
+                        <div className="flex flex-col">
+                          <div
+                            className={`bg-[#F5F5F5] border-[#D9D9D9] col-span-1 flex items-center justify-center flex-col cursor-pointer transition-all border-2 hover:border-primary p-4 rounded-md ${
+                              cat?.id === selectedCat?.id
+                                ? "border-primary"
+                                : "border-transparent"
+                            }`}
+                          >
+                            <img
+                              className="w-[193px] h-[188px]"
+                              src={`${cat.image}`}
+                              alt={cat.name}
+                            />
+                            <h4 className="block sm:hidden mt-2 text-base text-black font-semibold sm:text-primary text-left">
+                              {cat.name}
+                            </h4>
+                            <h4 className="block sm:hidden mt-2 w-[100%] text-base font-semibold text-primary text-left sm:text-center">
+                              {cat.count} Products
+                            </h4>
+                          </div>
+                          <h4 className="hidden sm:block mt-2 text-base text-black font-semibold sm:text-primary text-center">
+                            {cat.name}
+                          </h4>
+                        </div>
+                      </React.Fragment>
+                    ) : null;
+                  })}
             </div>
 
             <div className="hidden sm:grid grid-cols-2  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 mt-8">
               {selectedCat && selectedCat.children
                 ? selectedCat.children.map((cat, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="grid-cols-1 p-5 border border-gray-300  rounded-[4px] flex  flex-col transition-all hover:border-primary"
-                    >
-                      <Link
+                    return (
+                      <div
                         key={index}
-                        className="mt-1 block text-[#666666] text-base underline"
-                        to={`/collections/${id}/${cat.slug}/${cat.id}`}
+                        className="grid-cols-1 p-5 border border-gray-300  rounded-[4px] flex  flex-col transition-all hover:border-primary"
                       >
-                        <img
-                          className="w-full"
-                          src={cat.image}
-                          alt={cat.name}
-                        />
-                        <div className="mt-4 flex items-center justify-between">
-                          <h4 className="text-primary text-lg font-semibold">
-                            {cat.name}
-                          </h4>
-                          <span className="text-primary text-sm flex justify-end  flex-row min-w-[120px]">
-                            {cat.children.length} Categories{" "}
-                            <img
-                              src={
-                                process.env.PUBLIC_URL +
-                                "/icons/arrow-right.png"
-                              }
-                              alt=""
-                            />
-                          </span>
+                        <Link
+                          key={index}
+                          className="mt-1 block text-[#666666] text-base underline"
+                          to={`/collections/${id}/${cat.slug}/${cat.id}`}
+                        >
+                          <img
+                            className="w-full"
+                            src={cat.image}
+                            alt={cat.name}
+                          />
+                          <div className="mt-4 flex items-center justify-between">
+                            <h4 className="text-primary text-lg font-semibold">
+                              {cat.name}
+                            </h4>
+                            <span className="text-primary text-sm flex justify-end  flex-row min-w-[120px]">
+                              {cat.children.length} Categories{" "}
+                              <img
+                                src={
+                                  process.env.PUBLIC_URL +
+                                  "/icons/arrow-right.png"
+                                }
+                                alt=""
+                              />
+                            </span>
+                          </div>
+                        </Link>
+                        <div className="border bg-[#E2E8F0] w-full h-[1px] my-4"></div>
+                        <div className="overflow-y-auto max-h-[250px]">
+                          {cat.children
+                            ? cat.children.map((cat2) => {
+                                return (
+                                  <Link
+                                    key={index}
+                                    className="mt-1 block text-[#666666] text-base underline"
+                                    to={`/collections/${id}/${cat2.slug}/${cat2.id}?type=1`}
+                                  >
+                                    {cat2.name}
+                                  </Link>
+                                );
+                              })
+                            : null}
                         </div>
-                      </Link>
-                      <div className="border bg-[#E2E8F0] w-full h-[1px] my-4"></div>
-                      <div className="overflow-y-auto max-h-[250px]">
-                        {cat.children
-                          ? cat.children.map((cat2) => {
-                            return (
-                              <Link
-                                key={index}
-                                className="mt-1 block text-[#666666] text-base underline"
-                                to={`/collections/${id}/${cat2.slug}/${cat2.id}?type=1`}
-                              >
-                                {cat2.name}
-                              </Link>
-                            );
-                          })
-                          : null}
                       </div>
-                    </div>
-                  );
-                })
+                    );
+                  })
                 : null}
             </div>
           </div>
@@ -243,17 +235,17 @@ const CollectionPage = () => {
             </h3>
             {window?.innerWidth < 640 && (
               <p className="max-w-[850px] text-gray-700 mt-2 font-normal mb-[20px] text-[14px]">
-                Find top-notch commercial kitchen equipment for restaurants We
-                offer a wide range.
+                Find Top-Notch Commercial Kitchen Equipment For Restaurants. We
+                Offer A Wide Range .
               </p>
             )}
             {window?.innerWidth > 640 && (
               <p className="max-w-[850px] text-gray-700 mt-2 text-base">
-                Find top-notch commercial kitchen equipment for restaurants. We
-                offer a wide range of products from trusted brands
-                like Beckers, Rational, Cambro, Empero, Robot Coupe, Lacor,
-                and Roller Grill. Whether you're outfitting a new kitchen or
-                upgrading your current setup.
+                Find Top-Notch Commercial Kitchen Equipment For Restaurants. We
+                Offer A Wide Range Of Products From Trusted Brands Like Beckers,
+                Rational, Cambro, Empero, Robot Coupe, Lacor, And Roller Grill.
+                Whether You're Outfitting A New Kitchen Or Upgrading Your
+                Current Setup.
               </p>
             )}
           </div>
@@ -261,16 +253,16 @@ const CollectionPage = () => {
             <div className="grid grid-cols-3 mt-5 gap-6">
               {megaDeals
                 ? megaDeals.map((items, index) => {
-                  return (
-                    <Link
-                      key={index}
-                      to={items.redirectLink}
-                      className="mt-2 mr-[10px]"
-                    >
-                      <img src={items.img} alt="" />
-                    </Link>
-                  );
-                })
+                    return (
+                      <Link
+                        key={index}
+                        to={items.redirectLink}
+                        className="mt-2 mr-[10px]"
+                      >
+                        <img src={items.img} alt="" />
+                      </Link>
+                    );
+                  })
                 : null}
             </div>
           )}
@@ -278,22 +270,24 @@ const CollectionPage = () => {
             <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
               {megaDeals
                 ? megaDeals.map((items, index) => (
-                  <Link
-                    key={index}
-                    to={items.redirectLink}
-                    className="snap-center flex-shrink-0 w-full"
-                  >
-                    <img
-                      className="w-full h-auto object-cover"
-                      src={items.img}
-                      alt=""
-                    />
-                  </Link>
-                ))
+                    <Link
+                      key={index}
+                      to={items.redirectLink}
+                      className="snap-center flex-shrink-0 w-full"
+                    >
+                      <img
+                        className="w-full h-auto object-cover"
+                        src={items.img}
+                        alt=""
+                      />
+                    </Link>
+                  ))
                 : null}
             </div>
           )}
         </div>
+        {/* Danish Slider */}
+        {/* Danish Slider */}
         <div className="mb-10">
           <div className="flex items-center justify-between mx-2 my-[10px] sm:my-8">
             <h2 className="font-medium sm:font-semibold text-[16px] sm:text-2xl leading-[18.77px] text-black-100 ">
@@ -312,18 +306,18 @@ const CollectionPage = () => {
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                    <ProductCard
-                      classes="min-h-[600px] mx-2"
-                      key={index}
-                      product={product}
-                    />
-                  ))
+                      <ProductCard
+                        classes="min-h-[600px] mx-2"
+                        key={index}
+                        product={product}
+                      />
+                    ))
                   : Array.from({ length: 10 }).map((_, index) => (
-                    <Skeleton
-                      key={index}
-                      className="col-span-1 mt-1 min-h-[400px]"
-                    />
-                  ))}
+                      <Skeleton
+                        key={index}
+                        className="col-span-1 mt-1 min-h-[400px]"
+                      />
+                    ))}
               </Slider>
             </div>
           )}
@@ -332,10 +326,10 @@ const CollectionPage = () => {
               style={
                 window.innerWidth < 640
                   ? {
-                    overflow: "auto",
-                    scrollbarWidth: "none", // For Firefox
-                    msOverflowStyle: "none", // For Internet Explorer and Edge
-                  }
+                      overflow: "auto",
+                      scrollbarWidth: "none", // For Firefox
+                      msOverflowStyle: "none", // For Internet Explorer and Edge
+                    }
                   : {}
               }
               className={bigScreenCss}
@@ -351,20 +345,20 @@ const CollectionPage = () => {
                 <React.Fragment>
                   {products && products.length > 0
                     ? products.map((product, index) =>
-                      index < 10 ? (
-                        <ProductCard
-                          key={index}
-                          classes="col-span-1 mt-1"
-                          product={product}
-                        />
-                      ) : null
-                    )
+                        index < 10 ? (
+                          <ProductCard
+                            key={index}
+                            classes="col-span-1 mt-1"
+                            product={product}
+                          />
+                        ) : null
+                      )
                     : Array.from({ length: 10 }).map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        className="col-span-1 mt-1 min-h-[400px]"
-                      />
-                    ))}
+                        <Skeleton
+                          key={index}
+                          className="col-span-1 mt-1 min-h-[400px]"
+                        />
+                      ))}
                 </React.Fragment>
               )}
             </div>
@@ -410,18 +404,18 @@ const CollectionPage = () => {
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                    <ProductCard
-                      classes="min-h-[600px] mx-2"
-                      key={index}
-                      product={product}
-                    />
-                  ))
+                      <ProductCard
+                        classes="min-h-[600px] mx-2"
+                        key={index}
+                        product={product}
+                      />
+                    ))
                   : Array.from({ length: 10 }).map((_, index) => (
-                    <Skeleton
-                      key={index}
-                      className="col-span-1 mt-1 min-h-[400px]"
-                    />
-                  ))}
+                      <Skeleton
+                        key={index}
+                        className="col-span-1 mt-1 min-h-[400px]"
+                      />
+                    ))}
               </Slider>
             </div>
           )}
@@ -430,10 +424,10 @@ const CollectionPage = () => {
               style={
                 window.innerWidth < 640
                   ? {
-                    overflow: "auto",
-                    scrollbarWidth: "none", // For Firefox
-                    msOverflowStyle: "none", // For Internet Explorer and Edge
-                  }
+                      overflow: "auto",
+                      scrollbarWidth: "none", // For Firefox
+                      msOverflowStyle: "none", // For Internet Explorer and Edge
+                    }
                   : {}
               }
               className={bigScreenCss}
@@ -449,20 +443,20 @@ const CollectionPage = () => {
                 <React.Fragment>
                   {products && products.length > 0
                     ? products.map((product, index) =>
-                      index < 10 ? (
-                        <ProductCard
-                          key={index}
-                          classes="col-span-1 mt-1"
-                          product={product}
-                        />
-                      ) : null
-                    )
+                        index < 10 ? (
+                          <ProductCard
+                            key={index}
+                            classes="col-span-1 mt-1"
+                            product={product}
+                          />
+                        ) : null
+                      )
                     : Array.from({ length: 10 }).map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        className="col-span-1 mt-1 min-h-[400px]"
-                      />
-                    ))}
+                        <Skeleton
+                          key={index}
+                          className="col-span-1 mt-1 min-h-[400px]"
+                        />
+                      ))}
                 </React.Fragment>
               )}
             </div>
@@ -508,18 +502,18 @@ const CollectionPage = () => {
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                    <ProductCard
-                      classes="min-h-[600px] mx-2"
-                      key={index}
-                      product={product}
-                    />
-                  ))
+                      <ProductCard
+                        classes="min-h-[600px] mx-2"
+                        key={index}
+                        product={product}
+                      />
+                    ))
                   : Array.from({ length: 10 }).map((_, index) => (
-                    <Skeleton
-                      key={index}
-                      className="col-span-1 mt-1 min-h-[400px]"
-                    />
-                  ))}
+                      <Skeleton
+                        key={index}
+                        className="col-span-1 mt-1 min-h-[400px]"
+                      />
+                    ))}
               </Slider>
             </div>
           )}
@@ -528,10 +522,10 @@ const CollectionPage = () => {
               style={
                 window.innerWidth < 640
                   ? {
-                    overflow: "auto",
-                    scrollbarWidth: "none", // For Firefox
-                    msOverflowStyle: "none", // For Internet Explorer and Edge
-                  }
+                      overflow: "auto",
+                      scrollbarWidth: "none", // For Firefox
+                      msOverflowStyle: "none", // For Internet Explorer and Edge
+                    }
                   : {}
               }
               className={bigScreenCss}
@@ -547,20 +541,20 @@ const CollectionPage = () => {
                 <React.Fragment>
                   {products && products.length > 0
                     ? products.map((product, index) =>
-                      index < 10 ? (
-                        <ProductCard
-                          key={index}
-                          classes="col-span-1 mt-1"
-                          product={product}
-                        />
-                      ) : null
-                    )
+                        index < 10 ? (
+                          <ProductCard
+                            key={index}
+                            classes="col-span-1 mt-1"
+                            product={product}
+                          />
+                        ) : null
+                      )
                     : Array.from({ length: 10 }).map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        className="col-span-1 mt-1 min-h-[400px]"
-                      />
-                    ))}
+                        <Skeleton
+                          key={index}
+                          className="col-span-1 mt-1 min-h-[400px]"
+                        />
+                      ))}
                 </React.Fragment>
               )}
             </div>
@@ -603,18 +597,18 @@ const CollectionPage = () => {
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                    <ProductCard
-                      classes="min-h-[600px] mx-2"
-                      key={index}
-                      product={product}
-                    />
-                  ))
+                      <ProductCard
+                        classes="min-h-[600px] mx-2"
+                        key={index}
+                        product={product}
+                      />
+                    ))
                   : Array.from({ length: 10 }).map((_, index) => (
-                    <Skeleton
-                      key={index}
-                      className="col-span-1 mt-1 min-h-[400px]"
-                    />
-                  ))}
+                      <Skeleton
+                        key={index}
+                        className="col-span-1 mt-1 min-h-[400px]"
+                      />
+                    ))}
               </Slider>
             </div>
           )}
@@ -623,10 +617,10 @@ const CollectionPage = () => {
               style={
                 window.innerWidth < 640
                   ? {
-                    overflow: "auto",
-                    scrollbarWidth: "none", // For Firefox
-                    msOverflowStyle: "none", // For Internet Explorer and Edge
-                  }
+                      overflow: "auto",
+                      scrollbarWidth: "none", // For Firefox
+                      msOverflowStyle: "none", // For Internet Explorer and Edge
+                    }
                   : {}
               }
               className={bigScreenCss}
@@ -642,20 +636,20 @@ const CollectionPage = () => {
                 <React.Fragment>
                   {products && products.length > 0
                     ? products.map((product, index) =>
-                      index < 10 ? (
-                        <ProductCard
-                          key={index}
-                          classes="col-span-1 mt-1"
-                          product={product}
-                        />
-                      ) : null
-                    )
+                        index < 10 ? (
+                          <ProductCard
+                            key={index}
+                            classes="col-span-1 mt-1"
+                            product={product}
+                          />
+                        ) : null
+                      )
                     : Array.from({ length: 10 }).map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        className="col-span-1 mt-1 min-h-[400px]"
-                      />
-                    ))}
+                        <Skeleton
+                          key={index}
+                          className="col-span-1 mt-1 min-h-[400px]"
+                        />
+                      ))}
                 </React.Fragment>
               )}
             </div>
@@ -669,17 +663,17 @@ const CollectionPage = () => {
             </h3>
             {window?.innerWidth < 640 && (
               <p className="max-w-[850px] mb-[20px] text-gray-700 mt-2 text-[14px]  sm:text-base">
-                Find top-notch commercial kitchen equipment for restaurants We
-                offer a wide range.
+                Find Top-Notch Commercial Kitchen Equipment For Restaurants. We
+                Offer A Wide Range
               </p>
             )}
             {window?.innerWidth > 640 && (
               <p className="max-w-[850px] text-gray-700 mt-2 text-[14px]  sm:text-base">
-                Find top-notch commercial kitchen equipment for restaurants. We
-                offer a wide range of products from trusted brands
-                like Beckers, Rational, Cambro, Empero, Robot Coupe, Lacor,
-                and Roller Grill. Whether you're outfitting a new kitchen or
-                upgrading your current setup.
+                Find Top-Notch Commercial Kitchen Equipment For Restaurants. We
+                Offer A Wide Range Of Products From Trusted Brands Like Beckers,
+                Rational, Cambro, Empero, Robot Coupe, Lacor, And Roller Grill.
+                Whether You're Outfitting A New Kitchen Or Upgrading Your
+                Current Setup.
               </p>
             )}
           </div>
@@ -688,28 +682,28 @@ const CollectionPage = () => {
               style={
                 window.innerWidth < 640
                   ? {
-                    overflow: "auto",
-                    scrollbarWidth: "none", // For Firefox
-                    msOverflowStyle: "none", // For Internet Explorer and Edge
-                  }
+                      overflow: "auto",
+                      scrollbarWidth: "none", // For Firefox
+                      msOverflowStyle: "none", // For Internet Explorer and Edge
+                    }
                   : {}
               }
               className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide scroll-smooth"
             >
               {ExploreBrandImages
                 ? ExploreBrandImages.map((items, index) => (
-                  <Link
-                    key={index}
-                    to={items.redirectLink}
-                    className="snap-center flex-shrink-0 mr-[10px] w-[50vw]"
-                  >
-                    <img
-                      className="w-full mx-[10px] h-auto object-cover rounded-lg"
-                      src={items.img}
-                      alt=""
-                    />
-                  </Link>
-                ))
+                    <Link
+                      key={index}
+                      to={items.redirectLink}
+                      className="snap-center flex-shrink-0 mr-[10px] w-[50vw]"
+                    >
+                      <img
+                        className="w-full mx-[10px] h-auto object-cover rounded-lg"
+                        src={items.img}
+                        alt=""
+                      />
+                    </Link>
+                  ))
                 : null}
             </div>
           )}
@@ -843,18 +837,18 @@ const CollectionPage = () => {
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                    <ProductCard
-                      classes="min-h-[600px] mx-2"
-                      key={index}
-                      product={product}
-                    />
-                  ))
+                      <ProductCard
+                        classes="min-h-[600px] mx-2"
+                        key={index}
+                        product={product}
+                      />
+                    ))
                   : Array.from({ length: 10 }).map((_, index) => (
-                    <Skeleton
-                      key={index}
-                      className="col-span-1 mt-1 min-h-[400px]"
-                    />
-                  ))}
+                      <Skeleton
+                        key={index}
+                        className="col-span-1 mt-1 min-h-[400px]"
+                      />
+                    ))}
               </Slider>
             </div>
           )}
@@ -863,10 +857,10 @@ const CollectionPage = () => {
               style={
                 window.innerWidth < 640
                   ? {
-                    overflow: "auto",
-                    scrollbarWidth: "none", // For Firefox
-                    msOverflowStyle: "none", // For Internet Explorer and Edge
-                  }
+                      overflow: "auto",
+                      scrollbarWidth: "none", // For Firefox
+                      msOverflowStyle: "none", // For Internet Explorer and Edge
+                    }
                   : {}
               }
               className={bigScreenCss}
@@ -882,20 +876,20 @@ const CollectionPage = () => {
                 <React.Fragment>
                   {products && products.length > 0
                     ? products?.map((product, index) =>
-                      index < 10 ? (
-                        <ProductCard
-                          key={index}
-                          classes="col-span-1 mt-1"
-                          product={product}
-                        />
-                      ) : null
-                    )
+                        index < 10 ? (
+                          <ProductCard
+                            key={index}
+                            classes="col-span-1 mt-1"
+                            product={product}
+                          />
+                        ) : null
+                      )
                     : Array.from({ length: 10 }).map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        className="col-span-1 mt-1 min-h-[400px]"
-                      />
-                    ))}
+                        <Skeleton
+                          key={index}
+                          className="col-span-1 mt-1 min-h-[400px]"
+                        />
+                      ))}
                 </React.Fragment>
               )}
             </div>
@@ -919,18 +913,18 @@ const CollectionPage = () => {
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                    <ProductCard
-                      classes="min-h-[600px] mx-2"
-                      key={index}
-                      product={product}
-                    />
-                  ))
+                      <ProductCard
+                        classes="min-h-[600px] mx-2"
+                        key={index}
+                        product={product}
+                      />
+                    ))
                   : Array.from({ length: 10 }).map((_, index) => (
-                    <Skeleton
-                      key={index}
-                      className="col-span-1 mt-1 min-h-[400px]"
-                    />
-                  ))}
+                      <Skeleton
+                        key={index}
+                        className="col-span-1 mt-1 min-h-[400px]"
+                      />
+                    ))}
               </Slider>
             </div>
           )}
@@ -939,10 +933,10 @@ const CollectionPage = () => {
               style={
                 window.innerWidth < 640
                   ? {
-                    overflow: "auto",
-                    scrollbarWidth: "none", // For Firefox
-                    msOverflowStyle: "none", // For Internet Explorer and Edge
-                  }
+                      overflow: "auto",
+                      scrollbarWidth: "none", // For Firefox
+                      msOverflowStyle: "none", // For Internet Explorer and Edge
+                    }
                   : {}
               }
               className={bigScreenCss}
@@ -958,20 +952,20 @@ const CollectionPage = () => {
                 <React.Fragment>
                   {products && products.length > 0
                     ? products.map((product, index) =>
-                      index < 10 ? (
-                        <ProductCard
-                          key={index}
-                          classes="col-span-1 mt-1"
-                          product={product}
-                        />
-                      ) : null
-                    )
+                        index < 10 ? (
+                          <ProductCard
+                            key={index}
+                            classes="col-span-1 mt-1"
+                            product={product}
+                          />
+                        ) : null
+                      )
                     : Array.from({ length: 10 }).map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        className="col-span-1 mt-1 min-h-[400px]"
-                      />
-                    ))}
+                        <Skeleton
+                          key={index}
+                          className="col-span-1 mt-1 min-h-[400px]"
+                        />
+                      ))}
                 </React.Fragment>
               )}
             </div>
@@ -981,8 +975,5 @@ const CollectionPage = () => {
     </>
   );
 };
-
-
-
 
 export default React.memo(CollectionPage);
