@@ -516,3 +516,4 @@ const ProductCard = ({
 };
 
 export default React.memo(ProductCard);
+
