@@ -162,10 +162,11 @@ const DynamicFilter = ({ data, setDynamicParams, dynamicParams }) => {
               className="underline text-gray-700 text-xs mt-2 cursor-pointer"
               onClick={() => setSeeMore(!seeMore)}
             >
-              {!seeMore ? "See More" : "See Less"}
+              {/* {!seeMore ? "See More" : "See Less"} */}
             </p>
           </div>
         </div>
+        <div className="h-[1px] w-full bg-gray-300 my-3 "></div>
       </React.Fragment>
     );
   };

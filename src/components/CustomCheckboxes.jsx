@@ -15,7 +15,7 @@ const CustomCheckboxes = ({ title, quantity, id, checked, onChange }) => {
           value=""
           className="outline-none w-4 h-4 border-primary rounded accent-primary"
         />
-        <label htmlFor={checkboxId} className="ml-2 text-sm">
+        <label htmlFor={checkboxId} className="ml-2 text-sm capitalize">
           {title}
         </label>
       </div>
