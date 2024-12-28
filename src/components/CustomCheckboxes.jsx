@@ -1,7 +1,7 @@
 import React from "react";
 
 const CustomCheckboxes = ({ title, quantity, id, checked, onChange }) => {
-  // Generate a unique id for the checkbox based on title and id
+ 
   const checkboxId = `${title.split("")[0]}-${id}`;
 
   return (
