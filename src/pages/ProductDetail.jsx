@@ -42,7 +42,7 @@ function Model({ url, onLoaded }) {
   return <primitive object={scene} />;
 }
 
-  const ProductDetail = () => {
+const ProductDetail = () => {
   const { id } = useParams(); // Access the id from the URL
   const [seeMore, setSeeMore] = useState(true);
   const videoRef = useRef(null);
@@ -698,9 +698,7 @@ function Model({ url, onLoaded }) {
                                         ? "border-primary"
                                         : ""
                                     }`}
-                                    src={`${
-                                      item.images ? item.images[0] : ""
-                                    }`}
+                                    src={`${item.images ? item.images[0] : ""}`}
                                     alt={item.name}
                                   />
                                 </Link>
@@ -1387,7 +1385,6 @@ function Model({ url, onLoaded }) {
                   </div>
                 </div>
               </div>
-
               <Documents docs={!!product && product.documents} />
             </div>
 
