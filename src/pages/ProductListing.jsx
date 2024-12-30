@@ -216,6 +216,7 @@ const ProductListing = () => {
           minDelivery={minDelivery}
           maxDelivery={maxDelivery}
           priceRangeBool={priceRangeBool}
+          setBrands={setBrands}
           setPriceRangeBool={setPriceRangeBool}
           brands={brands}
           setPage={setPage}
@@ -251,6 +252,7 @@ const ProductListing = () => {
               setPriceRangeBool={setPriceRangeBool}
               brands={brands}
               setPage={setPage}
+              setBrands={setBrands}
               selectedBrands={selectedBrands}
               setSelectedBrands={setSelectedBrands}
               categories={categories}
@@ -617,7 +619,9 @@ const Rating = ({ rating, classes }) => {
 // Filter Section
 const FilterSection = ({
   brands,
+  setBrands,
   priceMin,
+  selectedBrands,
   priceMax,
   setSelectedReview,
   selectedReview,
@@ -727,6 +731,16 @@ const FilterSection = ({
                 setSelectedMaxPrice(20000);
                 setSelectedMinPrice(10);
                 setBtnActive(true);
+                setSelectedBrands((prev) => {
+                  const newState = []; // Set the new state as an empty array
+                  console.log("----->>>>>>", newState); // Log immediately after updating state
+                  return newState;
+                });
+                setBrands((prev) => {
+                  const newState = []; // Set the new state as an empty array
+                  console.log("----->>>>>>", newState); // Log immediately after updating state
+                  return newState;
+                });
               }}
             >
               Clear All
@@ -767,28 +781,32 @@ const FilterSection = ({
           <div className="relative mt-1">
             <div className="mt-3">
               {brands ? (
-                brands.map((brand, index) => {
-                  return (
-                    <React.Fragment key={index}>
-                      {!seeMoreBrand && index < 5 ? (
-                        <CustomCheckbox
-                          key={index}
-                          id={brand.id}
-                          title={brand.name}
-                          onClick={() => handleCheckboxChange(brand.id)}
-                        />
-                      ) : null}
-                      {seeMoreBrand ? (
-                        <CustomCheckbox
-                          key={index}
-                          id={brand.id}
-                          title={brand.name}
-                          onClick={() => handleCheckboxChange(brand.id)}
-                        />
-                      ) : null}
-                    </React.Fragment>
-                  );
-                })
+                brands.map((brand, index) => (
+                  <React.Fragment key={index}>
+                    {/* Show the first 5 brands initially */}
+                    {!seeMoreBrand && index < 5 ? (
+                      <CustomCheckbox
+                        id={brand.id}
+                        title={brand.name}
+                        onClick={() => {
+                          handleCheckboxChange(brand.id);
+                          setBtnActive(false);
+                        }}
+                      />
+                    ) : null}
+                    {/* Show all brands if 'See More' is clicked */}
+                    {seeMoreBrand ? (
+                      <CustomCheckbox
+                        id={brand.id}
+                        title={brand.name}
+                        onClick={() => {
+                          handleCheckboxChange(brand.id);
+                          setBtnActive(false);
+                        }}
+                      />
+                    ) : null}
+                  </React.Fragment>
+                ))
               ) : (
                 <p>No Brand Found</p>
               )}
@@ -802,7 +820,6 @@ const FilterSection = ({
           </div>
           <div className="w-full h-[1px] bg-[#E2E8F0] my-5"></div>
         </React.Fragment>
-
         {/* <React.Fragment>
           <div className="flex items-center justify-between">
             <FilterTitle title="Fulfillment Speed" />
