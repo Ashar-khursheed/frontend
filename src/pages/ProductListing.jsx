@@ -744,7 +744,6 @@ const FilterSection = ({
                 setBtnActive(true);
                 setSelectedBrands((prev) => {
                   const newState = []; // Set the new state as an empty array
-                  console.log("----->>>>>>", newState); // Log immediately after updating state
                   return newState;
                 });
                 setBrands((prev) => {
