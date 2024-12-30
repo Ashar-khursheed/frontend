@@ -706,7 +706,7 @@ const FilterSection = ({
                 <FilterTitle title="Applied Search" />
                 <button
                   className={`underline cursor-pointer ${
-                    btnActive ? "text-[red]" : "text-[red]"
+                    btnActive ? "text-[black]" : "text-[gray]"
                   } font-semibold text-sm`}
                 >
                   Clear All
@@ -744,7 +744,6 @@ const FilterSection = ({
                 setBtnActive(true);
                 setSelectedBrands((prev) => {
                   const newState = []; // Set the new state as an empty array
-                  console.log("----->>>>>>", newState); // Log immediately after updating state
                   return newState;
                 });
                 setBrands((prev) => {
