@@ -312,7 +312,7 @@ const Navigation = ({ categories, currentLocation }) => {
       <div className="flex lg:hidden items-center bg-[#186737] p-[10px]">
         <img
           className="p-[2px] rounded-[2px]"
-          src={process.env.PUBLIC_URL + "/icons/location.svg"}
+          src={process.env.PUBLIC_URL + "/icons/LocationMobileWhite.svg"}
           alt="Location"
         />
         <p className="text-[14px] ml-[10px] leading-[16.42px] font-semibold text-[white]">
@@ -785,7 +785,7 @@ const Navigation = ({ categories, currentLocation }) => {
               )
             )}
           </div>
-          <div className="flex items-center justify-between ml-[20px]">
+          <div className="flex items-center justify-between ml-[20px] sm:ml-[0px]">
             <div className="flex flex-row  items-center justify-evenly ml-[10%] lg:ml-0  lg:mr-2  lg:min-w-[125px] ">
               {/* <div className="relative mx-2 hidden lg:flex">
             <img src={process.env.PUBLIC_URL + "/icons/graph.svg"} alt="" />
@@ -890,7 +890,7 @@ const Navigation = ({ categories, currentLocation }) => {
               : setShowProfileDrawer(false);
           }}
           style={{ zIndex: 1000 }}
-          className="hidden sm:grid  grid grid-cols-1 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 bg-[white] absolute z-1000 overflow-hidden w-[80vw] border-2 shadow-md m-[10px] ml-[12%] mt-[-20px] rounded-[10px] h-[714px] overflow-x-auto overflow-y-auto"
+          className="hidden sm:grid  grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-8 bg-[white] absolute z-1000 overflow-hidden w-[80vw] border-2 shadow-md m-[10px] ml-[12%] mt-[-70px] rounded-[10px] h-[714px] overflow-x-auto overflow-y-auto"
         >
           <div className="col-span-1 sm:col-span-2 md:col-span-6 lg:col-span-3 p-4  border-r-2 mr-[20px]">
             <h1 className="text-[16px] leading-[16px] font-semibold">
@@ -1063,13 +1063,16 @@ const Navigation = ({ categories, currentLocation }) => {
               </div>
             </div>
           </div>
-          <div className="col-span-1 sm:col-span-2 md:col-span-12 lg:col-span-6     p-5">
+          <div className="col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 p-5">
             {navItems.map((item, index) => {
               return (
                 <div
                   className="flex items-center p-5 border-b-2 justify-between cursor-pointer"
                   key={index}
-                  onClick={() => navigate(item.link)}
+                  onClick={() => {
+                    navigate(item.link);
+                    setOnHoverProfile(false);
+                  }}
                 >
                   <div className="flex items-center">
                     <img className="h-[25px] mr-[10px]" src={item.icon} />
@@ -1112,7 +1115,7 @@ const Navigation = ({ categories, currentLocation }) => {
                             className="text-[16px] font-normal text-primary mx-2"
                             to={`/collections/${cat.slug}`}
                           >
-                            {cat.name}
+                            <p className="hover:text-[gray]">{cat.name}</p>
                           </Link>
                         )}
                         {index === categories.length - 1 && (

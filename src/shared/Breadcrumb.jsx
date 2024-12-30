@@ -5,7 +5,7 @@ import { PiGreaterThan } from "react-icons/pi";
 export const Breadcrumb = ({ classes, items }) => {
   return (
     <ul
-      className={`${classes} flex flex-row items-center bg-[#E2E8F080] sm:bg-[white] border-t-2 sm:border-none w-[100vw] sm:w-[80vw] ml-[-10px] py-[7px] px-[10px] mt-[15px] sm:h-[100%]`}
+      className={`${classes} flex flex-row items-center bg-[#E2E8F080] sm:bg-[white] border-t-2 sm:border-none w-[full] sm:w-[80vw] ml-[-10px] py-[7px] px-[10px] mt-[15px] sm:h-[100%]`}
       style={{ textTransform: "capitalize" }}
     >
       {items.map((item, index) => {

@@ -19,7 +19,6 @@ import { toast } from "react-toastify";
 import { useWishlist } from "../context/WishListContext";
 import { ProductCardCounter } from "../components/ProductCardCounter";
 
-
 const ProductCard = ({
   classes,
   product,
@@ -202,7 +201,7 @@ const ProductCard = ({
   return (
     <React.Fragment>
       <div
-        className={`${classes}  min-h-[330px] sm:min-h-[520px] block w-[183px] sm:w-full group border-gray-300 relative rounded-[4px]  cursor-pointer product__card__wrapper group transition-all border-2 z-[70] hover:border-primary duration-700`}
+        className={`${classes}  min-h-[330px] sm:min-h-[520px] block sm:w-full group border-gray-300 relative rounded-[4px]  cursor-pointer product__card__wrapper group transition-all border-2 z-[70] hover:border-primary duration-700`}
         onMouseLeave={() => onMouseLeaveFunction(product.video_path)}
         onMouseEnter={() => onMouseEnterFunction(product.video_path)}
       >
@@ -480,19 +479,17 @@ const ProductCard = ({
                 images={product.images}
                 video_path={product.video_path}
               >
+                <MdOutlineAddShoppingCart className="text-primary group-hover:text-white transition-all duration-500" />
                 {window.innerWidth < 640 ? (
-                  <>
-                    <MdOutlineAddShoppingCart className="text-primary group-hover:text-white transition-all duration-500" />
-                    <span className="ml-[-10px] text-[14px] pl-[10px] w-[150px] sm:ml-2 p-[2px] sm:p-0 font-semibold text-primary text-[10px] sm:text-base group-hover:text-white transition-all duration-500">
-                      Add To Cart
-                    </span>
-                  </>
+                  <span className="ml-[-10px] text-[14px] pl-[10px] w-[150px] sm:ml-2 p-[2px] sm:p-0 font-semibold text-primary text-[10px] sm:text-base group-hover:text-white transition-all duration-500">
+                    Add To Cart
+                  </span>
                 ) : (
                   <span
                     className={
                       window?.innerWidth < 1367
                         ? "ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] group-hover:text-white transition-all duration-500"
-                        : "ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] lg:text-[8px] 80p:text-base 110p:text-[14px] group-hover:text-white transition-all duration-500"
+                        : "ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] lg:text-[8px] 80p:text-base 110p:text-[10px] group-hover:text-white transition-all duration-500"
                     }
                   >
                     {/* <span className="ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] lg:text-[8px] 80p:text-base 110p:text-[10px] group-hover:text-white transition-all duration-500"> */}
@@ -519,3 +516,4 @@ const ProductCard = ({
 };
 
 export default React.memo(ProductCard);
+
