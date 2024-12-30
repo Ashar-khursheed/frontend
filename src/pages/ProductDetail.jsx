@@ -348,9 +348,9 @@ const ProductDetail = () => {
           ) : (
             <Skeleton className="mt-7" width="30%" height="30px" count={1} />
           )}
-          <div className="grid grid-cols-12 gap-x-8 ">
+          <div className="grid-none sm:grid grid-cols-12 gap-x-8">
             <div className="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-9 xl:col-span-9">
-              <div className="grid grid-cols-12 md:grid-cols-12 lg:grid-cols-12 gap-6">
+              <div className="grid grid-cols-12 gap-6">
                 {/*  product images */}
                 <div className="col-span-12 md:col-span-12  lg:col-span-6 mt-4">
                   <div className="mx-auto">

@@ -290,10 +290,9 @@ const CollectionPage = () => {
         {/* Danish Slider */}
         <div className="mb-10">
           <div className="flex items-center justify-between mx-2 my-[10px] sm:my-8">
-            <h2 className="font-medium sm:font-semibold text-[16px] sm:text-2xl leading-[18.77px] text-black-100 ">
+            <h2 className="font-medium ml-[0px] sm:font-semibold text-[16px] sm:text-2xl leading-[18.77px] text-black-100 ">
               Top Picks in Santos
             </h2>
-
             {window?.innerWidth > 600 && window?.innerWidth < 1024 && (
               <span className="text-gray-700 text-sm">Page 1 of 3</span>
             )}
@@ -306,11 +305,13 @@ const CollectionPage = () => {
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                      <ProductCard
-                        classes="min-h-[600px] mx-2"
-                        key={index}
-                        product={product}
-                      />
+                      <div className="px-2">
+                        <ProductCard
+                          classes="min-h-[600px]"
+                          key={index}
+                          product={product}
+                        />
+                      </div>
                     ))
                   : Array.from({ length: 10 }).map((_, index) => (
                       <Skeleton
@@ -389,7 +390,7 @@ const CollectionPage = () => {
 
         <div className="mb-10">
           <div className="flex items-center justify-between mx-2 my-[10px] sm:my-8">
-            <h2 className=" font-medium sm:font-semibold text-[16px] sm:text-2xl text-black-100 ">
+            <h2 className=" font-medium ml-[8px] sm:font-semibold text-[16px] sm:text-2xl text-black-100 ">
               Top deals from our sellers
             </h2>
             {window?.innerWidth > 600 && window?.innerWidth < 1024 && (
@@ -404,11 +405,13 @@ const CollectionPage = () => {
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                      <ProductCard
-                        classes="min-h-[600px] mx-2"
-                        key={index}
-                        product={product}
-                      />
+                      <div className="px-2">
+                        <ProductCard
+                          classes="min-h-[600px]"
+                          key={index}
+                          product={product}
+                        />
+                      </div>
                     ))
                   : Array.from({ length: 10 }).map((_, index) => (
                       <Skeleton
@@ -487,7 +490,7 @@ const CollectionPage = () => {
 
         <div className="mb-10">
           <div className="flex items-center justify-between mx-2 my-[10px] sm:my-8">
-            <h2 className=" font-medium sm:font-semibold text-[16px] sm:text-2xl text-black-100 ">
+            <h2 className=" font-medium ml-[8px] sm:font-semibold text-[16px] sm:text-2xl text-black-100 ">
               Explore top picks
             </h2>
             {window?.innerWidth > 600 && window?.innerWidth < 1024 && (
@@ -502,11 +505,13 @@ const CollectionPage = () => {
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                      <ProductCard
-                        classes="min-h-[600px] mx-2"
-                        key={index}
-                        product={product}
-                      />
+                      <div className="px-2">
+                        <ProductCard
+                          classes="min-h-[600px]"
+                          key={index}
+                          product={product}
+                        />
+                      </div>
                     ))
                   : Array.from({ length: 10 }).map((_, index) => (
                       <Skeleton
@@ -582,7 +587,7 @@ const CollectionPage = () => {
 
         <div className="mb-10">
           <div className="flex items-center justify-between mx-2 my-[10px] sm:my-8">
-            <h2 className=" font-medium sm:font-semibold text-[16px] sm:text-2xl text-black-100 ">
+            <h2 className=" font-medium ml-[8px] sm:font-semibold text-[16px] sm:text-2xl text-black-100 ">
               Hot new releases
             </h2>
             {window?.innerWidth > 600 && window?.innerWidth < 1024 && (
@@ -597,11 +602,13 @@ const CollectionPage = () => {
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                      <ProductCard
-                        classes="min-h-[600px] mx-2"
-                        key={index}
-                        product={product}
-                      />
+                      <div className="px-2">
+                        <ProductCard
+                          classes="min-h-[600px]"
+                          key={index}
+                          product={product}
+                        />
+                      </div>
                     ))
                   : Array.from({ length: 10 }).map((_, index) => (
                       <Skeleton
@@ -822,7 +829,7 @@ const CollectionPage = () => {
 
         <div className="mb-10">
           <div className="flex items-center justify-between mx-2 my-[10px] sm:my-8">
-            <h2 className=" font-medium sm:font-semibold text-[16px] sm:text-2xl text-black-100 ">
+            <h2 className=" font-medium ml-[8px] sm:font-semibold text-[16px] sm:text-2xl text-black-100 ">
               Products you may also like
             </h2>
             {window?.innerWidth > 600 && window?.innerWidth < 1024 && (
@@ -837,11 +844,13 @@ const CollectionPage = () => {
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                      <ProductCard
-                        classes="min-h-[600px] mx-2"
-                        key={index}
-                        product={product}
-                      />
+                      <div className="px-2">
+                        <ProductCard
+                          classes="min-h-[600px] mx-2"
+                          key={index}
+                          product={product}
+                        />
+                      </div>
                     ))
                   : Array.from({ length: 10 }).map((_, index) => (
                       <Skeleton
@@ -898,7 +907,7 @@ const CollectionPage = () => {
 
         <div className="mb-10">
           <div className="flex items-center justify-between mx-2 my-[10px] sm:my-8">
-            <h2 className=" font-medium sm:font-semibold text-[16px] sm:text-2xl text-black-100 ">
+            <h2 className=" font-medium ml-[8px] sm:font-semibold text-[16px] sm:text-2xl text-black-100 ">
               Inspired by your browsing history
             </h2>
             {window?.innerWidth > 600 && window?.innerWidth < 1024 && (
@@ -913,11 +922,13 @@ const CollectionPage = () => {
               <Slider {...settings} className="arrow__wrapper">
                 {products && products.length > 0
                   ? products.map((product, index) => (
-                      <ProductCard
-                        classes="min-h-[600px] mx-2"
-                        key={index}
-                        product={product}
-                      />
+                      <div className="px-2">
+                        <ProductCard
+                          classes="min-h-[600px] mx-2"
+                          key={index}
+                          product={product}
+                        />
+                      </div>
                     ))
                   : Array.from({ length: 10 }).map((_, index) => (
                       <Skeleton

@@ -1345,12 +1345,13 @@ const Navigation = ({ categories, currentLocation }) => {
               )
             )}
           </div>
+          {/* mobile searchbar */}
           <div className="block lg:hidden">
             {isFocused && (products || categoryList || brands) ? (
               <div className=" rounded-lg border-2  absolute w-full bg-[white] z-[999] mt-3">
                 {/* Products Section */}
                 {products && products.length > 0 && (
-                  <div className="flex flex-col  rounded-lg bg-[#f6f8fb]">
+                  <div className="flex flex-col  bg-[#f6f8fb]">
                     <div className="py-4 px-3 text-primary font-semibold text-base border-b-2 border-b-[#e2e8f0]">
                       Products
                     </div>
@@ -1388,7 +1389,7 @@ const Navigation = ({ categories, currentLocation }) => {
 
                 {/* Categories Section */}
                 {categoryList && categoryList.length > 0 && (
-                  <div className="flex flex-col rounded-lg bg-[#f6f8fb] mt-4">
+                  <div className="flex flex-col bg-[#f6f8fb] mt-4">
                     <div className="py-4 px-3 text-primary font-semibold text-base border-b-2 border-b-[#e2e8f0]">
                       Categories
                     </div>
@@ -1414,7 +1415,7 @@ const Navigation = ({ categories, currentLocation }) => {
 
                 {/* Brands Section */}
                 {brands && brands.length > 0 && (
-                  <div className="flex flex-col rounded-lg bg-[#f6f8fb] mt-4">
+                  <div className="flex flex-col bg-[#f6f8fb] mt-4">
                     <div className="py-4 px-3 text-primary font-semibold text-base">
                       Brands
                     </div>

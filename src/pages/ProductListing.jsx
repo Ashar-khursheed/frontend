@@ -706,7 +706,7 @@ const FilterSection = ({
                 <FilterTitle title="Applied Search" />
                 <button
                   className={`underline cursor-pointer ${
-                    btnActive ? "text-[red]" : "text-[red]"
+                    btnActive ? "text-[black]" : "text-[gray]"
                   } font-semibold text-sm`}
                 >
                   Clear All
