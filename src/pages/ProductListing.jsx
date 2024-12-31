@@ -13,7 +13,7 @@ import { IoClose } from "react-icons/io5";
 const ProductCard = lazy(() => import("../shared/ProductCard"));
 const ProductListing = () => {
   const [page, setPage] = useState("1");
-  const [perPage, setPerPage] = useState("20");
+  const [perPage, setPerPage] = useState("50");
   const [loader, setLoader] = useState(true);
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);

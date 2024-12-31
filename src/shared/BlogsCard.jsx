@@ -52,7 +52,7 @@ export const BlogsCard = ({ classes }) => {
         </span>
       </div>
       <div className={`${classes} `}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-4">
           {!loader ? (
             blogs.map((item, index) => {
               return (
@@ -65,7 +65,7 @@ export const BlogsCard = ({ classes }) => {
                       <React.Fragment>
                         <Link to="#">
                           <img
-                            className="w-full col-span-1 h-[350px] object-cover rounded-md"
+                            className="w-full col-span-1 h-[320px] object-cover rounded-md"
                             src={`${item.images[0]}`}
                             alt=""
                           />
@@ -77,7 +77,7 @@ export const BlogsCard = ({ classes }) => {
                                 alt="blog writer"
                               />
                               <span className="text-gray-700 text-[12px] md:text-[13] lg:text-[14px] xl:text-[14px] ml-3 whitespace-nowrap">
-                                Written by -
+                                Written By -
                               </span>
                               <span className="text-[#BE2535] font-semibold ml-2 text-[12px] md:text-[13] lg:text-[14px] xl:text-[14px] ">
                                 {" "}
@@ -129,7 +129,15 @@ export const BlogsCard = ({ classes }) => {
                               <span className="mx-3">1</span>
                             </span>
                           </div>
-                          {/* <span><img className="cursor-pointer" src={process.env.PUBLIC_URL + "/icons/heart-2.png"} alt="" /></span> */}
+                          <span>
+                            <img
+                              className="cursor-pointer"
+                              src={
+                                process.env.PUBLIC_URL + "/icons/heart-2.png"
+                              }
+                              alt=""
+                            />
+                          </span>
                         </div>
                       </React.Fragment>
                     </div>
