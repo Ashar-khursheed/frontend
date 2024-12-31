@@ -1,4 +1,4 @@
-import React, { useEffect, useState,lazy } from "react";
+import React, { useEffect, useState, lazy } from "react";
 import { Wrapper } from "../../../shared/Wrapper";
 import SidebarProfile from "../../../components/SidebarProfile";
 import ReviewCard from "./Components/ReviewCard";
@@ -6,21 +6,21 @@ import { apiClient } from "../../../utils/apiWrapper";
 import { Breadcrumb } from "../../../shared/Breadcrumb";
 import Skeleton from "react-loading-skeleton";
 import { useNavigate } from "react-router";
- 
+
 import { notify } from "../../../utils/notify";
 import ReviewPopup from "../../../components/ReviewPopup";
-const  ProductCard =lazy(()=>import("../../../shared/ProductCard"));
+const ProductCard = lazy(() => import("../../../shared/ProductCard"));
 const Reviews = () => {
   const [loader, setLoader] = useState(true);
-  const [showPopup,setShowPopup]=useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [reviewData, setReviewData] = useState([]);
   const [products, setProducts] = useState([]);
-  const [reviewId,setReviewId]=useState(0);
-  const [productId,setProductId]=useState(0);
-  const [updateReviews,setUpdateReviews]=useState(false);
+  const [reviewId, setReviewId] = useState(0);
+  const [productId, setProductId] = useState(0);
+  const [updateReviews, setUpdateReviews] = useState(false);
   const navigate = useNavigate();
   const authToken = localStorage.getItem("authToken");
- 
+
   const fetchAllReviews = async () => {
     if (!authToken) {
       navigate("/login");
@@ -37,39 +37,36 @@ const Reviews = () => {
   };
 
   const fetchProducts = async () => {
-
     const response = await apiClient.get(
       `${authToken ? "/products" : "/products-guest"}`
     );
     setProducts(response.data.data.data);
   };
 
-  const deleteReview=async(id)=>{
-    try{
+  const deleteReview = async (id) => {
+    try {
       const response = await apiClient.delete(`customer-reviews-delete/${id}`);
-        notify("Success", response.data.message);
-        setUpdateReviews(!updateReviews);
+      notify("Success", response.data.message);
+      setUpdateReviews(!updateReviews);
+    } catch (error) {
+      console.log(error);
     }
-      catch(error){
-        console.log(error);
-      }
-    }
+  };
 
-    const updateReview=(id,pid)=>{
-      setReviewId(id);
-      setProductId(pid);
-      setShowPopup(true);
-    }
-  
-  
+  const updateReview = (id, pid) => {
+    setReviewId(id);
+    setProductId(pid);
+    setShowPopup(true);
+  };
+
   useEffect(() => {
     fetchProducts();
     fetchAllReviews();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchAllReviews();
-  },[updateReviews]);
+  }, [updateReviews]);
 
   const collectionBreadCrumb = [
     {
@@ -81,7 +78,6 @@ const Reviews = () => {
       title: "Profile",
     },
     {
-      
       title: "Your Reviews",
     },
   ];
@@ -112,10 +108,16 @@ const Reviews = () => {
                 <React.Fragment>
                   {reviewData.length > 0 ? (
                     reviewData?.map((items) => {
-                      return <ReviewCard reviewData={items}  deleteReview={deleteReview} updateReview={updateReview}/>;
+                      return (
+                        <ReviewCard
+                          reviewData={items}
+                          deleteReview={deleteReview}
+                          updateReview={updateReview}
+                        />
+                      );
                     })
                   ) : (
-                    <div className="flex items-center h-[60vh] text-[26px] justify-center">
+                    <div className="flex items-center h-[20vh] text-[26px] justify-center">
                       <p>No Reviews Found</p>
                     </div>
                   )}
@@ -141,10 +143,10 @@ const Reviews = () => {
                 style={
                   window.innerWidth < 640
                     ? {
-                      overflow: "auto",
-                      scrollbarWidth: "none", // For Firefox
-                      msOverflowStyle: "none", // For Internet Explorer and Edge
-                    }
+                        overflow: "auto",
+                        scrollbarWidth: "none", // For Firefox
+                        msOverflowStyle: "none", // For Internet Explorer and Edge
+                      }
                     : {}
                 }
                 className={bigScreenCss}
@@ -187,10 +189,10 @@ const Reviews = () => {
                 style={
                   window.innerWidth < 640
                     ? {
-                      overflow: "auto",
-                      scrollbarWidth: "none", // For Firefox
-                      msOverflowStyle: "none", // For Internet Explorer and Edge
-                    }
+                        overflow: "auto",
+                        scrollbarWidth: "none", // For Firefox
+                        msOverflowStyle: "none", // For Internet Explorer and Edge
+                      }
                     : {}
                 }
                 className={bigScreenCss}
@@ -223,10 +225,20 @@ const Reviews = () => {
                 )}
               </div>
             </div>
-      
           </div>
         )}
-               {showPopup? <ReviewPopup setShowPopup={setShowPopup} popupHeading="Update Review" reviewId={reviewId}  setUpdateReviews={setUpdateReviews} updateReviews={updateReviews} id={productId}/>:''}
+        {showPopup ? (
+          <ReviewPopup
+            setShowPopup={setShowPopup}
+            popupHeading="Update Review"
+            reviewId={reviewId}
+            setUpdateReviews={setUpdateReviews}
+            updateReviews={updateReviews}
+            id={productId}
+          />
+        ) : (
+          ""
+        )}
       </Wrapper>
     </>
   );

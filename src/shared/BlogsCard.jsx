@@ -52,7 +52,7 @@ export const BlogsCard = ({ classes }) => {
         </span>
       </div>
       <div className={`${classes} `}>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-4">
           {!loader ? (
             blogs.map((item, index) => {
               return (

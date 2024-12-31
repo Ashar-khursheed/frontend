@@ -288,7 +288,7 @@ const ProductListing = () => {
               </div>
               <div className="hidden sm:hidden md:hidden lg:block flex flex-row items-center ">
                 <span className="text-sm text-gray-700 mr-6">
-                  Sort:
+                  Default Sorting:
                   <span className="text-black-100 ml-1 relative">
                     <Menu
                       arrow={true}
