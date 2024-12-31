@@ -176,7 +176,7 @@ const Wishlist = () => {
                     </>
                   ) : (
                     <>
-                      <div class="flex items-center justify-center w-[90vw] h-[100vh]">
+                      <div class="flex items-center justify-center w-[90vw] h-[20vh]">
                         <h1>Not product Found</h1>
                       </div>
                     </>

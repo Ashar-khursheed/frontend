@@ -109,8 +109,25 @@ export const BlogsCard = ({ classes }) => {
                               />{" "}
                               <span className="mx-3">{item.views}</span>
                             </span>
-                            {/* <span className="flex items-center cursor-pointer"><img src={process.env.PUBLIC_URL + "/icons/message.png"} alt="" /><span className="mx-3">6</span></span> */}
-                            {/* <span className="flex items-center cursor-pointer"><img src={process.env.PUBLIC_URL + "/icons/share/share.png"} alt="" /><span className="mx-3">1</span></span> */}
+                            <span className="flex items-center cursor-pointer">
+                              <img
+                                src={
+                                  process.env.PUBLIC_URL + "/icons/message.png"
+                                }
+                                alt=""
+                              />
+                              <span className="mx-3">6</span>
+                            </span>
+                            <span className="flex items-center cursor-pointer">
+                              <img
+                                src={
+                                  process.env.PUBLIC_URL +
+                                  "/icons/share/share.png"
+                                }
+                                alt=""
+                              />
+                              <span className="mx-3">1</span>
+                            </span>
                           </div>
                           {/* <span><img className="cursor-pointer" src={process.env.PUBLIC_URL + "/icons/heart-2.png"} alt="" /></span> */}
                         </div>
