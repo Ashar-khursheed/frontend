@@ -22,7 +22,7 @@ export const Hero = ({ sliderLoader, heroSlider }) => {
                       >
                         <img
                           className="w-full h-[500px] rounded-md"
-                          src={"https://testhssite.com/storage/" + banner.image}
+                          src={`${process.env.PUBLIC_URL}/images/homepageBanner.svg`}
                           alt={banner.title}
                         />
                       </Link>

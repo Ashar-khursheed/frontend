@@ -334,7 +334,7 @@ const ProductCard = ({
               </span>
             </div>
             {!flashSale ? (
-              <p className="text-gray-700 text-[12px] mt-1">
+              <p className="hidden sm:block text-gray-700 text-[12px] mt-1">
                 15% discount on first time order
               </p>
             ) : null}
@@ -370,7 +370,7 @@ const ProductCard = ({
               )}
             </p>
 
-            <div className="flex overflow-hidden items-baseline  sm:flex-row items-baseline mb-[10px] mt-[10px]">
+            <div className="flex overflow-hidden items-baseline  sm:flex-row items-baseline mb-[10px] mt-[0px] sm:mt-[10px]">
               <span className="flex items-baseline sm:flex-none text-primary font-semibold">
                 <span className="ml-0 text-[10px] sm:text-[14px] font-normal sm:font-bold">
                   {product.currency_title ? product.currency_title : "USD "}
