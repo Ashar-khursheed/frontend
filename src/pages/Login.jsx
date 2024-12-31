@@ -11,8 +11,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Loader } from "../shared/Loader";
 
-  const Login = () => {
+const Login = () => {
   const location = useLocation();
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
@@ -22,13 +23,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
   const [loader, setLoading] = useState(false);
   const [guestUser, setGuestUser] = useState(false);
   const [showGuestAddress, setGuestAddress] = useState(false);
+  const [showError, setShowError] = useState(false);
   const navigate = useNavigate();
   const { currencyTitle, totalAmount } = location.state || {};
 
   const [getData, setData] = useState([]);
 
   const handlePayments = async (data) => {
-
 
     const datas = {
       "amount": data.amount,
@@ -51,24 +52,53 @@ import { yupResolver } from "@hookform/resolvers/yup";
     }
   }
 
+  const schema = yup.object({
+    number: yup
+      .number()
+      .transform((value, originalValue) => {
+        if (originalValue === "") {
+          return null;  // or undefined if you prefer
+        }
+        return value;
+      })
+      .nullable()
+      .notRequired()
+      .positive("Number must be positive")
+      .integer("Number must be an integer")
+      .required("Mobile number is required"),
 
-  const schema = yup
+    email: yup
+      .string()
+      .email("Please enter a valid email address")
+      .required("Email is required"),
+  }).required();
+
+  //for address
+
+
+  const schemaForAddress = yup
     .object({
-      number: yup.number().positive().integer().required(),
-      email: yup.string().required(),
-
+      name: yup.string().required("Name is required"),
+      country: yup.string().required("Country is required"),
+      state: yup.string().required("State is required"),
+      city: yup.string().required("City is required"),
+      address: yup.string().required("Address is required"),
     })
     .required();
 
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({
+
+  const { register, handleSubmit, formState: { errors }, getValues, reset } = useForm({
     resolver: yupResolver(schema),
+    mode: 'onSubmit',                 // Trigger validation on submit
+    reValidateMode: 'onSubmit',       // Revalidate only on submit
+    defaultValues: {                  // Initialize form fields with empty values
+      number: '',
+      email: '',
+    },
   });
+
+  
 
   const onSubmit = (data) => {
     localStorage.setItem('guestUser', JSON.stringify(data));
@@ -80,15 +110,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
   //for guest user address
 
-  const schemaForAddress = yup
-    .object({
-      name: yup.string().required(),
-      country: yup.string().required(),
-      state: yup.string().required(),
-      city: yup.string().required(),
-      address: yup.string().required(),
-    })
-    .required();
 
 
   const {
@@ -114,33 +135,39 @@ import { yupResolver } from "@hookform/resolvers/yup";
   }
 
 
-  const validateForm = () => {
-    if (!password) {
-      setError("Password is required");
-      return false;
-    }
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters");
-      return false;
-    }
-    setError(""); // Clear any existing errors
-    return true;
-  };
+  const LoginSchema = yup.object({
+    email: yup
+      .string()
+      .email("Please enter a valid email address")
+      .required("Email is required"),
+    password: yup
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .required("Password is required"),
+  }).required();
 
+  const {
+    register: loginForm,
+    handleSubmit: loginSubmit,
+    formState: { errors: loginError },
+    reset: loginReset,
+  } = useForm({
+    resolver: yupResolver(LoginSchema),
+  });
 
+  const loginSubmitForm = async (data) => {
+    handleFormSubmit(data)
+  }
 
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-
-    if (!validateForm()) return; // Validate form before submitting
+   
+  const handleFormSubmit = async (data) => {
     try {
       setLoading(true);
       const response = await axios.post(
         "https://testhssite.com/api/login",
         {
-          email,
-          password,
+          email:data.email,
+          password:data.password,
         },
         {
           headers: {
@@ -166,6 +193,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
     }
   }, [getData]);
 
+  const onButtonClick = () => {
+    setShowError(true);
+  }
+ 
+  
   return (
     <React.Fragment>
 
@@ -173,13 +205,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
       <Wrapper>
 
+      {loader ?<div className="w-full h-[100vh] flex items-center justify-center bg-white fixed left-0 top-0 z-[999]"><Loader/></div>:null }
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-12 items-center mb-20">
 
           <div className="col-span-1"></div>
           <div className="col-span-4 mt-16 ">
             <form
               className="bg-[#E2E8F04D] border-[#E2E8F0] rounded-[10px] mt-5 border px-6 py-10 max-w-[550px]"
-              onSubmit={handleFormSubmit}
+              onSubmit={loginSubmit(loginSubmitForm)}
             >
               <div className="text-center mb-10">
                 <h3 className="text-2xl text-[#030303] font-semibold">
@@ -192,24 +225,24 @@ import { yupResolver } from "@hookform/resolvers/yup";
               <input
                 type="email"
                 placeholder="Enter your Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("Email")
+                {...loginForm("email")}
+              
+                className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${loginError.email
                   ? "border-red-500"
                   : "border-[#66666666]"
                   } rounded-[4px]`}
               />
-              {error.includes("Email") && (
-                <p className="text-red-500 text-sm">{error}</p>
+              {loginError.email && (
+                <p className="text-red-500 text-sm">{loginError?.email?.message}</p>
               )}
 
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("Password")
+                  {...loginForm("password")}
+             
+                  className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${loginError.password
                     ? "border-red-500"
                     : "border-[#66666666]"
                     } rounded-[4px] pr-12`}
@@ -225,8 +258,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
                   )}
                 </span>
               </div>
-              {error.includes("Password") && (
-                <p className="text-red-500 text-sm">{error}</p>
+              {loginError.password && (
+                <p className="text-red-500 text-sm">{loginError?.password?.message}</p>
               )}
               {error.includes("Login") && (
                 <p className="text-red-500 text-sm">{error}</p>
@@ -243,13 +276,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
                 disabled={loader}
                 style={{ opacity: `${loader ? "0.5" : ""}` }}
               >
-                {loader ? (
-                  <span className="flex items-center justify-center">
-                    <ButtonLoader />
-                  </span>
-                ) : (
+            
                   <span>Login</span>
-                )}
+              
               </button>
 
               <span className="relative block text-center text-[22px] text-black my-7 after:absolute after:left-0 after:w-[40%] after:h-[1px] after:bg-[#E2E8F0] after:top-1/2 after:translate-y-[-50%] before:absolute before:right-0 before:w-[40%] before:h-[1px] before:bg-[#E2E8F0] before:top-1/2 before:translate-y-[-50%]">
@@ -331,13 +360,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
                   disabled={loader}
                   style={{ opacity: `${loader ? "0.5" : ""}` }}
                 >
-                  {loader ? (
-                    <span className="flex items-center justify-center">
-                      <ButtonLoader />
-                    </span>
-                  ) : (
+                  
                     <span>Continue as a Guest</span>
-                  )}
+                 
                 </button></> :
                 //guest form 
                 <>
@@ -351,33 +376,37 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 
                       <input
-                        type="number"
-                        placeholder="Enter number"
+                        type="tel"
+                        placeholder="Enter mobile number"
                         {...register("number", {
                           minLength: 1,
                           maxLength: 12
                         })}
-                        className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("number")
+                        onInput={(e) => {
+                          // Allow only numeric input (this is optional since pattern handles it)
+                          e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                        }}
+                        className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${errors.number
                           ? "border-red-500"
                           : "border-[#66666666]"
                           } rounded-[4px]`}
                       />
-                      {error.includes("number") && (
-                        <p className="text-red-500 text-sm"> {errors.number?.message}</p>
+                      {showError && errors.number && (
+                        <p className="text-red-500 text-sm text-left">{errors.number?.message}</p>
                       )}
                     </div>
                     <div className="relative">
                       <input
                         type="email"
-                        placeholder="Email Address"
+                        placeholder="Enter email address"
                         {...register("email")}
-                        className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("email")
+                        className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${errors.email
                           ? "border-red-500"
                           : "border-[#66666666]"
                           } rounded-[4px] pr-12`}
                       />
-                      {error.includes("email") && (
-                        <p className="text-red-500 text-sm">  {errors.email?.message}</p>
+                      {showError && errors.email && (
+                        <p className="text-red-500 text-sm text-left"> {errors?.email?.message}</p>
                       )}
 
                     </div>
@@ -385,7 +414,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
                   {/*             
                  //for guest user */}
-                  <button type="submit" className=" w-full bg-primary text-white flex items-center justify-center py-4 px-3 font-semibold text-base min-w-[300px] rounded-[4px] "><span className="mr-2">Confirm & Pay</span> <FaArrowRightLong /></button>
+                  <button type="submit" onClick={onButtonClick} className=" w-full bg-primary text-white flex items-center justify-center py-4 px-3 font-semibold text-base min-w-[300px] rounded-[4px] "><span className="mr-2">Confirm & Pay</span> <FaArrowRightLong /></button>
 
 
                 </>}
@@ -407,13 +436,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
                       type="text"
                       placeholder="Enter name"
                       {...register2("name")}
-                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("number")
+                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error2?.name
                         ? "border-red-500"
                         : "border-[#66666666]"
                         } rounded-[4px]`}
                     />
 
-                    <p className="text-red-500 text-sm"> {errors.name?.message}</p>
+                    <p className="text-red-500 text-sm text-left"> {error2?.name?.message}</p>
 
                   </div>
                   <div className="relative">
@@ -421,13 +450,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
                       type="text"
                       placeholder="Enter country"
                       {...register2("country")}
-                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("email")
+                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error2?.country
                         ? "border-red-500"
                         : "border-[#66666666]"
                         } rounded-[4px] pr-12`}
                     />
 
-                    <p className="text-red-500 text-sm">  {errors.country?.message}</p>
+                    <p className="text-red-500 text-sm text-left">  {error2?.country?.message}</p>
 
 
                   </div>
@@ -436,13 +465,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
                       type="text"
                       placeholder="Enter state"
                       {...register2("state")}
-                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("state")
+                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error2?.state
                         ? "border-red-500"
                         : "border-[#66666666]"
                         } rounded-[4px] pr-12`}
                     />
 
-                    <p className="text-red-500 text-sm">  {errors.state?.message}</p>
+                    <p className="text-red-500 text-sm text-left">  {error2?.state?.message}</p>
 
 
                   </div>
@@ -451,13 +480,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
                       type="text"
                       placeholder="Enter city"
                       {...register2("city")}
-                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("city")
+                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error2?.city
                         ? "border-red-500"
                         : "border-[#66666666]"
                         } rounded-[4px] pr-12`}
                     />
 
-                    <p className="text-red-500 text-sm">  {errors.city?.message}</p>
+                    <p className="text-red-500 text-sm text-left">  {error2?.city?.message}</p>
 
 
                   </div>
@@ -467,13 +496,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
                       type="text"
                       placeholder="Enter address"
                       {...register2("address")}
-                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error.includes("address")
+                      className={`w-full block mt-5 px-3 py-3 bg-[#FFFFFF66] text-[#212121] border ${error2?.address
                         ? "border-red-500"
                         : "border-[#66666666]"
                         } rounded-[4px] pr-12`}
                     />
 
-                    <p className="text-red-500 text-sm">  {errors.address?.message}</p>
+                    <p className="text-red-500 text-sm text-left">  {error2?.address?.message}</p>
 
 
                   </div>
@@ -490,15 +519,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
                   disabled={loader}
                   style={{ opacity: `${loader ? "0.5" : ""}` }}
                 >
-                  {loader ? (
-                    <span className="flex items-center justify-center">
-                      <ButtonLoader />
-                    </span>
-                  ) : (
-                    <>
+                  
+                    
                       <span className="mr-2">Confirm & Pay</span> <FaArrowRightLong />
-                    </>
-                  )}
+                    
+                  
                 </button>
 
               </form>
