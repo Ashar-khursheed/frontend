@@ -93,7 +93,7 @@ const Homepage = ({ categories }) => {
   return (
     <div>
       <Hero heroSlider={heroSlider} sliderLoader={sliderLoader} />
-      <RowNews />
+      {/* <RowNews /> */}
       <Categories categories={categories} />
       <FeatureProduct
         featureCat={featureCat}
@@ -109,7 +109,7 @@ const Homepage = ({ categories }) => {
         brandCatLoader={brandCatLoader}
         setSelectedBrand={setSelectedBrand}
       />
-      <FeatureClearance />
+      {/* <FeatureClearance /> */}
       <TimerBanner />
       <BlogsCard />
     </div>

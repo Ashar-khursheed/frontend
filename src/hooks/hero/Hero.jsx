@@ -21,7 +21,7 @@ export const Hero = ({ sliderLoader, heroSlider }) => {
                         to={`/products?search=`}
                       >
                         <img
-                          className="w-full rounded-md"
+                          className="w-full h-[500px] rounded-md"
                           src={"https://testhssite.com/storage/" + banner.image}
                           alt={banner.title}
                         />
@@ -46,7 +46,7 @@ export const Hero = ({ sliderLoader, heroSlider }) => {
                   <img
                     src={banner.imgSource}
                     alt="Horeca Product Banner"
-                    className="min-h-[140px] rounded-md lg:min-h-[100px] xl:min-h-[180px]"
+                    className="min-h-[140px] h-[240px] rounded-md lg:min-h-[100px] xl:min-h-[180px]"
                   />
                 </Link>
               );
