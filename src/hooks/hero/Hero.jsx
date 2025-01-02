@@ -8,7 +8,7 @@ import Skeleton from "react-loading-skeleton";
 export const Hero = ({ sliderLoader, heroSlider }) => {
   return (
     <Wrapper classes="mt-4 flex items-start justify-between flex-nowrap">
-      <div className="grid lg:grid-cols-7 lg:gap-x-4 grid-cols-1">
+      <div className="grid lg:grid-cols-7 lg:gap-x-4 grid-cols-1 2xl:grid-cols-7">
         <div className="lg:col-span-5 col-span-1">
           {!sliderLoader ? (
             <Slider {...singleImageBanner} className="">
@@ -21,7 +21,7 @@ export const Hero = ({ sliderLoader, heroSlider }) => {
                         to={`/products?search=`}
                       >
                         <img
-                          className="w-full h-[500px] rounded-md"
+                          className="w-full rounded-md"
                           src={`${process.env.PUBLIC_URL}/images/homepageBanner.svg`}
                           alt={banner.title}
                         />
@@ -46,7 +46,7 @@ export const Hero = ({ sliderLoader, heroSlider }) => {
                   <img
                     src={banner.imgSource}
                     alt="Horeca Product Banner"
-                    className="min-h-[140px] h-[240px] rounded-md lg:min-h-[100px] xl:min-h-[180px]"
+                    className=""
                   />
                 </Link>
               );

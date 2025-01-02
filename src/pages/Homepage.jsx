@@ -4,6 +4,7 @@ import { Hero } from "../hooks/hero/Hero";
 import { RowNews } from "../hooks/rownews/RowNews";
 import { TimerBanner } from "../hooks/timerBanner/TimerBanner";
 import { apiClient } from "../utils/apiWrapper";
+import { Wrapper } from "../shared/Wrapper";
 const FeatureProduct = lazy(() =>
   import("../hooks/featureproducts/FeatureProducts")
 );
@@ -102,6 +103,12 @@ const Homepage = ({ categories }) => {
         featureCatLoader={featureCatLoader}
         setSelectedCat={setSelectedCat}
       />
+      <Wrapper>
+        <img
+          className="mt-[50px]"
+          src={`${process.env.PUBLIC_URL}/images/DummyHomepageBanner.png`}
+        />
+      </Wrapper>
       <FeatureBrand
         brandCat={brandCat}
         brandCatList={brandCatList}
