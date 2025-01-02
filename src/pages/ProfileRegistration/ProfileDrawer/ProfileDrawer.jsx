@@ -2,7 +2,7 @@ import React from "react";
 import { Wrapper } from "../../../shared/Wrapper";
 import { useNavigate } from "react-router";
 
-const ProfileDrawer = () => {
+const ProfileDrawer = ({ setShowProfileDrawer }) => {
   const navigate = useNavigate();
   const navItems = [
     // {
@@ -100,7 +100,10 @@ const ProfileDrawer = () => {
             </p>
             <div className="flex items-center justify-between mt-[10px]">
               <div
-                onClick={() => navigate("/registration/all-orders")}
+                onClick={() => {
+                  navigate("/registration/all-orders");
+                  setShowProfileDrawer(false);
+                }}
                 className="flex flex-col items-center justify-center"
               >
                 <img
@@ -112,7 +115,10 @@ const ProfileDrawer = () => {
                 </p>
               </div>
               <div
-                onClick={() => navigate("/registration/coupons-offers")}
+                onClick={() => {
+                  navigate("/registration/coupons-offers");
+                  setShowProfileDrawer(false);
+                }}
                 className="flex flex-col items-center justify-center"
               >
                 <img
@@ -124,7 +130,10 @@ const ProfileDrawer = () => {
                 </p>
               </div>
               <div
-                onClick={() => navigate("/registration/wishlist")}
+                onClick={() => {
+                  navigate("/registration/wishlist");
+                  setShowProfileDrawer(false);
+                }}
                 className="flex flex-col items-center justify-center"
               >
                 <img
@@ -140,7 +149,10 @@ const ProfileDrawer = () => {
           {navItems?.map((item) => {
             return (
               <div
-                onClick={() => navigate(item.link)}
+                onClick={() => {
+                  navigate(item.link);
+                  setShowProfileDrawer(false);
+                }}
                 className="flex items-center py-[15px] border-b-2"
               >
                 <img className="mr-[10px]" src={item.icon} />

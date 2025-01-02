@@ -52,7 +52,7 @@ const Wishlist = () => {
         });
         setLoader(false);
         toast(
-          <span className="line-clamp-2">{`Successfully Remove From Cart`}</span>
+          <span className="line-clamp-2">{`Successfully Removed from Wishlist`}</span>
         );
         fetchAllReviews();
       } catch (error) {
@@ -131,8 +131,8 @@ const Wishlist = () => {
 
   const collectionBreadCrumb = [
     {
-      url: "/",
-      title: "Order",
+      url: "/home",
+      title: "Homepage",
     },
     {
       title: "Wishlist",

@@ -232,7 +232,10 @@ const Navigation = ({ categories, currentLocation }) => {
         <React.Fragment>
           <div
             className="bg-[#000000a1] primary w-full h-[100vh] z-[999] fixed flex items-center justify-center"
-            onClick={() => setOpenModel(false)}
+            onClick={() => {
+              setOpenModel(false);
+              setShowProfileDrawer(false);
+            }}
           ></div>
           <div className="w-[375px] bg-white rounded-[10px] z-[9999] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <div className="bg-[#f6f8fb] border-b  border-b-[#e2e8f0] flex items-center justify-between p-5 py-3 rounded-t-[10px]">
@@ -650,7 +653,7 @@ const Navigation = ({ categories, currentLocation }) => {
           /> */}
           </div>
           {/* Search Option Button */}
-          <div className="w-[60%] rounded-full border border-gray-300  relative ml-2 hidden lg:block">
+          <div className="w-[50%] rounded-full border border-gray-300  relative ml-2 hidden lg:block">
             {/* <Wrapper> */}
             <form
               className="flex items-center h-12"
@@ -1086,7 +1089,7 @@ const Navigation = ({ categories, currentLocation }) => {
       )}
       <div className="bg-[#DEF9EC] py-3 hidden lg:flex">
         <Wrapper classes="flex flex-row items-center justify-between">
-          <div className="flex group relative group/cat1 mr-3  items-center justify-between w-full">
+          <div className="flex group relative group/cat1  items-center justify-between w-full">
             <div
               className="flex flex-row items-center justify-center mr-3 cursor-pointer"
               ref={ref}
@@ -1120,7 +1123,7 @@ const Navigation = ({ categories, currentLocation }) => {
                         )}
                         {index === categories.length - 1 && (
                           <Link
-                            className="text-[16px] font-bold text-primary mx-2 "
+                            className="text-[16px] font-bold text-primary ml-2 "
                             to="/collections/deal-of-a-days"
                           >
                             Deal of the day
@@ -1452,7 +1455,7 @@ const Navigation = ({ categories, currentLocation }) => {
       </Wrapper>
       {showProfileDrawer && (
         <div>
-          <ProfileDrawer />
+          <ProfileDrawer setShowProfileDrawer={setShowProfileDrawer} />
         </div>
       )}
     </React.Fragment>
