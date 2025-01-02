@@ -232,7 +232,10 @@ const Navigation = ({ categories, currentLocation }) => {
         <React.Fragment>
           <div
             className="bg-[#000000a1] primary w-full h-[100vh] z-[999] fixed flex items-center justify-center"
-            onClick={() => setOpenModel(false)}
+            onClick={() => {
+              setOpenModel(false);
+              setShowProfileDrawer(false);
+            }}
           ></div>
           <div className="w-[375px] bg-white rounded-[10px] z-[9999] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <div className="bg-[#f6f8fb] border-b  border-b-[#e2e8f0] flex items-center justify-between p-5 py-3 rounded-t-[10px]">
@@ -1452,7 +1455,7 @@ const Navigation = ({ categories, currentLocation }) => {
       </Wrapper>
       {showProfileDrawer && (
         <div>
-          <ProfileDrawer />
+          <ProfileDrawer setShowProfileDrawer={setShowProfileDrawer} />
         </div>
       )}
     </React.Fragment>
