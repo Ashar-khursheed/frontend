@@ -86,10 +86,10 @@ const ProfileDrawer = () => {
   ];
   return (
     <>
-      <Wrapper>
+      <div className="w-[100vw] flex justify-center h-[0vh]">
         <div
           style={{ zIndex: "999" }}
-          className="absolute z-999 w-[95%] rounded-md border-2 p-5 h-[624px] mt-[-50px] z-999 bg-[white]"
+          className="absolute z-999 w-[95%] mx-[auto] rounded-md border-2 p-5 mt-[-50px] z-999 bg-[white]"
         >
           <div className="h-[170px] p-4  rounded-md bg-[#DEF9EC] ">
             <h1 className="text-[18px] font-medium leading-[24px] text-center">
@@ -149,7 +149,7 @@ const ProfileDrawer = () => {
             );
           })}
         </div>
-      </Wrapper>
+      </div>
     </>
   );
 };

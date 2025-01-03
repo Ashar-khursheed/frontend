@@ -202,7 +202,7 @@ const ProductCard = ({
   return (
     <React.Fragment>
       <div
-        className={`${classes}  min-h-[330px] sm:min-h-[520px] block w-[183px] sm:w-full group border-gray-300 relative rounded-[4px]  cursor-pointer product__card__wrapper group transition-all border-2 z-[70] hover:border-primary duration-700`}
+        className={`${classes}  min-h-[330px] sm:min-h-[520px] block w-[183px] sm:w-full group border-[#e2e8f0] relative rounded-[4px]  cursor-pointer product__card__wrapper group transition-all border z-[70] hover:border-primary duration-700`}
         onMouseLeave={() => onMouseLeaveFunction(product.video_path)}
         onMouseEnter={() => onMouseEnterFunction(product.video_path)}
       >
@@ -224,7 +224,7 @@ const ProductCard = ({
           className={
             window?.innerWidth < 640
               ? "overflow-hidden relative z-50 h-[120px] sm:h-[288px]"
-              : "overflow-hidden relative z-50 80p:h-[288px] 110p:h-[288px] "
+              : "overflow-hidden relative z-50"
           }
         >
           <Link to={`/product/${productId}`}>
@@ -252,7 +252,7 @@ const ProductCard = ({
                     <img
                       src={`${product.images[0]}`}
                       alt={product.altText}
-                      className="mt-[12px] sm:mt-[0px] w-[100px] h-[110px] sm:h-[100%] sm:w-full object-contain"
+                      className="mt-[12px] sm:mt-[0px] w-[100px] h-[110px] sm:h-[236px] sm:w-[246px] sm:w-full object-contain"
                     />
                   )}
                 </div>
@@ -275,11 +275,13 @@ const ProductCard = ({
                       key={index}
                       className="flex items-center justify-center"
                     >
-                      <img
-                        src={`${image}`}
-                        alt={product.altText}
-                        className="w-full w-[100px] h-[120px] sm:h-[100%] flex items-center justify-center object-contain"
-                      />
+                      <div className="flex items-center justify-center">
+                        <img
+                          src={`${image}`}
+                          alt={product.altText}
+                          className=" w-[100px] h-[120px] sm:h-[236px] sm:w-[246px] flex items-center justify-center object-contain"
+                        />
+                      </div>
                     </div>
                   ))}
                 </Slider>
@@ -312,7 +314,7 @@ const ProductCard = ({
         </div>
         <div className="mt-1 p-4 mr-[0px] sm:mr-[10px] xl:mt-[-28%] 2xl:mt-[-3%] ">
           <Link to={`/product/${productId}`}>
-            {product.leftStock <= 0 ? (
+            {/* {product.leftStock <= 0 ? (
               <p className="text-[#A6131D] text-[10px] mt-[-10px] mb-[0px] sm:text-sm mt-2">
                 Only available for pre-orders
               </p>
@@ -320,7 +322,7 @@ const ProductCard = ({
               <p className="text-[white] text-[10px] mt-[-10px] mb-[10px] sm:text-sm mt-2">
                 .
               </p>
-            )}
+            )} */}
             <div className="">
               <h2 className="text-[12px] sm:text-lg font-normal sm:font-semibold line-clamp-2">
                 {product.name}
@@ -333,7 +335,7 @@ const ProductCard = ({
               </span>
             </div>
             {!flashSale ? (
-              <p className="text-gray-700 text-xs mt-1">
+              <p className="hidden sm:block text-gray-700 text-[12px] mt-1">
                 15% discount on first time order
               </p>
             ) : null}
@@ -358,14 +360,18 @@ const ProductCard = ({
               {product.delivery_days > 0 ? (
                 <span>
                   {" "}
-                  Get it as soon as in&nbsp;{product.delivery_days} Days
+                  <span className="text-[black]">FREE DELIVERY</span> Get it
+                  in&nbsp;
+                  {product.delivery_days} Days
                 </span>
               ) : (
-                <span className="">Now Delivering Faster</span>
+                <>
+                  <span className="">Now Delivering Faster</span>
+                </>
               )}
             </p>
 
-            <div className="flex overflow-hidden items-baseline  sm:flex-row items-baseline">
+            <div className="flex overflow-hidden items-baseline  sm:flex-row items-baseline mb-[10px] mt-[0px] sm:mt-[10px]">
               <span className="flex items-baseline sm:flex-none text-primary font-semibold">
                 <span className="ml-0 text-[10px] sm:text-[14px] font-normal sm:font-bold">
                   {product.currency_title ? product.currency_title : "USD "}
@@ -435,8 +441,17 @@ const ProductCard = ({
               />
             </div>
           </div>
-          <div className="flex items-center">
-            <div className="hidden mt-2 sm:flex items-center justify-between p-[2px] sm:px-3 sm:py-[2px] w-[90px] border border-[#BCE3C9] rounded-[4px]">
+          {product.leftStock <= 0 ? (
+            <p className="text-[#A6131D] text-[10px] mt-[-10px] mb-[0px] sm:text-sm mt-2">
+              Only available for pre-orders
+            </p>
+          ) : (
+            <p className="text-[#A6131D] text-[10px] mt-[-10px] mb-[0px] sm:text-sm mt-2">
+              Only 4 left in stock - order soon.
+            </p>
+          )}
+          <div className="flex items-center ">
+            <div className="hidden mt-2 sm:flex items-center h-[44px] justify-between p-[2px] sm:px-3 sm:py-[2px] w-[90px] border border-[#BCE3C9] rounded-[4px]">
               <FiMinus
                 className="cursor-pointer w-[10px] sm:w-[24px]"
                 onClick={(e) => handlerDecrement(e)}
@@ -488,19 +503,27 @@ const ProductCard = ({
                     </span>
                   </>
                 ) : (
-                  <span
-                    className={
-                      window?.innerWidth < 1367
-                        ? "ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] group-hover:text-white transition-all duration-500"
-                        : "ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] lg:text-[8px] 80p:text-base 110p:text-[14px] group-hover:text-white transition-all duration-500"
-                    }
-                  >
-                    {/* <span className="ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] lg:text-[8px] 80p:text-base 110p:text-[10px] group-hover:text-white transition-all duration-500"> */}
+                  // <span
+                  // // className={
+                  // //   window?.innerWidth < 1367
+                  // //     ? "ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] group-hover:text-white transition-all duration-500"
+                  // //     : "ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[8px] lg:text-[8px] 80p:text-base 110p:text-[14px] group-hover:text-white transition-all duration-500"
+                  // // }
+                  // >
+                  <span className="ml-0 sm:ml-[1px] p-[2px] sm:p-0 font-semibold text-primary text-[18px] group-hover:text-white transition-all duration-500">
                     Add To Cart
                   </span>
                 )}
               </CartButton>
             </div>
+          </div>
+          <div>
+            <p className="text-[12px] font-light leading-[14px] text-[#64748B] my-[10px]">
+              More Vendor Options
+            </p>
+            <p className="text-[12px] font-normal leading-[14px] text-[black] mt-[10px]">
+              AED 169.17 <span className="text-[#186737]">(Lowest Offers)</span>
+            </p>
           </div>
           {removeItem ? (
             <button

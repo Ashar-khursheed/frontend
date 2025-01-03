@@ -9,8 +9,8 @@ const SellOnHoreca = () => {
       title: "Home",
     },
     {
-      url: "/career",
-      title: "Career",
+      url: "/sell-on-horecastore",
+      title: "Sell On Horecastore",
     },
   ];
   return (
@@ -20,10 +20,11 @@ const SellOnHoreca = () => {
       </Wrapper>
       <div className="flex mt-[10px] text-[32px] font-bold text-white h-[160px] sm:h-[450px] w-full bg-gray-400">
         <img
-          className="absolute h-[160px] sm:h-[450px] w-full object-cover opacity-[0.5]"
-          src="https://images.pexels.com/photos/7689734/pexels-photo-7689734.jpeg?auto=compress&cs=tinysrgb&w=800"
+          className="absolute h-[160px] sm:h-[450px] w-full object-cover "
+          src={`${process.env.PUBLIC_URL}/images/sellonHoreca.svg`}
         />
-        <div className="relative p-[10px] sm:p-20 w-[100%]">
+        {/* backend is pending */}
+        {/* <div className="relative p-[10px] sm:p-20 w-[100%]">
           <p className="text-[20px] ml-0 sm:ml-[3%] text-center sm:text-left sm:text-[54px] leading:[10px] sm:leading-[63.34px] w-full sm:w-[50vw]">
             Our global reach is your playground.
           </p>
@@ -41,7 +42,7 @@ const SellOnHoreca = () => {
               Join Marketplace
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
       <Wrapper>
         <div className="flex flex-col items-center justify-center text-center mt-[60px]">
@@ -174,7 +175,7 @@ const SellOnHoreca = () => {
         <div className=" w-full mt-[0px] sm:mt-5">
           {" "}
           <img
-            className="w-full"
+            className="w-full rounded-md"
             src={process.env.PUBLIC_URL + "/images/categoryBanner.png"}
             alt=""
           />{" "}
