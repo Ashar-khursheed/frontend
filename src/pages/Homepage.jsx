@@ -18,6 +18,17 @@ const FeatureBrand = lazy(() => import("../hooks/featureBrand/FeatureBrand"));
 const BlogsCard = lazy(() => import("../shared/BlogsCard"));
 const Categories = lazy(() => import("../hooks/categories/Categories"));
 
+const sideBanner = [
+  {
+    imgSource: `${process.env.PUBLIC_URL}/images/homepageSidefirst.png`,
+    redirectSource: "#",
+  },
+  {
+    imgSource: `${process.env.PUBLIC_URL}/images/homepageSideSecond.svg`,
+    redirectSource: "#",
+  },
+];
+
 const Homepage = ({ categories }) => {
   const [featureCat, setFeatureCat] = useState([]);
   const [featureCatList, setFeatureCatList] = useState([]);
