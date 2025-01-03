@@ -12,7 +12,7 @@ const BlogDetails = () => {
 
   const collectionBreadCrumb = [
     {
-      url: "/",
+      url: "/homepage",
       title: "Home",
     },
     {
@@ -22,13 +22,24 @@ const BlogDetails = () => {
   ];
   return (
     <>
-      <Wrapper>
+      <div className="block sm:hidden pl-[8px]">
         <Breadcrumb items={collectionBreadCrumb} classes={"mt-[10px]"} />
-      </Wrapper>
+      </div>
       <Wrapper>
-        <div className="flex mt-[10px] text-[32px] m-[10px] font-bold text-white h-[160px] overflow-hidden rounded-[20px] sm:h-[700px] w-full">
+        <div className="hidden sm:block">
+          <Breadcrumb items={collectionBreadCrumb} classes={"mt-[10px]"} />
+        </div>
+      </Wrapper>
+      <div>
+        <img
+          className="block sm:hidden mt-[20px] h-[240px] object-cover"
+          src={`${data?.image}`}
+        />
+      </div>
+      <Wrapper>
+        <div className="hidden sm:flex mt-[10px] text-[32px] m-[10px] font-bold text-white h-[160px] overflow-hidden rounded-[20px] sm:h-[700px] w-full">
           <img
-            className="absolute h-[160px] m-[5px] sm:h-[700px] w-[85%] object-cover rounded-[20px] opacity-[1]"
+            className="absolute h-[160px] m-[5px] sm:h-[700px] w-[91%] object-cover rounded-[20px] opacity-[1]"
             src={`${data?.image}`}
           />
         </div>
@@ -37,9 +48,9 @@ const BlogDetails = () => {
           {/* First Container */}
           {/*  */}
           <div className="m-[10px] w-[100%] lg:w-[75%]">
-            <div className="flex items-center gap-2">
+            <div className="hidden sm:flex items-center gap-2">
               <img
-                src="https://images.pexels.com/photos/7689734/pexels-photo-7689734.jpeg?auto=compress&cs=tinysrgb&w=800"
+                src={`${data?.image}`}
                 alt="Author"
                 className="w-[50px] h-[50px] rounded-full object-cover"
               />
@@ -162,7 +173,7 @@ const BlogDetails = () => {
           {/*  */}
           <PopularPosts />
         </div>
-        <div className="m-[10px] w-[100%] lg:w-[100%]">
+        <div className="m-[0px] sm:m-[10px] w-[100%] lg:w-[100%]">
           <BlogPostCard count={3} />
         </div>
       </Wrapper>
