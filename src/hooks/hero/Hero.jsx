@@ -6,6 +6,7 @@ import { heroSlider, sideBanner } from "../../data/homepage";
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 export const Hero = ({ sliderLoader, heroSlider }) => {
+  console.log("###", heroSlider);
   return (
     <Wrapper classes="mt-4 flex items-start justify-between flex-nowrap">
       <div className="grid lg:grid-cols-7 lg:gap-x-4 grid-cols-1 2xl:grid-cols-7">
@@ -22,7 +23,7 @@ export const Hero = ({ sliderLoader, heroSlider }) => {
                       >
                         <img
                           className="w-full rounded-md"
-                          src={`${process.env.PUBLIC_URL}/images/homepageBanner.svg`}
+                          src={`https://admin.horecastore.sa/storage/${banner?.image}`}
                           alt={banner.title}
                         />
                       </Link>
