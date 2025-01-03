@@ -97,7 +97,7 @@ const Homepage = ({ categories }) => {
   return (
     <div>
       <Hero heroSlider={heroSlider} sliderLoader={sliderLoader} />
-      {/* <RowNews /> */}
+      <RowNews />
       <Categories categories={categories} />
       <FeatureProduct
         featureCat={featureCat}
@@ -106,12 +106,6 @@ const Homepage = ({ categories }) => {
         featureCatLoader={featureCatLoader}
         setSelectedCat={setSelectedCat}
       />
-      <Wrapper>
-        <img
-          className="mt-[50px]"
-          src={`${process.env.PUBLIC_URL}/images/DummyHomepageBanner.png`}
-        />
-      </Wrapper>
       <FeatureBrand
         brandCat={brandCat}
         brandCatList={brandCatList}
@@ -119,7 +113,7 @@ const Homepage = ({ categories }) => {
         brandCatLoader={brandCatLoader}
         setSelectedBrand={setSelectedBrand}
       />
-      {/* <FeatureClearance /> */}
+      <FeatureClearance />
       <TimerBanner />
       <BlogsCard />
       <HomepageBanner />

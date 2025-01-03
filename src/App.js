@@ -44,6 +44,8 @@ const BlogListing = lazy(() => import("./pages/BlogsPage/BlogListing"));
 const BlogDetails = lazy(() => import("./pages/BlogsPage/BlogDetails"));
 
 
+
+
 const App = () => {
   const location = useLocation();
   const [loader, setLoader] = useState(true);

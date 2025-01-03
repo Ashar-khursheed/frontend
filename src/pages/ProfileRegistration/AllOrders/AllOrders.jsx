@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy } from "react";
+import React, { useEffect, useState,lazy } from "react";
 import AllOrdersBox from "./components/AllOrdersBox";
 import { Wrapper } from "../../../shared/Wrapper";
 import SidebarProfile from "../../../components/SidebarProfile";
@@ -8,7 +8,7 @@ import { Breadcrumb } from "../../../shared/Breadcrumb";
 import ImagePopup from "../../../components/ImagePopup";
 import { useNavigate } from "react-router";
 import CommonProducts from "../CommonProducts/CommonProducts";
-const ProductCard = lazy(() => import("../../../shared/ProductCard"));
+const  ProductCard =lazy(()=>import("../../../shared/ProductCard"));
 const AllOrders = () => {
   const [viewedLoader, setViewedLoader] = useState(true);
   const [ordersData, setOrdersData] = useState([]);
@@ -59,6 +59,7 @@ const AllOrders = () => {
       title: "Profile",
     },
     {
+      
       title: "All Orders",
     },
   ];
@@ -103,7 +104,7 @@ const AllOrders = () => {
         </div>
       </div>
       <Wrapper>
-        <div className="hidden sm:flex">
+        <div className="flex">
           <SidebarProfile />
           <div className="flex flex-col  w-[100%]">
             {/* Sub-Navbar */}

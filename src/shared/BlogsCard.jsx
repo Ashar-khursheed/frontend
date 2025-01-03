@@ -52,7 +52,7 @@ export const BlogsCard = ({ classes }) => {
         </span>
       </div>
       <div className={`${classes} `}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {!loader ? (
             blogs.map((item, index) => {
               return (
@@ -60,41 +60,41 @@ export const BlogsCard = ({ classes }) => {
                   {index < 3 ? (
                     <div
                       onClick={() => handleNavigation(item)}
-                      className="border-2 rounded-md p-2 sm:p-6 border-[#EEEEEE]"
+                      className="border-2 rounded-md p-6 border-[#EEEEEE]"
                     >
                       <React.Fragment>
                         <Link to="#">
                           <img
-                            className="w-full col-span-1 h-[300px] object-cover rounded-md"
-                            src={`${item?.images[0]}`}
+                            className="w-full col-span-1 h-[350px] object-cover rounded-md"
+                            src={`${item.images[0]}`}
                             alt=""
                           />
                           <div className="flex justify-between items-center my-3">
                             <div className="flex justify-start items-center">
                               <img
-                                src={`${item?.images[0]}`}
+                                src={`${item.images[0]}`}
                                 className="size-[30px] rounded-full"
                                 alt="blog writer"
                               />
                               <span className="text-gray-700 text-[12px] md:text-[13] lg:text-[14px] xl:text-[14px] ml-3 whitespace-nowrap">
-                                Written By -
+                                Written by -
                               </span>
                               <span className="text-[#BE2535] font-semibold ml-2 text-[12px] md:text-[13] lg:text-[14px] xl:text-[14px] ">
                                 {" "}
-                                {item?.author?.username}
+                                {item.author.username}
                               </span>
                             </div>
                             <span className="text-gray-700 ml-2 text-[12px] md:text-[13] lg:text-[14px] xl:text-[14px] text-end ">
-                              Posted {formatDateString(item?.updated_at)}
+                              Posted {formatDateString(item.updated_at)}
                             </span>
                           </div>
                           <h3 className="text-[#262626] text-md line-clamp-1 lg:text-lg my-3">
-                            {item?.name}{" "}
+                            {item.name}{" "}
                           </h3>
                           <div
                             className="text-gray-700 text-[10px]  my-5 line-clamp-4 text-sm lg:text-md xl:text-base"
                             dangerouslySetInnerHTML={{
-                              __html: item?.content.replace(/<\/?p>/g, ""),
+                              __html: item.content.replace(/<\/?p>/g, ""),
                             }}
                           ></div>
                         </Link>
@@ -107,37 +107,12 @@ export const BlogsCard = ({ classes }) => {
                                 src={process.env.PUBLIC_URL + "/icons/eye.png"}
                                 alt=""
                               />{" "}
-                              <span className="mx-3">{item?.views}</span>
+                              <span className="mx-3">{item.views}</span>
                             </span>
-                            <span className="flex items-center cursor-pointer">
-                              <img
-                                src={
-                                  process.env.PUBLIC_URL + "/icons/message.png"
-                                }
-                                alt=""
-                              />
-                              <span className="mx-3">6</span>
-                            </span>
-                            <span className="flex items-center cursor-pointer">
-                              <img
-                                src={
-                                  process.env.PUBLIC_URL +
-                                  "/icons/share/share.png"
-                                }
-                                alt=""
-                              />
-                              <span className="mx-3">1</span>
-                            </span>
+                            {/* <span className="flex items-center cursor-pointer"><img src={process.env.PUBLIC_URL + "/icons/message.png"} alt="" /><span className="mx-3">6</span></span> */}
+                            {/* <span className="flex items-center cursor-pointer"><img src={process.env.PUBLIC_URL + "/icons/share/share.png"} alt="" /><span className="mx-3">1</span></span> */}
                           </div>
-                          <span>
-                            <img
-                              className="cursor-pointer"
-                              src={
-                                process.env.PUBLIC_URL + "/icons/heart-2.png"
-                              }
-                              alt=""
-                            />
-                          </span>
+                          {/* <span><img className="cursor-pointer" src={process.env.PUBLIC_URL + "/icons/heart-2.png"} alt="" /></span> */}
                         </div>
                       </React.Fragment>
                     </div>

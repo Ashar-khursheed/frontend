@@ -9,8 +9,8 @@ const SellOnHoreca = () => {
       title: "Home",
     },
     {
-      url: "/sell-on-horecastore",
-      title: "Sell On Horecastore",
+      url: "/career",
+      title: "Career",
     },
   ];
   return (
@@ -23,8 +23,7 @@ const SellOnHoreca = () => {
           className="absolute h-[160px] sm:h-[450px] sm:w-full object-cover "
           src={`${process.env.PUBLIC_URL}/images/sellonHoreca.svg`}
         />
-        {/* backend is pending */}
-        {/* <div className="relative p-[10px] sm:p-20 w-[100%]">
+        <div className="relative p-[10px] sm:p-20 w-[100%]">
           <p className="text-[20px] ml-0 sm:ml-[3%] text-center sm:text-left sm:text-[54px] leading:[10px] sm:leading-[63.34px] w-full sm:w-[50vw]">
             Our global reach is your playground.
           </p>
@@ -42,7 +41,7 @@ const SellOnHoreca = () => {
               Join Marketplace
             </button>
           </div>
-        </div> */}
+        </div>
       </div>
       <Wrapper>
         <div className="flex flex-col items-center justify-center text-center mt-[60px]">
@@ -175,7 +174,7 @@ const SellOnHoreca = () => {
         <div className=" w-full mt-[0px] sm:mt-5">
           {" "}
           <img
-            className="w-full rounded-md"
+            className="w-full"
             src={process.env.PUBLIC_URL + "/images/categoryBanner.png"}
             alt=""
           />{" "}

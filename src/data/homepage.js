@@ -94,11 +94,11 @@ const heroSlider = [{
 ]
 
 const sideBanner = [{
-        imgSource: `${process.env.PUBLIC_URL}/images/homepageSidefirst.png`,
+        imgSource: "/images/hero/Banner-2.jpg",
         redirectSource: "#"
     },
     {
-        imgSource: `${process.env.PUBLIC_URL}/images/homepageSideSecond.svg`,
+        imgSource: "/images/hero/Banner-3.jpg",
         redirectSource: "#"
     }
 ]

@@ -52,7 +52,7 @@ const Wishlist = () => {
         });
         setLoader(false);
         toast(
-          <span className="line-clamp-2">{`Successfully Removed from Wishlist`}</span>
+          <span className="line-clamp-2">{`Successfully Remove From Cart`}</span>
         );
         fetchAllReviews();
       } catch (error) {
@@ -176,7 +176,7 @@ const Wishlist = () => {
                     </>
                   ) : (
                     <>
-                      <div class="flex items-center justify-center w-[90vw] h-[20vh]">
+                      <div class="flex items-center justify-center w-[90vw] h-[100vh]">
                         <h1>Not product Found</h1>
                       </div>
                     </>

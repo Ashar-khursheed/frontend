@@ -4,7 +4,7 @@ const PopularPosts = () => {
   return (
     <>
       <div className="hidden lg:block w-[25%] mt-[90px]">
-        <div className="border-2 my-[10px] rounded-lg p-[10px]">
+        <div className="border-2 m-[10px] rounded-lg p-[10px]">
           <h1 className="font-Montserrat m-[5px] text-[20px] leading-[30px] font-semibold">
             Popular Posts
           </h1>

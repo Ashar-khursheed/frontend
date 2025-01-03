@@ -2,7 +2,7 @@ import React from "react";
 import { Wrapper } from "../../../shared/Wrapper";
 import { useNavigate } from "react-router";
 
-const ProfileDrawer = ({ setShowProfileDrawer }) => {
+const ProfileDrawer = () => {
   const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem("userProfile"));
   const navItems = [
@@ -87,10 +87,10 @@ const ProfileDrawer = ({ setShowProfileDrawer }) => {
   ];
   return (
     <>
-      <div className="w-[100vw] flex justify-center h-[0vh]">
+      <Wrapper>
         <div
           style={{ zIndex: "999" }}
-          className="absolute z-999 w-[95%] mx-[auto] rounded-md border-2 p-5 mt-[-50px] z-999 bg-[white]"
+          className="absolute z-999 w-[95%] rounded-md border-2 p-5 h-[624px] mt-[-50px] z-999 bg-[white]"
         >
           <div className="h-[170px] p-4  rounded-md bg-[#DEF9EC] ">
             <h1 className="text-[18px] font-medium leading-[24px] text-center">
@@ -101,10 +101,7 @@ const ProfileDrawer = ({ setShowProfileDrawer }) => {
             </p>
             <div className="flex items-center justify-between mt-[10px]">
               <div
-                onClick={() => {
-                  navigate("/registration/all-orders");
-                  setShowProfileDrawer(false);
-                }}
+                onClick={() => navigate("/registration/all-orders")}
                 className="flex flex-col items-center justify-center"
               >
                 <img
@@ -116,10 +113,7 @@ const ProfileDrawer = ({ setShowProfileDrawer }) => {
                 </p>
               </div>
               <div
-                onClick={() => {
-                  navigate("/registration/coupons-offers");
-                  setShowProfileDrawer(false);
-                }}
+                onClick={() => navigate("/registration/coupons-offers")}
                 className="flex flex-col items-center justify-center"
               >
                 <img
@@ -131,10 +125,7 @@ const ProfileDrawer = ({ setShowProfileDrawer }) => {
                 </p>
               </div>
               <div
-                onClick={() => {
-                  navigate("/registration/wishlist");
-                  setShowProfileDrawer(false);
-                }}
+                onClick={() => navigate("/registration/wishlist")}
                 className="flex flex-col items-center justify-center"
               >
                 <img
@@ -150,10 +141,7 @@ const ProfileDrawer = ({ setShowProfileDrawer }) => {
           {navItems?.map((item) => {
             return (
               <div
-                onClick={() => {
-                  navigate(item.link);
-                  setShowProfileDrawer(false);
-                }}
+                onClick={() => navigate(item.link)}
                 className="flex items-center py-[15px] border-b-2"
               >
                 <img className="mr-[10px]" src={item.icon} />
@@ -162,7 +150,7 @@ const ProfileDrawer = ({ setShowProfileDrawer }) => {
             );
           })}
         </div>
-      </div>
+      </Wrapper>
     </>
   );
 };

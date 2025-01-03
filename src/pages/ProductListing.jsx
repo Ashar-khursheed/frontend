@@ -15,7 +15,7 @@ import { settings } from "../utils/slicksettings";
 const ProductCard = lazy(() => import("../shared/ProductCard"));
 const ProductListing = () => {
   const [page, setPage] = useState("1");
-  const [perPage, setPerPage] = useState("50");
+  const [perPage, setPerPage] = useState("20");
   const [loader, setLoader] = useState(true);
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -52,7 +52,6 @@ const ProductListing = () => {
       title: "Products",
     },
   ];
-
   const fetchProducts = async () => {
     const authToken = localStorage.getItem("authToken");
     setLoader(true);
@@ -290,7 +289,7 @@ const ProductListing = () => {
               </div>
               <div className="hidden sm:hidden md:hidden lg:block flex flex-row items-center ">
                 <span className="text-sm text-gray-700 mr-6">
-                  Default Sorting:
+                  Sort:
                   <span className="text-black-100 ml-1 relative">
                     <Menu
                       arrow={true}
@@ -731,16 +730,6 @@ const FilterSection = ({
     );
   };
 
-  useEffect(() => {
-    if (selectedBrands == []) {
-      setBtnActive((prev) => {
-        const newState = true; // Set the new state to true
-        console.log(newState); // Log immediately after updating state
-        return newState; // Return the updated state
-      });
-    }
-  }, [selectedBrands, brands]);
-
   const handlerPriceRange = () => {
     setSelectedMinPrice(minValue);
     setSelectedMaxPrice(maxValue);
@@ -758,7 +747,7 @@ const FilterSection = ({
                 <FilterTitle title="Applied Search" />
                 <button
                   className={`underline cursor-pointer ${
-                    btnActive ? "text-[black]" : "text-[gray]"
+                    btnActive ? "text-[red]" : "text-[red]"
                   } font-semibold text-sm`}
                 >
                   Clear All
@@ -796,14 +785,12 @@ const FilterSection = ({
                 setBtnActive(true);
                 setSelectedBrands((prev) => {
                   const newState = []; // Set the new state as an empty array
+                  console.log("----->>>>>>", newState); // Log immediately after updating state
                   return newState;
                 });
                 setBrands((prev) => {
-                  const newState = []; // Set the new state as an empty array; // Log immediately after updating state
-                  return newState;
-                });
-                setBtnActive((prev) => {
-                  const newState = true; // Set the new state as an empty array; // Log immediately after updating state
+                  const newState = []; // Set the new state as an empty array
+                  console.log("----->>>>>>", newState); // Log immediately after updating state
                   return newState;
                 });
               }}
