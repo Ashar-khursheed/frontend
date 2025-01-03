@@ -1,4 +1,4 @@
-import React, { useEffect, useState,lazy } from "react";
+import React, { useEffect, useState, lazy } from "react";
 import { Wrapper } from "../../../shared/Wrapper";
 import SidebarProfile from "../../../components/SidebarProfile";
 import WishlistBox from "./Components/WishlistBox";
@@ -7,7 +7,8 @@ import Skeleton from "react-loading-skeleton";
 import { Breadcrumb } from "../../../shared/Breadcrumb";
 import { useNavigate } from "react-router";
 import CommonProducts from "../CommonProducts/CommonProducts";
-const ProductCard =lazy(()=>import("../../../shared/ProductCard"));
+import { toast } from "react-toastify";
+const ProductCard = lazy(() => import("../../../shared/ProductCard"));
 const ProfileWishlist = () => {
   const [wishListData, setWishListData] = useState([]);
   const navigate = useNavigate();
@@ -21,7 +22,6 @@ const ProfileWishlist = () => {
       const response = await apiClient.get("/wishlist");
       setWishListData(response?.data?.wishlist);
       setLoader(false);
- 
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -37,8 +37,11 @@ const ProfileWishlist = () => {
         const response = await apiClient.delete(`/wishlist/remove`, {
           params: { product_id: product.id },
         });
- 
+
         setLoader(false);
+        toast(
+          <span className="line-clamp-2">{`Successfully Removed from Wishlist`}</span>
+        );
         fetchAllReviews();
       } catch (error) {
         console.error("Error:", error);
@@ -92,7 +95,6 @@ const ProfileWishlist = () => {
       title: "Profile",
     },
     {
-      
       title: "Wishlist",
     },
   ];

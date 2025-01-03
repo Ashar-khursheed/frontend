@@ -107,6 +107,7 @@ const Navigation = ({ categories, currentLocation }) => {
       const response = await apiClient.get(`/search`, { params });
       setBrands(response.data.brands);
       setCategoryList(response.data.categories);
+      console.log("######", response?.data?.categories);
       setProducts(response.data.products);
       setLoader(false);
     } catch (error) {
@@ -602,7 +603,7 @@ const Navigation = ({ categories, currentLocation }) => {
               onClick={toggleDrawer}
             />
           )}
-          <div className={"mr-[15%] lg:mr-[0%]"}>
+          <div className={"block lg:hidden mr-[15%] lg:mr-[0%]"}>
             <Link to="/home">
               <img
                 onClick={toggleDrawer}
@@ -653,7 +654,7 @@ const Navigation = ({ categories, currentLocation }) => {
           /> */}
           </div>
           {/* Search Option Button */}
-          <div className="w-[50%] rounded-full border border-gray-300  relative ml-2 hidden lg:block">
+          <div className="w-[50%] 3xl:w-[60%] rounded-full border border-gray-300  relative ml-2 hidden lg:block">
             {/* <Wrapper> */}
             <form
               className="flex items-center h-12"

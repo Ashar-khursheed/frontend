@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 
 const ProfileDrawer = ({ setShowProfileDrawer }) => {
   const navigate = useNavigate();
+  const userData = JSON.parse(localStorage.getItem("userProfile"));
   const navItems = [
     // {
     //   id: "",
@@ -93,10 +94,10 @@ const ProfileDrawer = ({ setShowProfileDrawer }) => {
         >
           <div className="h-[170px] p-4  rounded-md bg-[#DEF9EC] ">
             <h1 className="text-[18px] font-medium leading-[24px] text-center">
-              Hello, Mohd Danish
+              Hello, {userData?.name}
             </h1>
             <p className="text-[12px] mt-[5px] font-light leading-[24px] text-center">
-              mohddanish@horecastore.com
+              {userData?.email}
             </p>
             <div className="flex items-center justify-between mt-[10px]">
               <div

@@ -132,7 +132,7 @@ const Wishlist = () => {
   const collectionBreadCrumb = [
     {
       url: "/home",
-      title: "Homepage",
+      title: "Home",
     },
     {
       title: "Wishlist",
