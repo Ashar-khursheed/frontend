@@ -90,6 +90,7 @@ const Homepage = ({ categories }) => {
     fetchBrandProducts(tempBrand);
   }, []);
 
+  
   return (
     <div>
       <Hero heroSlider={heroSlider} sliderLoader={sliderLoader} />

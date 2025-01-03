@@ -50,7 +50,6 @@ const ProductListing = () => {
       title: "Products",
     },
   ];
-
   const fetchProducts = async () => {
     const authToken = localStorage.getItem("authToken");
     setLoader(true);
@@ -679,16 +678,6 @@ const FilterSection = ({
     );
   };
 
-  useEffect(() => {
-    if (selectedBrands == []) {
-      setBtnActive((prev) => {
-        const newState = true; // Set the new state to true
-        console.log(newState); // Log immediately after updating state
-        return newState; // Return the updated state
-      });
-    }
-  }, [selectedBrands, brands]);
-
   const handlerPriceRange = () => {
     setSelectedMinPrice(minValue);
     setSelectedMaxPrice(maxValue);
@@ -706,7 +695,7 @@ const FilterSection = ({
                 <FilterTitle title="Applied Search" />
                 <button
                   className={`underline cursor-pointer ${
-                    btnActive ? "text-[black]" : "text-[gray]"
+                    btnActive ? "text-[red]" : "text-[red]"
                   } font-semibold text-sm`}
                 >
                   Clear All
@@ -744,14 +733,12 @@ const FilterSection = ({
                 setBtnActive(true);
                 setSelectedBrands((prev) => {
                   const newState = []; // Set the new state as an empty array
+                  console.log("----->>>>>>", newState); // Log immediately after updating state
                   return newState;
                 });
                 setBrands((prev) => {
-                  const newState = []; // Set the new state as an empty array; // Log immediately after updating state
-                  return newState;
-                });
-                setBtnActive((prev) => {
-                  const newState = true; // Set the new state as an empty array; // Log immediately after updating state
+                  const newState = []; // Set the new state as an empty array
+                  console.log("----->>>>>>", newState); // Log immediately after updating state
                   return newState;
                 });
               }}

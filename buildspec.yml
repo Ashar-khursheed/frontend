@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22 # Specify the Node.js version (adjust to the version you need)
+    commands:
+      # Install dependencies
+      - echo Installing dependencies...
+      - npm install
+
+  build:
+    commands:
+      # Build the React app
+      - echo Building the React app...
+      - npm run build
+
+  post_build:
+    commands:
+      # After the build is complete, you can copy the build output to an S3 bucket (optional)
+      - echo Build completed successfully!
+
+artifacts:
+  files:
+    - '**/*'  # Include all files
+  base-directory: build  # This is the folder where the React app's build output is generated
+  discard-paths: yes  # Optional: To discard the directory structure in the artifact (useful for S3)

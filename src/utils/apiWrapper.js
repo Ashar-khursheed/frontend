@@ -1,6 +1,6 @@
 import axios from 'axios';
 const hostUrl = window.location.origin;
-let apiUrl='https://admin.horecastore.sa/api';
+let apiUrl='https://testhssite.com/api';
 if(hostUrl=='https://uaehorecastore.netlify.app'){
     apiUrl='https://horeca-uae.testhssite.com/api';
 } 
