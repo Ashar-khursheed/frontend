@@ -12,9 +12,88 @@ import {
 import axios from "axios";
 import { apiClient } from "../utils/apiWrapper";
 
- const Footer = () => {
+const Footer = () => {
   const [footerMenu, setFooterMenu] = useState([]);
   const [footerIndex, setFooterIndex] = useState(0);
+
+  const FooterHeading = {
+    "Restaurant Equipment": [
+      "Cooking Equipment",
+      " Commercial Ovens",
+      " Food Display",
+      "Commercial Tables",
+      "Food Holding",
+      "Food Warmer",
+      "Dish Washing Equipment",
+      "Food Preparation",
+      "Beverage Equipment",
+    ],
+    Refrigeration: [
+      "Cooking Equipment",
+      "Commercial Ovens",
+      "Food Display",
+      "Commercial Tables",
+      "Food Holding",
+      "Food Warmer",
+      "Dish Washing Equipment",
+      "Food Preparation",
+      "Beverage Equipment",
+    ],
+    Tableware: [
+      "Cooking Equipment",
+      " Commercial Ovens",
+      " Food Display",
+      "Commercial Tables",
+      "Food Holding",
+      "Food Warmer",
+      "Dish Washing Equipment",
+      "Food Preparation",
+      "Beverage Equipment",
+    ],
+    "Kitchen & Pastry": [
+      "Cooking Equipment",
+      " Commercial Ovens",
+      " Food Display",
+      "Commercial Tables",
+      "Food Holding",
+      "Food Warmer",
+      "Dish Washing Equipment",
+      "Food Preparation",
+      "Beverage Equipment",
+    ],
+    "Food & Beverage": [
+      "Cooking Equipment",
+      " Commercial Ovens",
+      " Food Display",
+      "Commercial Tables",
+      "Food Holding",
+      "Food Warmer",
+      "Dish Washing Equipment",
+      "Food Preparation",
+      "Beverage Equipment",
+    ],
+    "Top Brands": [
+      "Santos",
+      "Simonelli",
+      "Rational",
+      "Robot Coupe",
+      "Hamilton Beach",
+      "Empero",
+      "Solay",
+      "Turkay",
+    ],
+
+    "Discover Horeca": [
+      "Your Orders",
+      "Returns & Replacement",
+      "Shipping Rates & Policies",
+      "Refund and Returns Policy",
+      "Privacy Policy",
+      "Terms & Conditions",
+      "(FAQ's)",
+      "Sell on Horeca",
+    ],
+  };
 
   const fetchMenu = async () => {
     try {
@@ -83,22 +162,25 @@ import { apiClient } from "../utils/apiWrapper";
       </Wrapper>
       <hr />
       <Wrapper classes="pt-0 lg:pt-7 pb-0 lg:pb-10">
-        <div className="grid grid-cols-1 gap-0 lg:gap-2 lg:flex lg:flex lg:gap-0">
-          {window.innerWidth > 640 &&
-            footerMenu.map((footer, index) => {
+        <div className="">
+          <div className=" grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-7">
+            {Object.entries(FooterHeading).map(([category, items]) => {
               return (
                 <div
-                  key={footer.name}
-                  className="basis-1/5 border-t lg:border-none mt-3 text-black-100"
+                  key={category}
+                  className="border-t lg:border-none mt-3 text-black-100"
                 >
-                  <h4 className="mt-[20px]  text-[1.375rem] font-semibold">
-                    {footer.name}
+                  <h4 className="mt-[20px] text-[18px] leading-[21.11px] font-normal">
+                    {category}
                   </h4>
                   <ul>
-                    {footer.menu_nodes.map((menu, index) => {
+                    {items.map((menu, index) => {
                       return (
-                        <li key={index} className="text-[0.937rem] my-[10px]">
-                          <Link to={menu.url}>{menu.title}</Link>
+                        <li
+                          key={index}
+                          className="text-[15px] leading-[24px] font-light text-[#64748B] my-[10px]"
+                        >
+                          <Link to={menu}>{menu}</Link>
                         </li>
                       );
                     })}
@@ -106,6 +188,7 @@ import { apiClient } from "../utils/apiWrapper";
                 </div>
               );
             })}
+          </div>
           {window.innerWidth < 640 &&
             footerMenu.map((footer, index) => {
               return (
@@ -174,7 +257,7 @@ import { apiClient } from "../utils/apiWrapper";
                 </div>
               );
             })}
-          <div className="basis-1/5 mt-7 hidden md:block">
+          {/* <div className="basis-1/5 mt-7 hidden md:block">
             <h4 className=" text-[1.375rem] font-semibold">Download</h4>
             <p className="text-gray-700 text-base mt-5">
               You can download our mobile application from app stores
@@ -223,7 +306,7 @@ import { apiClient } from "../utils/apiWrapper";
                 alt="mastercard"
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </Wrapper>
       <hr />

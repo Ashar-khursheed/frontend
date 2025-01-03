@@ -20,8 +20,8 @@ const SellOnHoreca = () => {
       </Wrapper>
       <div className="flex mt-[10px] text-[32px] font-bold text-white h-[160px] sm:h-[450px] w-full bg-gray-400">
         <img
-          className="absolute h-[160px] sm:h-[450px] w-full object-cover opacity-[0.5]"
-          src="https://images.pexels.com/photos/7689734/pexels-photo-7689734.jpeg?auto=compress&cs=tinysrgb&w=800"
+          className="absolute h-[160px] sm:h-[450px] sm:w-full object-cover "
+          src={`${process.env.PUBLIC_URL}/images/sellonHoreca.svg`}
         />
         <div className="relative p-[10px] sm:p-20 w-[100%]">
           <p className="text-[20px] ml-0 sm:ml-[3%] text-center sm:text-left sm:text-[54px] leading:[10px] sm:leading-[63.34px] w-full sm:w-[50vw]">

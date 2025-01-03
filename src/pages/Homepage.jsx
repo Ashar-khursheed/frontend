@@ -4,6 +4,10 @@ import { Hero } from "../hooks/hero/Hero";
 import { RowNews } from "../hooks/rownews/RowNews";
 import { TimerBanner } from "../hooks/timerBanner/TimerBanner";
 import { apiClient } from "../utils/apiWrapper";
+import { Wrapper } from "../shared/Wrapper";
+import HomepageBanner from "../shared/HomepageBanner";
+import HomepageContent from "../shared/HomepageContent";
+import HomepagePopularSearches from "../shared/HomepagePopularSearches";
 const FeatureProduct = lazy(() =>
   import("../hooks/featureproducts/FeatureProducts")
 );
@@ -90,7 +94,6 @@ const Homepage = ({ categories }) => {
     fetchBrandProducts(tempBrand);
   }, []);
 
-  
   return (
     <div>
       <Hero heroSlider={heroSlider} sliderLoader={sliderLoader} />
@@ -113,6 +116,9 @@ const Homepage = ({ categories }) => {
       <FeatureClearance />
       <TimerBanner />
       <BlogsCard />
+      <HomepageBanner />
+      <HomepageContent />
+      <HomepagePopularSearches />
     </div>
   );
 };

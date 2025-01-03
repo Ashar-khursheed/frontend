@@ -19,10 +19,10 @@ const Career = () => {
       <Wrapper>
         <Breadcrumb items={collectionBreadCrumb} classes={"mt-[10px]"} />
       </Wrapper>
-      <div className="flex items-center mt-[10px] justify-center font-bold text-white h-[170px] sm:h-[740px] w-full bg-gray-400">
+      <div className="flex items-center mt-[10px] justify-center font-bold text-white h-[170px] sm:h-[640px] w-full bg-gray-400">
         <img
-          className="absolute h-[170px] sm:h-[740px] w-full object-cover opacity-[1]"
-          src="https://images.pexels.com/photos/7689734/pexels-photo-7689734.jpeg?auto=compress&cs=tinysrgb&w=800"
+          className="absolute h-[170px] sm:h-[640px] w-full object-cover opacity-[1]"
+          src={`${process.env.PUBLIC_URL}/images/careerbanner.png`}
         />
         <div className="relative mt-[0%] sm:mt-[20%]">
           <form className="flex items-center w-[90vw] sm:w-[50vw] h-14 overflow-hidden bg-[white] p-[5px] rounded-full">
