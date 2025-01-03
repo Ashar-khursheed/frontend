@@ -42,7 +42,7 @@ function Model({ url, onLoaded }) {
   return <primitive object={scene} />;
 }
 
-  const ProductDetail = () => {
+const ProductDetail = () => {
   const { id } = useParams(); // Access the id from the URL
   const [seeMore, setSeeMore] = useState(true);
   const videoRef = useRef(null);
@@ -348,9 +348,9 @@ function Model({ url, onLoaded }) {
           ) : (
             <Skeleton className="mt-7" width="30%" height="30px" count={1} />
           )}
-          <div className="grid grid-cols-12 gap-x-8 ">
+          <div className="grid-none sm:grid grid-cols-12 gap-x-8">
             <div className="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-9 xl:col-span-9">
-              <div className="grid grid-cols-12 md:grid-cols-12 lg:grid-cols-12 gap-6">
+              <div className="grid grid-cols-12 gap-6">
                 {/*  product images */}
                 <div className="col-span-12 md:col-span-12  lg:col-span-6 mt-4">
                   <div className="mx-auto">
@@ -698,9 +698,7 @@ function Model({ url, onLoaded }) {
                                         ? "border-primary"
                                         : ""
                                     }`}
-                                    src={`${
-                                      item.images ? item.images[0] : ""
-                                    }`}
+                                    src={`${item.images ? item.images[0] : ""}`}
                                     alt={item.name}
                                   />
                                 </Link>
@@ -1387,7 +1385,6 @@ function Model({ url, onLoaded }) {
                   </div>
                 </div>
               </div>
-
               <Documents docs={!!product && product.documents} />
             </div>
 

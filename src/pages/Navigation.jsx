@@ -233,7 +233,10 @@ const Navigation = ({ categories, currentLocation }) => {
         <React.Fragment>
           <div
             className="bg-[#000000a1] primary w-full h-[100vh] z-[999] fixed flex items-center justify-center"
-            onClick={() => setOpenModel(false)}
+            onClick={() => {
+              setOpenModel(false);
+              setShowProfileDrawer(false);
+            }}
           ></div>
           <div className="w-[375px] bg-white rounded-[10px] z-[9999] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <div className="bg-[#f6f8fb] border-b  border-b-[#e2e8f0] flex items-center justify-between p-5 py-3 rounded-t-[10px]">
@@ -1087,7 +1090,7 @@ const Navigation = ({ categories, currentLocation }) => {
       )}
       <div className="bg-[#DEF9EC] py-3 hidden lg:flex">
         <Wrapper classes="flex flex-row items-center justify-between">
-          <div className="flex group relative group/cat1 mr-3  items-center justify-between w-full">
+          <div className="flex group relative group/cat1  items-center justify-between w-full">
             <div
               className="flex flex-row items-center justify-center mr-3 cursor-pointer"
               ref={ref}
@@ -1121,7 +1124,7 @@ const Navigation = ({ categories, currentLocation }) => {
                         )}
                         {index === categories.length - 1 && (
                           <Link
-                            className="text-[16px] font-bold text-primary mx-2 "
+                            className="text-[16px] font-bold text-primary ml-2 "
                             to="/collections/deal-of-a-days"
                           >
                             Deal of the day
@@ -1247,108 +1250,213 @@ const Navigation = ({ categories, currentLocation }) => {
             </div>
           </form>
 
-          {isFocused && (products || categoryList || brands) ? (
-            <div className="max-h-[700px] rounded-lg absolute w-full bg-[red] z-[999] mt-3">
-              {products && products.length > 0 && (
-                <div className="flex border-b-2 border-b-[#e2e8f0] rounded-lg bg-[#f6f8fb]">
-                  <div className="basis-1/4 py-4 px-3 text-primary font-semibold text-base border-r-2 border-r-[#e2e8f0]">
-                    Products
+          <div className="hidden lg:block">
+            {isFocused && (products || categoryList || brands) ? (
+              <div className="max-h-[700px] rounded-lg absolute w-full z-[999] mt-3">
+                {products && products.length > 0 && (
+                  <div className="flex border-b-2 border-b-[#e2e8f0] rounded-lg bg-[#f6f8fb]">
+                    <div className="basis-1/4 py-4 px-3 text-primary font-semibold text-base border-r-2 border-r-[#e2e8f0]">
+                      Products
+                    </div>
+                    <div className="basis-3/4 py-4 px-3 bg-white">
+                      {products.slice(0, 7).map((prod, index) => (
+                        <Link
+                          to={`product/${prod.id}`}
+                          key={prod.id}
+                          className={`flex p-2 ${
+                            selectedIndex === index
+                              ? "bg-[#def9ec]"
+                              : "hover:bg-[#def9ec]"
+                          }`}
+                        >
+                          <div>
+                            <img
+                              className="max-w-[40px]"
+                              src={`${prod.image}`}
+                              alt={prod.name}
+                            />
+                          </div>
+                          <div className="ml-3">
+                            <span className="line-clamp-1 text-[#2E2F32] font-semibold text-[14px]">
+                              {prod.name}
+                            </span>
+                            <span className="text-[#64748B] text-sm">
+                              SAR {prod.sale_price}
+                            </span>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                  <div className="basis-3/4 py-4 px-3 bg-white">
-                    {products.slice(0, 7).map((prod, index) => (
-                      <Link
-                        to={`product/${prod.id}`}
-                        key={prod.id}
-                        className={`flex p-2 ${
-                          selectedIndex === index
-                            ? "bg-[#def9ec]"
-                            : "hover:bg-[#def9ec]"
-                        }`}
-                      >
-                        <div>
-                          <img
-                            className="max-w-[40px]"
-                            src={`${prod.image}`}
-                            alt={prod.name}
-                          />
-                        </div>
-                        <div className="ml-3">
-                          <span className="line-clamp-1 text-[#2E2F32] font-semibold text-[14px]">
-                            {prod.name}
-                          </span>
-                          <span className="text-[#64748B] text-sm">
-                            SAR {prod.sale_price}
-                          </span>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
+                )}
 
-              {categoryList && categoryList.length > 0 && (
-                <div className="flex border-b-2 border-b-[#e2e8f0] rounded-lg bg-[#f6f8fb]">
-                  <div className="basis-1/4 py-4 px-3 text-primary font-semibold text-base border-r-2 border-r-[#e2e8f0]">
-                    Categories
+                {categoryList && categoryList.length > 0 && (
+                  <div className="flex border-b-2 border-b-[#e2e8f0] rounded-lg bg-[#f6f8fb]">
+                    <div className="basis-1/4 py-4 px-3 text-primary font-semibold text-base border-r-2 border-r-[#e2e8f0]">
+                      Categories
+                    </div>
+                    <div className="basis-3/4 py-4 px-3 bg-white">
+                      {categoryList.slice(0, 4).map((cat, index) => (
+                        <Link
+                          to={`/collections/${cat.slug}`}
+                          key={cat.id}
+                          className={`flex p-2 ${
+                            selectedIndex === index + products.length
+                              ? "bg-[#def9ec]"
+                              : "hover:bg-[#def9ec]"
+                          }`}
+                        >
+                          <span className="line-clamp-1 text-[#64748B] font-semibold text-base">
+                            {cat.name}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                  <div className="basis-3/4 py-4 px-3 bg-white">
-                    {categoryList.slice(0, 4).map((cat, index) => (
-                      <Link
-                        to={`/collections/${cat.slug}`}
-                        key={cat.id}
-                        className={`flex p-2 ${
-                          selectedIndex === index + products.length
-                            ? "bg-[#def9ec]"
-                            : "hover:bg-[#def9ec]"
-                        }`}
-                      >
-                        <span className="line-clamp-1 text-[#64748B] font-semibold text-base">
-                          {cat.name}
-                        </span>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
+                )}
 
-              {brands && brands.length > 0 && (
-                <div className="flex  border-[#e2e8f0] rounded-lg bg-[#f6f8fb]">
-                  <div className="basis-1/4 py-4 px-3 text-primary font-semibold border-r-2 text-base">
-                    Brands
+                {brands && brands.length > 0 && (
+                  <div className="flex  border-[#e2e8f0] rounded-lg bg-[#f6f8fb]">
+                    <div className="basis-1/4 py-4 px-3 text-primary font-semibold border-r-2 text-base">
+                      Brands
+                    </div>
+                    <div className="basis-3/4 py-4 px-3 bg-white">
+                      {brands.slice(0, 4).map((brand, index) => (
+                        <Link
+                          to={`/collections/${brand.id}`}
+                          key={brand.id}
+                          className={`flex p-2 ${
+                            selectedIndex ===
+                            index + products.length + categoryList.length
+                              ? "bg-[#def9ec]"
+                              : "hover:bg-[#def9ec]"
+                          }`}
+                        >
+                          <span className="line-clamp-1 text-[#64748B] font-semibold text-base">
+                            {brand.name}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                  <div className="basis-3/4 py-4 px-3 bg-white">
-                    {brands.slice(0, 4).map((brand, index) => (
-                      <Link
-                        to={`/collections/${brand.id}`}
-                        key={brand.id}
-                        className={`flex p-2 ${
-                          selectedIndex ===
-                          index + products.length + categoryList.length
-                            ? "bg-[#def9ec]"
-                            : "hover:bg-[#def9ec]"
-                        }`}
-                      >
-                        <span className="line-clamp-1 text-[#64748B] font-semibold text-base">
-                          {brand.name}
-                        </span>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            isFocused && (
-              <div className="max-h-[300px] rounded-lg absolute w-full z-[999] mt-3">
-                No Product Found...
+                )}
               </div>
-            )
-          )}
+            ) : (
+              isFocused && (
+                <div className="max-h-[300px] rounded-lg absolute w-full z-[999] mt-3">
+                  No Product Found...
+                </div>
+              )
+            )}
+          </div>
+          {/* mobile searchbar */}
+          <div className="block lg:hidden">
+            {isFocused && (products || categoryList || brands) ? (
+              <div className=" rounded-lg border-2  absolute w-full bg-[white] z-[999] mt-3">
+                {/* Products Section */}
+                {products && products.length > 0 && (
+                  <div className="flex flex-col  bg-[#f6f8fb]">
+                    <div className="py-4 px-3 text-primary font-semibold text-base border-b-2 border-b-[#e2e8f0]">
+                      Products
+                    </div>
+                    <div className="py-4 px-3 bg-white">
+                      {products.slice(0, 7).map((prod, index) => (
+                        <Link
+                          to={`product/${prod.id}`}
+                          key={prod.id}
+                          className={`flex p-2 ${
+                            selectedIndex === index
+                              ? "bg-[#def9ec]"
+                              : "hover:bg-[#def9ec]"
+                          }`}
+                        >
+                          <div>
+                            <img
+                              className="max-w-[40px]"
+                              src={`${prod.image}`}
+                              alt={prod.name}
+                            />
+                          </div>
+                          <div className="ml-3">
+                            <span className="line-clamp-1 text-[#2E2F32] font-semibold text-[14px]">
+                              {prod.name}
+                            </span>
+                            <span className="text-[#64748B] text-sm">
+                              SAR {prod.sale_price}
+                            </span>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Categories Section */}
+                {categoryList && categoryList.length > 0 && (
+                  <div className="flex flex-col bg-[#f6f8fb] mt-4">
+                    <div className="py-4 px-3 text-primary font-semibold text-base border-b-2 border-b-[#e2e8f0]">
+                      Categories
+                    </div>
+                    <div className="py-4 px-3 bg-white">
+                      {categoryList.slice(0, 4).map((cat, index) => (
+                        <Link
+                          to={`/collections/${cat.slug}`}
+                          key={cat.id}
+                          className={`flex p-2 ${
+                            selectedIndex === index + products.length
+                              ? "bg-[#def9ec]"
+                              : "hover:bg-[#def9ec]"
+                          }`}
+                        >
+                          <span className="line-clamp-1 text-[#64748B] font-semibold text-base">
+                            {cat.name}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Brands Section */}
+                {brands && brands.length > 0 && (
+                  <div className="flex flex-col bg-[#f6f8fb] mt-4">
+                    <div className="py-4 px-3 text-primary font-semibold text-base">
+                      Brands
+                    </div>
+                    <div className="py-4 px-3 bg-white">
+                      {brands.slice(0, 4).map((brand, index) => (
+                        <Link
+                          to={`/collections/${brand.id}`}
+                          key={brand.id}
+                          className={`flex p-2 ${
+                            selectedIndex ===
+                            index + products.length + categoryList.length
+                              ? "bg-[#def9ec]"
+                              : "hover:bg-[#def9ec]"
+                          }`}
+                        >
+                          <span className="line-clamp-1 text-[#64748B] font-semibold text-base">
+                            {brand.name}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              isFocused && (
+                <div className="max-h-[300px] rounded-lg absolute w-full z-[999] mt-3">
+                  No Product Found...
+                </div>
+              )
+            )}
+          </div>
         </div>
       </Wrapper>
       {showProfileDrawer && (
         <div>
-          <ProfileDrawer />
+          <ProfileDrawer setShowProfileDrawer={setShowProfileDrawer} />
         </div>
       )}
     </React.Fragment>
