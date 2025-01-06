@@ -24,7 +24,6 @@ const Categories = ({ categories }) => {
         {categories.map((category, index) => {
           const isSmallScreen = window.innerWidth < 640;
           const maxCategories = isSmallScreen ? 6 : 14;
-
           if (index < maxCategories) {
             return (
               <React.Fragment key={index}>
