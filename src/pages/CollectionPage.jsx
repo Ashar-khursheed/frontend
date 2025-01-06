@@ -171,7 +171,7 @@ const CollectionPage = () => {
                   })}
             </div>
 
-            <div className="hidden sm:grid grid-cols-2  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 mt-8">
+            <div className="hidden sm:grid grid-cols-2  sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 3xl:grid-cols-4 gap-8 mt-8">
               {selectedCat && selectedCat.children
                 ? selectedCat.children.map((cat, index) => {
                     return (
@@ -184,11 +184,17 @@ const CollectionPage = () => {
                           className="mt-1 block text-[#666666] text-base underline"
                           to={`/collections/${id}/${cat.slug}/${cat.id}`}
                         >
-                          <img
-                            className="w-full"
-                            src={cat.image}
-                            alt={cat.name}
-                          />
+                          <div className="flex items-center justify-center h-[230px] overflow-hidden">
+                            <img
+                              className="h-[230px]"
+                              src={
+                                cat.image
+                                  ? cat.image
+                                  : `${process.env.PUBLIC_URL}/images/categories/coffeemachines.png`
+                              }
+                              alt={cat.name}
+                            />
+                          </div>
                           <div className="mt-4 flex items-center justify-between">
                             <h4 className="text-primary text-lg font-semibold">
                               {cat.name}

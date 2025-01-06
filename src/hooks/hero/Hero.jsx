@@ -22,7 +22,7 @@ export const Hero = ({ sliderLoader, heroSlider }) => {
                       >
                         <img
                           className="w-full h-[500px] rounded-md"
-                          src={`${process.env.PUBLIC_URL}/images/homepageBanner.svg`}
+                          src={`https://admin.horecastore.sa/storage/${banner?.image}`}
                           alt={banner.title}
                         />
                       </Link>

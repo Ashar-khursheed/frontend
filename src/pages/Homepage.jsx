@@ -4,6 +4,10 @@ import { Hero } from "../hooks/hero/Hero";
 import { RowNews } from "../hooks/rownews/RowNews";
 import { TimerBanner } from "../hooks/timerBanner/TimerBanner";
 import { apiClient } from "../utils/apiWrapper";
+import { Wrapper } from "../shared/Wrapper";
+import HomepageBanner from "../shared/HomepageBanner";
+import HomepageContent from "../shared/HomepageContent";
+import HomepagePopularSearches from "../shared/HomepagePopularSearches";
 const FeatureProduct = lazy(() =>
   import("../hooks/featureproducts/FeatureProducts")
 );
@@ -13,6 +17,17 @@ const FeatureClearance = lazy(() =>
 const FeatureBrand = lazy(() => import("../hooks/featureBrand/FeatureBrand"));
 const BlogsCard = lazy(() => import("../shared/BlogsCard"));
 const Categories = lazy(() => import("../hooks/categories/Categories"));
+
+const sideBanner = [
+  {
+    imgSource: `${process.env.PUBLIC_URL}/images/homepageSidefirst.png`,
+    redirectSource: "#",
+  },
+  {
+    imgSource: `${process.env.PUBLIC_URL}/images/homepageSideSecond.svg`,
+    redirectSource: "#",
+  },
+];
 
 const Homepage = ({ categories }) => {
   const [featureCat, setFeatureCat] = useState([]);
@@ -102,6 +117,12 @@ const Homepage = ({ categories }) => {
         featureCatLoader={featureCatLoader}
         setSelectedCat={setSelectedCat}
       />
+      <Wrapper>
+        <img
+          className="mt-[50px]"
+          src={`${process.env.PUBLIC_URL}/images/DummyHomepageBanner.png`}
+        />
+      </Wrapper>
       <FeatureBrand
         brandCat={brandCat}
         brandCatList={brandCatList}
@@ -112,6 +133,9 @@ const Homepage = ({ categories }) => {
       {/* <FeatureClearance /> */}
       <TimerBanner />
       <BlogsCard />
+      <HomepageBanner />
+      <HomepageContent />
+      <HomepagePopularSearches />
     </div>
   );
 };

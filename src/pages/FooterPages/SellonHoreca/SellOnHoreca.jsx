@@ -20,7 +20,7 @@ const SellOnHoreca = () => {
       </Wrapper>
       <div className="flex mt-[10px] text-[32px] font-bold text-white h-[160px] sm:h-[450px] w-full bg-gray-400">
         <img
-          className="absolute h-[160px] sm:h-[450px] w-full object-cover "
+          className="absolute h-[160px] sm:h-[450px] sm:w-full object-cover "
           src={`${process.env.PUBLIC_URL}/images/sellonHoreca.svg`}
         />
         {/* backend is pending */}
